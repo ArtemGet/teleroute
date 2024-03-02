@@ -11,9 +11,20 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-public class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> {
+/**
+ * Pick any random route or command.
+ *
+ * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ */
+public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> {
     private final Collection<Route<SrcUpdate, Sender>> routes;
 
+    /**
+     * Construct RandomRoute with one or many commands.
+     *
+     * @param commands one or many commands
+     */
     @SafeVarargs
     public RandomRoute(final Cmd<SrcUpdate, Sender>... commands) {
         this(
@@ -23,11 +34,21 @@ public class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> 
         );
     }
 
+    /**
+     * Construct RandomRoute with one or many routes.
+     *
+     * @param routes one or many routes
+     */
     @SafeVarargs
-    public RandomRoute(final Route<SrcUpdate, Sender>... route) {
-        this(Arrays.asList(route));
+    public RandomRoute(final Route<SrcUpdate, Sender>... routes) {
+        this(Arrays.asList(routes));
     }
 
+    /**
+     * Main constructor. Construct RandomRoute with collection of routes.
+     *
+     * @param routes routes
+     */
     public RandomRoute(final Collection<Route<SrcUpdate, Sender>> routes) {
         this.routes = Collections.unmodifiableCollection(routes);
     }

@@ -1,11 +1,10 @@
 package aget.teleroute.send;
 
 /**
- * <p></p>
  * Sends messages via sender.
  * Feel free to implement.
  *
- * @param <Sender> Sender, actually sends messages, ie AdsSender from telegrambots or your own impl of tg send**
+ * @param <Sender> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
 public interface Send<Sender> {
     /**

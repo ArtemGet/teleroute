@@ -5,7 +5,13 @@ import aget.teleroute.send.Send;
 
 import java.util.Optional;
 
-public class SkipCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender> {
+/**
+ * Does nothing, skip logic.
+ *
+ * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ */
+public final class SkipCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender> {
     @Override
     public Optional<Send<Sender>> execute(SrcUpdate srcUpdate) {
         return Optional.empty();

@@ -8,14 +8,30 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MultiCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender> {
+/**
+ * Execute many commands as one.
+ *
+ * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ */
+public final class MultiCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender> {
     private final Collection<Cmd<SrcUpdate, Sender>> commands;
 
+    /**
+     * Construct MultiCmd that execute one or many commands.
+     *
+     * @param commands commands to execute
+     */
     @SafeVarargs
     public MultiCmd(Cmd<SrcUpdate, Sender>... commands) {
         this(Arrays.asList(commands));
     }
 
+    /**
+     * Main constructor. Construct MultiCmd that execute collection of commands.
+     *
+     * @param commands commands to execute
+     */
     public MultiCmd(Collection<Cmd<SrcUpdate, Sender>> commands) {
         this.commands = commands;
     }
