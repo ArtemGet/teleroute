@@ -3,7 +3,7 @@ package aget.teleroute.route;
 import aget.teleroute.command.Cmd;
 import aget.teleroute.command.SkipCmd;
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Optional;
 
@@ -33,7 +33,7 @@ public final class EndRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sende
     }
 
     @Override
-    public Optional<Send<Sender>> route(Update<SrcUpdate> update) {
-        return deadEndCommand.execute(update.source());
+    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+        return deadEndCommand.execute(updateWrap.source());
     }
 }

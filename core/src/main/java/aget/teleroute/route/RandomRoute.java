@@ -2,7 +2,7 @@ package aget.teleroute.route;
 
 import aget.teleroute.command.Cmd;
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -54,10 +54,10 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
     }
 
     @Override
-    public Optional<Send<Sender>> route(Update<SrcUpdate> update) {
+    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
         return routes.stream()
                 .skip(new Random().nextInt(routes.size()))
                 .findFirst()
-                .flatMap(route -> route.route(update));
+                .flatMap(route -> route.route(updateWrap));
     }
 }

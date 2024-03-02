@@ -1,7 +1,7 @@
 package aget.teleroute.route;
 
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -37,8 +37,8 @@ public final class IterateRoute<SrcUpdate, Sender> implements Route<SrcUpdate, S
     }
 
     @Override
-    public Optional<Send<Sender>> route(Update<SrcUpdate> update) {
-        return Optional.ofNullable(update)
+    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+        return Optional.ofNullable(updateWrap)
                 .flatMap(
                         upd -> routes.stream()
                                 .map(route -> route.route(upd))

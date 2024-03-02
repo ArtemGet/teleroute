@@ -1,7 +1,7 @@
 package aget.teleroute.match.common;
 
 import aget.teleroute.match.Match;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 /**
  * Check update's message's text equals provided text.
@@ -21,8 +21,8 @@ public final class FullTxtMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     @Override
-    public boolean match(Update<SrcUpdate> update) {
-        return update.text()
+    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+        return updateWrap.text()
                 .map(text -> text.equals(this.text))
                 .orElse(false);
     }

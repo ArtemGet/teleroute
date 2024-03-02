@@ -1,7 +1,7 @@
 package aget.teleroute.route;
 
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Optional;
 
@@ -16,8 +16,8 @@ public interface Route<SrcUpdate, Sender> {
     /**
      * Routes Update to command or other Route.
      *
-     * @param update update wrapper, provide data required by routes and matches.
+     * @param updateWrap update wrapper, provide data required by routes and matches.
      * @return Send
      */
-    Optional<Send<Sender>> route(Update<SrcUpdate> update);
+    Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap);
 }

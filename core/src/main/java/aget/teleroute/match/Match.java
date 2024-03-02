@@ -1,7 +1,7 @@
 package aget.teleroute.match;
 
 
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 /**
  * Match condition.
@@ -13,8 +13,8 @@ public interface Match<SrcUpdate> {
     /**
      * Check if provided update matches condition.
      *
-     * @param update update wrapper, provide data required by routes and matches.
+     * @param updateWrap update wrapper, provide data required by routes and matches.
      * @return condition match
      */
-    boolean match(Update<SrcUpdate> update);
+    boolean match(UpdateWrap<SrcUpdate> updateWrap);
 }

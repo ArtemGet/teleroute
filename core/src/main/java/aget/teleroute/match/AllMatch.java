@@ -1,6 +1,6 @@
 package aget.teleroute.match;
 
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -34,8 +34,8 @@ public final class AllMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     @Override
-    public boolean match(Update<SrcUpdate> update) {
+    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
         return this.matches.stream()
-                .allMatch(match -> match.match(update));
+                .allMatch(match -> match.match(updateWrap));
     }
 }

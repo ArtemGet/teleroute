@@ -3,7 +3,7 @@ package aget.teleroute.route;
 import aget.teleroute.command.Cmd;
 import aget.teleroute.command.SkipCmd;
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,12 +62,12 @@ public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpda
     }
 
     @Override
-    public Optional<Send<Sender>> route(Update<SrcUpdate> update) {
+    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
         try {
-            return this.route.route(update);
+            return this.route.route(updateWrap);
         } catch (Exception e) {
             log.error("Error occurred while executing command: {}", e.getMessage(), e);
-            return this.errorRoute.route(update);
+            return this.errorRoute.route(updateWrap);
         }
     }
 }

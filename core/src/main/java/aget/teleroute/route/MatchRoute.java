@@ -4,7 +4,7 @@ import aget.teleroute.command.Cmd;
 import aget.teleroute.command.SkipCmd;
 import aget.teleroute.match.Match;
 import aget.teleroute.send.Send;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 import java.util.Optional;
 
@@ -70,11 +70,11 @@ public final class MatchRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sen
     }
 
     @Override
-    public Optional<Send<Sender>> route(Update<SrcUpdate> update) {
-        if (!match.match(update)) {
-            return notMatchRoute.route(update);
+    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+        if (!match.match(updateWrap)) {
+            return notMatchRoute.route(updateWrap);
         }
 
-        return this.route.route(update);
+        return this.route.route(updateWrap);
     }
 }

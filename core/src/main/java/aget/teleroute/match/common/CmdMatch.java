@@ -1,7 +1,7 @@
 package aget.teleroute.match.common;
 
 import aget.teleroute.match.Match;
-import aget.teleroute.update.Update;
+import aget.teleroute.update.UpdateWrap;
 
 /**
  * Check update contains command.
@@ -10,7 +10,7 @@ import aget.teleroute.update.Update;
  */
 public final class CmdMatch<SrcUpdate> implements Match<SrcUpdate> {
     @Override
-    public boolean match(Update<SrcUpdate> update) {
-        return update.isCommand();
+    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+        return updateWrap.isCommand();
     }
 }
