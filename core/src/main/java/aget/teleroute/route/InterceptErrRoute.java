@@ -62,7 +62,7 @@ public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpda
     }
 
     @Override
-    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
         try {
             return this.route.route(updateWrap);
         } catch (Exception e) {

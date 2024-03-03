@@ -26,12 +26,12 @@ public class SendMessageWrap<T extends Serializable> implements Send<AbsSender> 
      *
      * @param sendMessage telegrambots BotApiMethod<T>
      */
-    public SendMessageWrap(BotApiMethod<T> sendMessage) {
+    public SendMessageWrap(final BotApiMethod<T> sendMessage) {
         this.sendMessage = sendMessage;
     }
 
     @Override
-    public void send(AbsSender send) {
+    public void send(final AbsSender send) {
         try {
             send.execute(this.sendMessage);
         } catch (TelegramApiException e) {

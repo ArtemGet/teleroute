@@ -17,11 +17,11 @@ public interface UpdateWrap<SrcUpdate> {
     Integer id();
 
     /**
-     * Define is this update contains tg command.
+     * Define is this update contains telegram command.
      *
      * @return is command
      */
-    boolean isCommand();
+    Boolean isCommand();
 
     /**
      * Provide update's text if exists.
@@ -31,9 +31,9 @@ public interface UpdateWrap<SrcUpdate> {
     Optional<String> text();
 
     /**
-     * Provide tg update.
+     * Provide telegram update.
      *
-     * @return tg update
+     * @return telegram update
      */
     SrcUpdate source();
 }

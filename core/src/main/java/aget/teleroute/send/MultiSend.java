@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Impl of batch send, use in case you need to send many messages at the same time
+ * Implementation of batch send, use in case you need to send many messages at the same time.
  *
  * @param <Sender> Actually sends messages, ie AdsSender from telegrambots or your own impl of tg send
  */
@@ -23,7 +23,7 @@ public final class MultiSend<Sender> implements Send<Sender> {
     }
 
     /**
-     * Main constructor. Construct MultiSend of collection of Send objects.
+     * Main constructor. Construct MultiSend of many Send objects.
      *
      * @param sends collection of Send objects
      */
@@ -32,7 +32,7 @@ public final class MultiSend<Sender> implements Send<Sender> {
     }
 
     @Override
-    public void send(Sender sender) {
+    public void send(final Sender sender) {
         this.sends.forEach(send -> send.send(sender));
     }
 }

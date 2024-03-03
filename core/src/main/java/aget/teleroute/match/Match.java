@@ -16,5 +16,5 @@ public interface Match<SrcUpdate> {
      * @param updateWrap update wrapper, provide data required by routes and matches.
      * @return condition match
      */
-    boolean match(UpdateWrap<SrcUpdate> updateWrap);
+    Boolean match(UpdateWrap<SrcUpdate> updateWrap);
 }

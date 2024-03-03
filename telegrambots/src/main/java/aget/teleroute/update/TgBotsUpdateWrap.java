@@ -8,7 +8,7 @@ import java.util.Optional;
 public class TgBotsUpdateWrap implements UpdateWrap<Update> {
     private final Update telegramBotsUpdate;
 
-    public TgBotsUpdateWrap(Update telegramBotsUpdate) {
+    public TgBotsUpdateWrap(final Update telegramBotsUpdate) {
         this.telegramBotsUpdate = telegramBotsUpdate;
     }
 
@@ -18,7 +18,7 @@ public class TgBotsUpdateWrap implements UpdateWrap<Update> {
     }
 
     @Override
-    public boolean isCommand() {
+    public Boolean isCommand() {
         return Optional.ofNullable(this.telegramBotsUpdate.getMessage())
                 .map(Message::isCommand)
                 .orElse(false);

@@ -12,7 +12,7 @@ import java.util.Optional;
  */
 public final class SkipCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender> {
     @Override
-    public Optional<Send<Sender>> execute(SrcUpdate srcUpdate) {
+    public Optional<Send<Sender>> execute(final SrcUpdate srcUpdate) {
         return Optional.empty();
     }
 }

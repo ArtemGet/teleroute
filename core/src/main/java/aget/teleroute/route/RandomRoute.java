@@ -45,7 +45,7 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
     }
 
     /**
-     * Main constructor. Construct RandomRoute with collection of routes.
+     * Main constructor. Construct RandomRoute with many routes.
      *
      * @param routes routes
      */
@@ -54,7 +54,7 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
     }
 
     @Override
-    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
         return routes.stream()
                 .skip(new Random().nextInt(routes.size()))
                 .findFirst()

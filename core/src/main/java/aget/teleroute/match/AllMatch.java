@@ -34,7 +34,7 @@ public final class AllMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     @Override
-    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+    public Boolean match(final UpdateWrap<SrcUpdate> updateWrap) {
         return this.matches.stream()
                 .allMatch(match -> match.match(updateWrap));
     }

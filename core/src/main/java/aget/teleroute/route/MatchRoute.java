@@ -9,18 +9,18 @@ import aget.teleroute.update.UpdateWrap;
 import java.util.Optional;
 
 /**
- * Route to route or command in case of update matching condition, if not - route to other route or command or none.
+ * Routes to route or command in case of update matching condition, if not - route to other route or command or none.
  *
  * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
  * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
 public final class MatchRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> {
     private final Route<SrcUpdate, Sender> route;
-    private final Route<SrcUpdate, Sender> notMatchRoute;
+    private final Route<SrcUpdate, Sender> spareRoute;
     private final Match<SrcUpdate> match;
 
     /**
-     * Construct MatchRoute that route to match command or none if update not match condition.
+     * Construct MatchRoute that routes to match command or none if update not match condition.
      *
      * @param match   match condition
      * @param command match command
@@ -35,12 +35,12 @@ public final class MatchRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sen
      *
      * @param match           match condition
      * @param command         match command
-     * @param notMatchCommand spare command
+     * @param spareRoute spare command
      */
     public MatchRoute(final Match<SrcUpdate> match,
                       final Cmd<SrcUpdate, Sender> command,
-                      final Cmd<SrcUpdate, Sender> notMatchCommand) {
-        this(match, new EndRoute<>(command), new EndRoute<>(notMatchCommand));
+                      final Cmd<SrcUpdate, Sender> spareRoute) {
+        this(match, new EndRoute<>(command), new EndRoute<>(spareRoute));
     }
 
     /**
@@ -59,20 +59,20 @@ public final class MatchRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sen
      *
      * @param match         match condition
      * @param route         match route
-     * @param notMatchRoute spare route
+     * @param spareRoute spare route
      */
     public MatchRoute(final Match<SrcUpdate> match,
                       final Route<SrcUpdate, Sender> route,
-                      final Route<SrcUpdate, Sender> notMatchRoute) {
+                      final Route<SrcUpdate, Sender> spareRoute) {
         this.match = match;
         this.route = route;
-        this.notMatchRoute = notMatchRoute;
+        this.spareRoute = spareRoute;
     }
 
     @Override
-    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
         if (!match.match(updateWrap)) {
-            return notMatchRoute.route(updateWrap);
+            return spareRoute.route(updateWrap);
         }
 
         return this.route.route(updateWrap);

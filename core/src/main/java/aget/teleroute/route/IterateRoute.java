@@ -28,7 +28,7 @@ public final class IterateRoute<SrcUpdate, Sender> implements Route<SrcUpdate, S
     }
 
     /**
-     * Main constructor. Construct IterateRoute that iterate over collection of routes.
+     * Main constructor. Construct IterateRoute that iterate over many routes.
      *
      * @param routes routes to iterate
      */
@@ -37,7 +37,7 @@ public final class IterateRoute<SrcUpdate, Sender> implements Route<SrcUpdate, S
     }
 
     @Override
-    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
         return Optional.ofNullable(updateWrap)
                 .flatMap(
                         upd -> routes.stream()

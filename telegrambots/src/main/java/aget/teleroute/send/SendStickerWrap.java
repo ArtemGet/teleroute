@@ -18,14 +18,14 @@ public class SendStickerWrap implements Send<AbsSender> {
      *
      * @param sendSticker telegrambots SendSticker
      */
-    public SendStickerWrap(SendSticker sendSticker) {
+    public SendStickerWrap(final SendSticker sendSticker) {
         this.sendSticker = sendSticker;
     }
 
     @Override
-    public void send(AbsSender send) {
+    public void send(final AbsSender send) {
         try {
-            send.execute(sendSticker);
+            send.execute(this.sendSticker);
         } catch (TelegramApiException e) {
             log.error(e.getMessage(), e);
         }

@@ -16,12 +16,12 @@ public final class FullTxtMatch<SrcUpdate> implements Match<SrcUpdate> {
      *
      * @param text text to match
      */
-    public FullTxtMatch(String text) {
+    public FullTxtMatch(final String text) {
         this.text = text;
     }
 
     @Override
-    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+    public Boolean match(final UpdateWrap<SrcUpdate> updateWrap) {
         return updateWrap.text()
                 .map(text -> text.equals(this.text))
                 .orElse(false);

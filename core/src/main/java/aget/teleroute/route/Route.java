@@ -6,7 +6,7 @@ import aget.teleroute.update.UpdateWrap;
 import java.util.Optional;
 
 /**
- * Route, core interface. Routes Update to command or other Route. Return Send as a result.
+ * Route, core interface. Routes update to command or other route. Return Send as a result.
  * Feel free to implement.
  *
  * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public interface Route<SrcUpdate, Sender> {
     /**
-     * Routes Update to command or other Route.
+     * Routes update to command or other Route.
      *
      * @param updateWrap update wrapper, provide data required by routes and matches.
      * @return Send

@@ -25,7 +25,7 @@ public final class AnyMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     /**
-     * Main constructor. Construct AnyMatch contains collection of conditions.
+     * Main constructor. Construct AnyMatch contains many conditions.
      *
      * @param matches conditions
      */
@@ -34,7 +34,7 @@ public final class AnyMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     @Override
-    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+    public Boolean match(UpdateWrap<SrcUpdate> updateWrap) {
         return this.matches
                 .stream()
                 .anyMatch(match -> match.match(updateWrap));

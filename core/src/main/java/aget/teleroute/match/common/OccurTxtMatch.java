@@ -16,12 +16,12 @@ public final class OccurTxtMatch<SrcUpdate> implements Match<SrcUpdate> {
      *
      * @param text text to match
      */
-    public OccurTxtMatch(String text) {
+    public OccurTxtMatch(final String text) {
         this.text = text;
     }
 
     @Override
-    public boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+    public Boolean match(final UpdateWrap<SrcUpdate> updateWrap) {
         return updateWrap.text()
                 .map(text -> text.contains(this.text))
                 .orElse(false);

@@ -33,7 +33,7 @@ public final class EndRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sende
     }
 
     @Override
-    public Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
         return deadEndCommand.execute(updateWrap.source());
     }
 }

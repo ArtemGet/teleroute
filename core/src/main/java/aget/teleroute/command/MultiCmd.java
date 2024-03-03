@@ -5,6 +5,7 @@ import aget.teleroute.send.Send;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,7 @@ public final class MultiCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender>
      * @param commands commands to execute
      */
     @SafeVarargs
-    public MultiCmd(Cmd<SrcUpdate, Sender>... commands) {
+    public MultiCmd(final Cmd<SrcUpdate, Sender>... commands) {
         this(Arrays.asList(commands));
     }
 
@@ -32,12 +33,12 @@ public final class MultiCmd<SrcUpdate, Sender> implements Cmd<SrcUpdate, Sender>
      *
      * @param commands commands to execute
      */
-    public MultiCmd(Collection<Cmd<SrcUpdate, Sender>> commands) {
-        this.commands = commands;
+    public MultiCmd(final Collection<Cmd<SrcUpdate, Sender>> commands) {
+        this.commands = Collections.unmodifiableCollection(commands);
     }
 
     @Override
-    public Optional<Send<Sender>> execute(SrcUpdate srcUpdate) {
+    public Optional<Send<Sender>> execute(final SrcUpdate srcUpdate) {
         return Optional.of(
                 new MultiSend<>(
                         commands.stream()
