@@ -11,6 +11,8 @@ import java.util.Optional;
 /**
  * Iterate over routes, pick first successful result.
  *
+ * <p><img src="../doc-files/IteratorRouteScheme.png" width=1000>
+ *
  * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
  * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */

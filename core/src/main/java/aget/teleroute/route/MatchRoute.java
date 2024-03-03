@@ -11,6 +11,8 @@ import java.util.Optional;
 /**
  * Routes to route or command in case of update matching condition, if not - route to other route or command or none.
  *
+ * <p><img src="../doc-files/MatchRouteScheme.png" width=1000>
+ *
  * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
  * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
