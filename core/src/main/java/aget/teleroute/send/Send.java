@@ -4,13 +4,13 @@ package aget.teleroute.send;
  * Sends messages via sender.
  * Feel free to implement.
  *
- * @param <Sender> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
-public interface Send<Sender> {
+public interface Send<S> {
     /**
      * Sends command result to chat or user.
      *
      * @param send Sender
      */
-    void send(Sender send);
+    void send(S send);
 }

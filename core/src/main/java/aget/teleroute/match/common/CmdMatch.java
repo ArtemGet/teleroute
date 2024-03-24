@@ -1,16 +1,16 @@
 package aget.teleroute.match.common;
 
 import aget.teleroute.match.Match;
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 
 /**
  * Check update contains command.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
  */
-public final class CmdMatch<SrcUpdate> implements Match<SrcUpdate> {
+public final class CmdMatch<U> implements Match<U> {
     @Override
-    public Boolean match(final UpdateWrap<SrcUpdate> updateWrap) {
-        return updateWrap.isCommand();
+    public Boolean match(final UpdWrap<U> updWrap) {
+        return updWrap.isCommand();
     }
 }

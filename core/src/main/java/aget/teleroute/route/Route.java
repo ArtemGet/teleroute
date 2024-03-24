@@ -1,23 +1,23 @@
 package aget.teleroute.route;
 
-import aget.teleroute.send.Send;
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.command.Cmd;
+import aget.teleroute.update.UpdWrap;
 
 import java.util.Optional;
 
 /**
- * Route, core interface. Routes update to command or other route. Return Send as a result.
+ * Route, core interface. Routes update to command or other route. Return Cmd as a result.
  * Feel free to implement.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
-public interface Route<SrcUpdate, Sender> {
+public interface Route<U, S> {
     /**
      * Routes update to command or other Route.
      *
-     * @param updateWrap update wrapper, provide data required by routes and matches.
-     * @return Send
+     * @param updWrap update wrapper, provide data required by routes and matches.
+     * @return Cmd command
      */
-    Optional<Send<Sender>> route(UpdateWrap<SrcUpdate> updateWrap);
+    Optional<Cmd<U, S>> route(UpdWrap<U> updWrap);
 }

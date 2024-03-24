@@ -8,7 +8,7 @@ import java.util.Optional;
  *
  * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
  */
-public interface UpdateWrap<SrcUpdate> {
+public interface UpdWrap<SrcUpdate> {
     /**
      * Provide update id.
      *
@@ -35,5 +35,5 @@ public interface UpdateWrap<SrcUpdate> {
      *
      * @return telegram update
      */
-    SrcUpdate source();
+    SrcUpdate src();
 }

@@ -1,20 +1,20 @@
 package aget.teleroute.match;
 
 
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 
 /**
  * Match condition.
  * Feel free to implement.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
  */
-public interface Match<SrcUpdate> {
+public interface Match<U> {
     /**
      * Check if provided update matches condition.
      *
-     * @param updateWrap update wrapper, provide data required by routes and matches.
+     * @param updWrap update wrapper, provide data required by routes and matches.
      * @return condition match
      */
-    Boolean match(UpdateWrap<SrcUpdate> updateWrap);
+    Boolean match(UpdWrap<U> updWrap);
 }

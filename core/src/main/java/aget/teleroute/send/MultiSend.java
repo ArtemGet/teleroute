@@ -7,10 +7,10 @@ import java.util.Collections;
 /**
  * Implementation of batch send, use in case you need to send many messages at the same time.
  *
- * @param <Sender> Actually sends messages, ie AdsSender from telegrambots or your own impl of tg send
+ * @param <S> Actually sends messages, ie AdsSender from telegrambots or your own impl of tg send
  */
-public final class MultiSend<Sender> implements Send<Sender> {
-    private final Collection<Send<Sender>> sends;
+public final class MultiSend<S> implements Send<S> {
+    private final Collection<Send<S>> sends;
 
     /**
      * Construct MultiSend of one or many Send objects.
@@ -18,7 +18,7 @@ public final class MultiSend<Sender> implements Send<Sender> {
      * @param sends one or many Send objects
      */
     @SafeVarargs
-    public MultiSend(final Send<Sender>... sends) {
+    public MultiSend(final Send<S>... sends) {
         this(Arrays.asList(sends));
     }
 
@@ -27,12 +27,12 @@ public final class MultiSend<Sender> implements Send<Sender> {
      *
      * @param sends collection of Send objects
      */
-    public MultiSend(final Collection<Send<Sender>> sends) {
+    public MultiSend(final Collection<Send<S>> sends) {
         this.sends = Collections.unmodifiableCollection(sends);
     }
 
     @Override
-    public void send(final Sender sender) {
-        this.sends.forEach(send -> send.send(sender));
+    public void send(final S s) {
+        this.sends.forEach(send -> send.send(s));
     }
 }

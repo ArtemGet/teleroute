@@ -1,8 +1,7 @@
 package aget.teleroute.route;
 
 import aget.teleroute.command.Cmd;
-import aget.teleroute.send.Send;
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,11 +15,11 @@ import java.util.stream.Collectors;
  *
  * <p><img src="../doc-files/RandomRouteScheme.png" width=1000>
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
-public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> {
-    private final Collection<Route<SrcUpdate, Sender>> routes;
+public final class RndRoute<U, S> implements Route<U, S> {
+    private final Collection<Route<U, S>> routes;
 
     /**
      * Construct RandomRoute with one or many commands.
@@ -28,11 +27,11 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
      * @param commands one or many commands
      */
     @SafeVarargs
-    public RandomRoute(final Cmd<SrcUpdate, Sender>... commands) {
+    public RndRoute(final Cmd<U, S>... commands) {
         this(
                 Arrays.stream(commands)
                         .map(EndRoute::new)
-                        .collect(Collectors.<Route<SrcUpdate, Sender>>toList())
+                        .collect(Collectors.<Route<U, S>>toList())
         );
     }
 
@@ -42,7 +41,7 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
      * @param routes one or many routes
      */
     @SafeVarargs
-    public RandomRoute(final Route<SrcUpdate, Sender>... routes) {
+    public RndRoute(final Route<U, S>... routes) {
         this(Arrays.asList(routes));
     }
 
@@ -51,15 +50,15 @@ public final class RandomRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Se
      *
      * @param routes routes
      */
-    public RandomRoute(final Collection<Route<SrcUpdate, Sender>> routes) {
+    public RndRoute(final Collection<Route<U, S>> routes) {
         this.routes = Collections.unmodifiableCollection(routes);
     }
 
     @Override
-    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Cmd<U, S>> route(final UpdWrap<U> updWrap) {
         return routes.stream()
                 .skip(new Random().nextInt(routes.size()))
                 .findFirst()
-                .flatMap(route -> route.route(updateWrap));
+                .flatMap(route -> route.route(updWrap));
     }
 }

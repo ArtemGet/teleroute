@@ -5,10 +5,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.util.Optional;
 
-public class TgBotsUpdateWrap implements UpdateWrap<Update> {
+public class TelegramBotsUpdWrap implements UpdWrap<Update> {
     private final Update telegramBotsUpdate;
 
-    public TgBotsUpdateWrap(final Update telegramBotsUpdate) {
+    public TelegramBotsUpdWrap(final Update telegramBotsUpdate) {
         this.telegramBotsUpdate = telegramBotsUpdate;
     }
 
@@ -31,7 +31,7 @@ public class TgBotsUpdateWrap implements UpdateWrap<Update> {
     }
 
     @Override
-    public Update source() {
+    public Update src() {
         return this.telegramBotsUpdate;
     }
 }

@@ -1,14 +1,14 @@
 package aget.teleroute.match.common;
 
 import aget.teleroute.match.Match;
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 
 /**
  * Check update's message's text equals provided text.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
  */
-public final class FullTxtMatch<SrcUpdate> implements Match<SrcUpdate> {
+public final class FullTxtMatch<U> implements Match<U> {
     private final String text;
 
     /**
@@ -21,8 +21,8 @@ public final class FullTxtMatch<SrcUpdate> implements Match<SrcUpdate> {
     }
 
     @Override
-    public Boolean match(final UpdateWrap<SrcUpdate> updateWrap) {
-        return updateWrap.text()
+    public Boolean match(final UpdWrap<U> updWrap) {
+        return updWrap.text()
                 .map(text -> text.equals(this.text))
                 .orElse(false);
     }

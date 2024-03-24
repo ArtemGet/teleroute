@@ -1,6 +1,6 @@
 package aget.teleroute.match;
 
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,10 +9,10 @@ import java.util.Collections;
 /**
  * Check update match any condition.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
  */
-public final class AnyMatch<SrcUpdate> implements Match<SrcUpdate> {
-    private final Collection<Match<SrcUpdate>> matches;
+public final class AnyMatch<U> implements Match<U> {
+    private final Collection<Match<U>> matches;
 
     /**
      * Construct AnyMatch contains one or many conditions.
@@ -20,7 +20,7 @@ public final class AnyMatch<SrcUpdate> implements Match<SrcUpdate> {
      * @param matches conditions
      */
     @SafeVarargs
-    public AnyMatch(final Match<SrcUpdate>... matches) {
+    public AnyMatch(final Match<U>... matches) {
         this(Arrays.asList(matches));
     }
 
@@ -29,14 +29,14 @@ public final class AnyMatch<SrcUpdate> implements Match<SrcUpdate> {
      *
      * @param matches conditions
      */
-    public AnyMatch(final Collection<Match<SrcUpdate>> matches) {
+    public AnyMatch(final Collection<Match<U>> matches) {
         this.matches = Collections.unmodifiableCollection(matches);
     }
 
     @Override
-    public Boolean match(UpdateWrap<SrcUpdate> updateWrap) {
+    public Boolean match(UpdWrap<U> updWrap) {
         return this.matches
                 .stream()
-                .anyMatch(match -> match.match(updateWrap));
+                .anyMatch(match -> match.match(updWrap));
     }
 }

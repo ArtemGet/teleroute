@@ -1,34 +1,33 @@
 package aget.teleroute.route;
 
 import aget.teleroute.command.Cmd;
-import aget.teleroute.command.SkipCmd;
-import aget.teleroute.send.Send;
-import aget.teleroute.update.UpdateWrap;
+import aget.teleroute.update.UpdWrap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
 
 /**
+ * Fork route.
  * Lead to route or command, in case of Exception been thrown route to other route or command or none.
  *
  * <p><img src="../doc-files/ErrorRouteScheme.png" width=1000>
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <Sender>    sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
-public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpdate, Sender> {
-    private static final Logger log = LoggerFactory.getLogger(InterceptErrRoute.class);
-    private final Route<SrcUpdate, Sender> route;
-    private final Route<SrcUpdate, Sender> errorRoute;
+public final class FkErrRoute<U, S> implements Route<U, S> {
+    private static final Logger log = LoggerFactory.getLogger(FkErrRoute.class);
+    private final Route<U, S> route;
+    private final Route<U, S> errorRoute;
 
     /**
      * Construct InterceptErrRoute that route to target route and none if error.
      *
      * @param command target command
      */
-    public InterceptErrRoute(final Cmd<SrcUpdate, Sender> command) {
-        this(command, new SkipCmd<>());
+    public FkErrRoute(final Cmd<U, S> command) {
+        this(new EndRoute<>(command));
     }
 
     /**
@@ -37,8 +36,8 @@ public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpda
      * @param command      target command
      * @param errorCommand error command
      */
-    public InterceptErrRoute(final Cmd<SrcUpdate, Sender> command,
-                             final Cmd<SrcUpdate, Sender> errorCommand) {
+    public FkErrRoute(final Cmd<U, S> command,
+                      final Cmd<U, S> errorCommand) {
         this(new EndRoute<>(command), new EndRoute<>(errorCommand));
     }
 
@@ -47,7 +46,7 @@ public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpda
      *
      * @param route target route
      */
-    public InterceptErrRoute(final Route<SrcUpdate, Sender> route) {
+    public FkErrRoute(final Route<U, S> route) {
         this(route, new EndRoute<>());
     }
 
@@ -57,19 +56,19 @@ public final class InterceptErrRoute<SrcUpdate, Sender> implements Route<SrcUpda
      * @param route      target route
      * @param errorRoute error route
      */
-    public InterceptErrRoute(final Route<SrcUpdate, Sender> route,
-                             final Route<SrcUpdate, Sender> errorRoute) {
+    public FkErrRoute(final Route<U, S> route,
+                      final Route<U, S> errorRoute) {
         this.route = route;
         this.errorRoute = errorRoute;
     }
 
     @Override
-    public Optional<Send<Sender>> route(final UpdateWrap<SrcUpdate> updateWrap) {
+    public Optional<Cmd<U, S>> route(final UpdWrap<U> updWrap) {
         try {
-            return this.route.route(updateWrap);
+            return this.route.route(updWrap);
         } catch (Exception e) {
             log.error("Error occurred while executing command: {}", e.getMessage(), e);
-            return this.errorRoute.route(updateWrap);
+            return this.errorRoute.route(updWrap);
         }
     }
 }
