@@ -1,5 +1,8 @@
 package aget.teleroute.send;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +13,7 @@ import java.util.Collections;
  * @param <S> Actually sends messages, ie AdsSender from telegrambots or your own impl of tg send
  */
 public final class MultiSend<S> implements Send<S> {
+    private static final Logger log = LoggerFactory.getLogger(MultiSend.class);
     private final Collection<Send<S>> sends;
 
     /**
@@ -33,6 +37,12 @@ public final class MultiSend<S> implements Send<S> {
 
     @Override
     public void send(final S s) {
-        this.sends.forEach(send -> send.send(s));
+        this.sends.forEach(send -> {
+            try {
+                send.send(s);
+            } catch (Exception e) {
+                log.error("Unable to send message: {}", e.getMessage(), e);
+            }
+        });
     }
 }

@@ -2,6 +2,8 @@ package aget.teleroute.command;
 
 import aget.teleroute.send.MultiSend;
 import aget.teleroute.send.Send;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
  * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
 public final class MultiCmd<U, S> implements Cmd<U, S> {
+    private static final Logger log = LoggerFactory.getLogger(MultiCmd.class);
     private final Collection<Cmd<U, S>> commands;
 
     /**
@@ -42,7 +45,14 @@ public final class MultiCmd<U, S> implements Cmd<U, S> {
         return Optional.of(
                 new MultiSend<>(
                         commands.stream()
-                                .map(cmd -> cmd.execute(update))
+                                .map(cmd -> {
+                                    try {
+                                        return cmd.execute(update);
+                                    } catch (Exception e) {
+                                        log.error("Error execute cmd: {}", e.getMessage(), e);
+                                        return Optional.<Send<S>>empty();
+                                    }
+                                })
                                 .filter(Optional::isPresent)
                                 .map(Optional::get)
                                 .collect(Collectors.toList())
