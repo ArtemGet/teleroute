@@ -15,7 +15,7 @@ import java.util.Optional;
  * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
  * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
-public final class FkRoute<U, S> implements Route<U, S> {
+public final class ForkRoute<U, S> implements Route<U, S> {
     private final Route<U, S> route;
     private final Route<U, S> spareRoute;
     private final Match<U> match;
@@ -26,8 +26,8 @@ public final class FkRoute<U, S> implements Route<U, S> {
      * @param match   match condition
      * @param command match command
      */
-    public FkRoute(final Match<U> match,
-                   final Cmd<U, S> command) {
+    public ForkRoute(final Match<U> match,
+                     final Cmd<U, S> command) {
         this(match, new EndRoute<>(command), new EndRoute<>());
     }
 
@@ -38,9 +38,9 @@ public final class FkRoute<U, S> implements Route<U, S> {
      * @param command    match command
      * @param spareRoute spare command
      */
-    public FkRoute(final Match<U> match,
-                   final Cmd<U, S> command,
-                   final Cmd<U, S> spareRoute) {
+    public ForkRoute(final Match<U> match,
+                     final Cmd<U, S> command,
+                     final Cmd<U, S> spareRoute) {
         this(match, new EndRoute<>(command), new EndRoute<>(spareRoute));
     }
 
@@ -50,8 +50,8 @@ public final class FkRoute<U, S> implements Route<U, S> {
      * @param match match condition
      * @param route match route
      */
-    public FkRoute(final Match<U> match,
-                   final Route<U, S> route) {
+    public ForkRoute(final Match<U> match,
+                     final Route<U, S> route) {
         this(match, route, new EndRoute<>());
     }
 
@@ -62,9 +62,9 @@ public final class FkRoute<U, S> implements Route<U, S> {
      * @param route      match route
      * @param spareRoute spare route
      */
-    public FkRoute(final Match<U> match,
-                   final Route<U, S> route,
-                   final Route<U, S> spareRoute) {
+    public ForkRoute(final Match<U> match,
+                     final Route<U, S> route,
+                     final Route<U, S> spareRoute) {
         this.match = match;
         this.route = route;
         this.spareRoute = spareRoute;
