@@ -25,3 +25,4 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: ArtemGet/teleroute
+          fail_ci_if_error: true
