@@ -35,6 +35,10 @@ public final class AnyMatch<U> implements Match<U> {
 
     @Override
     public Boolean match(UpdWrap<U> updWrap) {
+        if (this.matches.isEmpty()) {
+            return true;
+        }
+
         return this.matches
                 .stream()
                 .anyMatch(match -> match.match(updWrap));

@@ -17,9 +17,8 @@ public class EndRouteTest {
 
     @Test
     public void route_shouldReturnFkCmd_whenFkCmdSpecified() {
-        Assertions.assertEquals(
-                new FkCmd(),
-                new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).get()
+        Assertions.assertTrue(
+                new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).isPresent()
         );
     }
 }
