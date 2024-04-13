@@ -2,7 +2,6 @@ package aget.teleroute.send;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -41,7 +40,7 @@ public class FkRs {
      *
      * @return response
      */
-    public Iterator<String> containing() {
-        return this.response.iterator();
+    public List<String> containing() {
+        return this.response;
     }
 }
