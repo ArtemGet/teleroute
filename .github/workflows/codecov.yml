@@ -16,10 +16,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Install dependencies
+      - name: Install dependencies, run tests and collect coverage
         run: mvn install -B -V
-      - name: Run tests and collect coverage
-        run: mvn -B test
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:
