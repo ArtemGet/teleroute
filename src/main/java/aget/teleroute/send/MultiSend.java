@@ -41,7 +41,7 @@ public final class MultiSend<S> implements Send<S> {
             try {
                 send.send(s);
             } catch (Exception e) {
-                log.error("Unable to send message: {}", e.getMessage(), e);
+                log.warn("Unable to send message: {}", e.getMessage(), e);
             }
         });
     }

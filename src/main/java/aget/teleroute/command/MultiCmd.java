@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -42,21 +43,27 @@ public final class MultiCmd<U, S> implements Cmd<U, S> {
 
     @Override
     public Optional<Send<S>> execute(final U update) {
-        return Optional.of(
-                new MultiSend<>(
-                        commands.stream()
-                                .map(cmd -> {
-                                    try {
-                                        return cmd.execute(update);
-                                    } catch (Exception e) {
-                                        log.error("Error execute cmd: {}", e.getMessage(), e);
-                                        return Optional.<Send<S>>empty();
-                                    }
-                                })
-                                .filter(Optional::isPresent)
-                                .map(Optional::get)
-                                .collect(Collectors.toList())
-                )
-        );
+        List<Send<S>> sends = this.executeCmds(update);
+
+        if (sends.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(new MultiSend<>(sends));
+    }
+
+    private List<Send<S>> executeCmds(final U update) {
+        return commands.stream()
+                .map(cmd -> {
+                    try {
+                        return cmd.execute(update);
+                    } catch (Exception e) {
+                        log.warn("Error execute cmd: {}", e.getMessage(), e);
+                        return Optional.<Send<S>>empty();
+                    }
+                })
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
     }
 }
