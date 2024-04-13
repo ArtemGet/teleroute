@@ -15,9 +15,9 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
-          java-version: 18
+          java-version: 11
       - name: Install dependencies
-        run: mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+        run: mvn install -B -V
       - name: Run tests and collect coverage
         run: mvn -B test
       - name: Upload coverage reports to Codecov
