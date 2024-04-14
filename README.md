@@ -8,6 +8,12 @@
 The goal of this project is to provide flexible telegram bot update routing.
 
 ## Getting started:
+In case you want to use teleroute with other telegram library:
+
+1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
+2) [java-telegram-bot-api integration (TODO)]()
+3) [elegram-api (TODO)]()
+
 This library is distributed via [Github Packages (actual)](https://github.com/ArtemGet/teleroute/packages/2122234) so
 you have to include this setting in your ~/.m2
 
@@ -28,12 +34,6 @@ And add dependency to your pom.xml
     <version>0.1.0</version>
 </dependency>
 ```
-
-In case you want to use teleroute with other telegram library:
-
-1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
-2) [java-telegram-bot-api integration (TODO)]()
-3) [elegram-api (TODO)]()
 
 ## Understanding of concept:
 
@@ -79,14 +79,14 @@ This route is actually just provide command:
 
 ```java
 Optional<Cmd<YourUpdate, YourSend> command = new EndRoute<>(new YourCmd()).route(new YourUpdate());
-//command.isPresent() == true
+//command.isEmpty() == false
 ```
 
 or empty if no command attached to it:
 
 ```java
 Optional<Cmd<YourUpdate, YourSend> command = new EndRoute<YourUpdate, YourSend>().route(new YourUpdate());
-//command.isPresent() == false;
+//command.isEmpty() == true;
 ```
 
 #### 2.2)ForkRoute
