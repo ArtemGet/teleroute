@@ -16,26 +16,26 @@ import java.util.Optional;
  * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
  */
 public final class EndRoute<U, S> implements Route<U, S> {
-    private final Collection<Cmd<U, S>> deadEndCommand;
+    private final Collection<Cmd<U, S>> cmd;
 
     /**
      * Construct EndRoute that actually do nothing.
      */
     public EndRoute() {
-        this.deadEndCommand = Collections.emptyList();
+        this.cmd = Collections.emptyList();
     }
 
     /**
      * Main constructor. Construct EndRoute that route to command.
      *
-     * @param deadEndCmd command
+     * @param command command
      */
-    public EndRoute(final Cmd<U, S> deadEndCmd) {
-        this.deadEndCommand = Collections.singletonList(deadEndCmd);
+    public EndRoute(final Cmd<U, S> command) {
+        this.cmd = Collections.singletonList(command);
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> updWrap) {
-        return this.deadEndCommand.stream().findFirst();
+    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
+        return this.cmd.stream().findFirst();
     }
 }

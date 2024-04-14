@@ -55,10 +55,10 @@ public final class RndRoute<U, S> implements Route<U, S> {
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> updWrap) {
+    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
         return routes.stream()
                 .skip(new Random().nextInt(routes.size()))
                 .findFirst()
-                .flatMap(route -> route.route(updWrap));
+                .flatMap(route -> route.route(update));
     }
 }

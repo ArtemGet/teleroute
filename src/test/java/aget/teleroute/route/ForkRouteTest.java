@@ -16,8 +16,9 @@ class ForkRouteTest {
                 new ForkRoute<>(
                         new FkMatch(),
                         new FkCmd(new FkSend())
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
@@ -27,8 +28,9 @@ class ForkRouteTest {
                 new ForkRoute<>(
                         new FkMatch(false),
                         new FkCmd(new FkSend())
-                ).route(new FkUpdWrap())
-                        .isEmpty()
+                )
+                .route(new FkUpdWrap())
+                .isEmpty()
         );
     }
 
@@ -40,8 +42,9 @@ class ForkRouteTest {
                         new FkMatch(),
                         new FkCmd(new FkSend()),
                         new FkCmd()
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
@@ -53,8 +56,9 @@ class ForkRouteTest {
                         new FkMatch(false),
                         new FkCmd(new FkSend()),
                         new FkCmd()
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
@@ -67,8 +71,9 @@ class ForkRouteTest {
                 new ForkRoute<>(
                         new FkMatch(),
                         new EndRoute<>(new FkCmd(new FkSend()))
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
@@ -78,8 +83,9 @@ class ForkRouteTest {
                 new ForkRoute<>(
                         new FkMatch(false),
                         new EndRoute<>(new FkCmd(new FkSend()))
-                ).route(new FkUpdWrap())
-                        .isEmpty()
+                )
+                .route(new FkUpdWrap())
+                .isEmpty()
         );
     }
 
@@ -91,8 +97,9 @@ class ForkRouteTest {
                         new FkMatch(),
                         new EndRoute<>(new FkCmd(new FkSend())),
                         new EndRoute<>(new FkCmd())
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
@@ -104,8 +111,9 @@ class ForkRouteTest {
                         new FkMatch(false),
                         new EndRoute<>(new FkCmd(new FkSend())),
                         new EndRoute<>(new FkCmd())
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 }

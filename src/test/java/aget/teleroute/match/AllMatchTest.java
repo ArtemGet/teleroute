@@ -16,16 +16,22 @@ class AllMatchTest {
     @Test
     void match_shouldMatch_whenAllMatch() {
         Assertions.assertTrue(
-                new AllMatch<>(new FkMatch(), new FkMatch())
-                        .match(new FkUpdWrap())
+                new AllMatch<>(
+                        new FkMatch(),
+                        new FkMatch()
+                )
+                .match(new FkUpdWrap())
         );
     }
 
     @Test
     void match_shouldNotMatch_whenAnyNotMatch() {
         Assertions.assertFalse(
-                new AllMatch<>(new FkMatch(false), new FkMatch())
-                        .match(new FkUpdWrap())
+                new AllMatch<>(
+                        new FkMatch(false),
+                        new FkMatch()
+                )
+                .match(new FkUpdWrap())
         );
     }
 }

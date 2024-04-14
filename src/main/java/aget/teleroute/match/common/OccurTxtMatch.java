@@ -21,8 +21,8 @@ public final class OccurTxtMatch<U> implements Match<U> {
     }
 
     @Override
-    public Boolean match(final UpdWrap<U> updWrap) {
-        return updWrap.text()
+    public Boolean match(final UpdWrap<U> update) {
+        return update.text()
                 .map(text -> text.contains(this.text))
                 .orElse(false);
     }

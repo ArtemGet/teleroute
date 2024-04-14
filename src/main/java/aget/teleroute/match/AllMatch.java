@@ -34,8 +34,8 @@ public final class AllMatch<U> implements Match<U> {
     }
 
     @Override
-    public Boolean match(final UpdWrap<U> updWrap) {
+    public Boolean match(final UpdWrap<U> update) {
         return this.matches.stream()
-                .allMatch(match -> match.match(updWrap));
+                .allMatch(match -> match.match(update));
     }
 }

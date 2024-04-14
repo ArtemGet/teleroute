@@ -1,6 +1,6 @@
 package aget.teleroute.command;
 
-import aget.teleroute.send.FkRs;
+import aget.teleroute.send.FkClient;
 import aget.teleroute.send.Send;
 
 import java.util.Collections;
@@ -8,23 +8,22 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FkCmd implements Cmd<String, FkRs> {
-    private final List<Send<FkRs>> send;
+public class FkCmd implements Cmd<String, FkClient> {
+    private final List<Send<FkClient>> send;
 
     public FkCmd() {
         send = Collections.emptyList();
     }
 
-    public FkCmd(Send<FkRs> send) {
+    public FkCmd(Send<FkClient> send) {
         this.send = Collections.singletonList(send);
     }
 
     @Override
-    public Optional<Send<FkRs>> execute(String update) {
+    public Optional<Send<FkClient>> execute(String update) {
         if (send.isEmpty()) {
             return Optional.empty();
         }
-
         return Optional.of(send.get(0));
     }
 

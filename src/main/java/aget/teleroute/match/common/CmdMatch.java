@@ -10,7 +10,7 @@ import aget.teleroute.update.UpdWrap;
  */
 public final class CmdMatch<U> implements Match<U> {
     @Override
-    public Boolean match(final UpdWrap<U> updWrap) {
-        return updWrap.isCommand();
+    public Boolean match(final UpdWrap<U> update) {
+        return update.isCommand();
     }
 }

@@ -13,15 +13,18 @@ public class MultiCmdTest {
                         new FkCmd(
                                 new FkSend()
                         )
-                ).execute("resp")
-                        .isPresent()
+                )
+                .execute("resp")
+                .isPresent()
         );
     }
 
     @Test
     public void execute_shouldNotSend_whenError() {
         Assertions.assertTrue(
-                new MultiCmd<>(new FkCmdErr()).execute("resp").isEmpty()
+                new MultiCmd<>(new FkCmdErr())
+                        .execute("resp")
+                        .isEmpty()
         );
     }
 }

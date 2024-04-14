@@ -1,13 +1,13 @@
 package aget.teleroute.command;
 
-import aget.teleroute.send.FkRs;
+import aget.teleroute.send.FkClient;
 import aget.teleroute.send.Send;
 
 import java.util.Optional;
 
-public class FkCmdErr implements Cmd<String, FkRs> {
+public class FkCmdErr implements Cmd<String, FkClient> {
     @Override
-    public Optional<Send<FkRs>> execute(String update) {
+    public Optional<Send<FkClient>> execute(String update) {
         throw new RuntimeException();
     }
 }

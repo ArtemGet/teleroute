@@ -2,7 +2,7 @@ package aget.teleroute.route;
 
 import aget.teleroute.command.Cmd;
 import aget.teleroute.command.FkCmd;
-import aget.teleroute.send.FkRs;
+import aget.teleroute.send.FkClient;
 import aget.teleroute.send.FkSend;
 import aget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Set;
 
 class RndRouteTest {
-    private static final Set<Cmd<String, FkRs>> CMD_SET =
+    private static final Set<Cmd<String, FkClient>> CMD_SET =
             Set.of(new FkCmd(), new FkCmd(new FkSend("resp")));
 
     @Test

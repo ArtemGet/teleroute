@@ -43,17 +43,18 @@ public final class MultiCmd<U, S> implements Cmd<U, S> {
 
     @Override
     public Optional<Send<S>> execute(final U update) {
-        List<Send<S>> sends = this.executeCmds(update);
+        return this.form(this.executeCmds(update));
+    }
 
+    private Optional<Send<S>> form(List<Send<S>> sends) {
         if (sends.isEmpty()) {
             return Optional.empty();
         }
-
         return Optional.of(new MultiSend<>(sends));
     }
 
     private List<Send<S>> executeCmds(final U update) {
-        return commands.stream()
+        return this.commands.stream()
                 .map(cmd -> {
                     try {
                         return cmd.execute(update);

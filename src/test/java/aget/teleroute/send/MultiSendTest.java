@@ -9,53 +9,53 @@ public class MultiSendTest {
 
     @Test
     public void send_shouldSingle_whenSubmittedSingle() {
-        FkRs fkRs = new FkRs();
-        new MultiSend<>(new FkSend("resp")).send(fkRs);
+        FkClient fkClient = new FkClient();
+        new MultiSend<>(new FkSend("resp")).send(fkClient);
 
         Assertions.assertEquals(
                 List.of("resp"),
-                fkRs.containing()
+                fkClient.sent()
         );
     }
 
     @Test
     public void send_shouldMulti_whenSubmittedMulti() {
-        FkRs fkRs = new FkRs();
+        FkClient fkClient = new FkClient();
         new MultiSend<>(
                 new FkSend("resp1"),
                 new FkSend("resp2"),
                 new FkSend("resp3")
-        ).send(fkRs);
+        ).send(fkClient);
 
         Assertions.assertEquals(
                 List.of("resp1", "resp2", "resp3"),
-                fkRs.containing()
+                fkClient.sent()
         );
     }
 
     @Test
     public void send_shouldNotSend_whenError() {
-        FkRs fkRs = new FkRs();
-        new MultiSend<>(new FkSendErr()).send(fkRs);
+        FkClient fkClient = new FkClient();
+        new MultiSend<>(new FkSendErr()).send(fkClient);
 
         Assertions.assertEquals(
                 List.of(),
-                fkRs.containing()
+                fkClient.sent()
         );
     }
 
     @Test
     public void send_shouldSendOnlyOne_whenManyError() {
-        FkRs fkRs = new FkRs();
+        FkClient fkClient = new FkClient();
         new MultiSend<>(
                 new FkSendErr(),
                 new FkSendErr(),
                 new FkSend("resp")
-        ).send(fkRs);
+        ).send(fkClient);
 
         Assertions.assertEquals(
                 List.of("resp"),
-                fkRs.containing()
+                fkClient.sent()
         );
     }
 }

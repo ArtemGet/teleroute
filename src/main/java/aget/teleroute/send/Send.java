@@ -8,9 +8,9 @@ package aget.teleroute.send;
  */
 public interface Send<S> {
     /**
-     * Sends command result to chat or user.
+     * Sends command result to chat or user via client.
      *
-     * @param send Sender
+     * @param client Sender client
      */
-    void send(S send);
+    void send(S client);
 }

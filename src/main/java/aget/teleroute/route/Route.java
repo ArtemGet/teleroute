@@ -16,8 +16,8 @@ public interface Route<U, S> {
     /**
      * Routes update to command or other Route.
      *
-     * @param updWrap update wrapper, provide data required by routes and matches.
+     * @param update update wrapper, provide data required by routes and matches.
      * @return Cmd command
      */
-    Optional<Cmd<U, S>> route(UpdWrap<U> updWrap);
+    Optional<Cmd<U, S>> route(UpdWrap<U> update);
 }

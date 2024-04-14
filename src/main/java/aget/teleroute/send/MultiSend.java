@@ -36,10 +36,10 @@ public final class MultiSend<S> implements Send<S> {
     }
 
     @Override
-    public void send(final S s) {
+    public void send(final S client) {
         this.sends.forEach(send -> {
             try {
-                send.send(s);
+                send.send(client);
             } catch (Exception e) {
                 log.warn("Unable to send message: {}", e.getMessage(), e);
             }

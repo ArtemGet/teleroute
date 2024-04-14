@@ -21,8 +21,8 @@ public final class FullTxtMatch<U> implements Match<U> {
     }
 
     @Override
-    public Boolean match(final UpdWrap<U> updWrap) {
-        return updWrap.text()
+    public Boolean match(final UpdWrap<U> update) {
+        return update.text()
                 .map(text -> text.equals(this.text))
                 .orElse(false);
     }

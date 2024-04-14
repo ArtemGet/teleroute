@@ -5,15 +5,15 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Fake tg response.
+ * Fake tg client.
  */
-public class FkRs {
+public class FkClient {
     private final List<String> response;
 
     /**
      * Constructs empty response.
      */
-    public FkRs() {
+    public FkClient() {
         this.response = new ArrayList<>();
     }
 
@@ -22,7 +22,7 @@ public class FkRs {
      *
      * @param response content
      */
-    public FkRs(String response) {
+    public FkClient(String response) {
         this.response = Collections.singletonList(response);
     }
 
@@ -40,7 +40,7 @@ public class FkRs {
      *
      * @return response
      */
-    public List<String> containing() {
+    public List<String> sent() {
         return this.response;
     }
 }

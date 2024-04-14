@@ -1,7 +1,7 @@
 package aget.teleroute.route;
 
 import aget.teleroute.command.FkCmd;
-import aget.teleroute.send.FkRs;
+import aget.teleroute.send.FkClient;
 import aget.teleroute.send.FkSend;
 import aget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
@@ -12,7 +12,7 @@ class DfsRouteTest {
     @Test
     void route_shouldRouteEmpty_whenEmpty() {
         Assertions.assertTrue(
-                new DfsRoute<String, FkRs>(new EndRoute<>())
+                new DfsRoute<String, FkClient>(new EndRoute<>())
                         .route(new FkUpdWrap())
                         .isEmpty()
         );
@@ -45,8 +45,9 @@ class DfsRouteTest {
                         new EndRoute<>(),
                         new EndRoute<>(new FkCmd(new FkSend("resp1"))),
                         new EndRoute<>(new FkCmd(new FkSend("resp2")))
-                ).route(new FkUpdWrap())
-                        .get()
+                )
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 }

@@ -13,8 +13,8 @@ public interface Match<U> {
     /**
      * Check if provided update matches condition.
      *
-     * @param updWrap update wrapper, provide data required by routes and matches.
+     * @param update provide data required by routes and matches.
      * @return condition match
      */
-    Boolean match(UpdWrap<U> updWrap);
+    Boolean match(UpdWrap<U> update);
 }

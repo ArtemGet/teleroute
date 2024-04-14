@@ -40,10 +40,10 @@ public final class DfsRoute<U, S> implements Route<U, S> {
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> updWrap) {
-        return Optional.ofNullable(updWrap)
+    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
+        return Optional.ofNullable(update)
                 .flatMap(
-                        upd -> routes.stream()
+                        upd -> this.routes.stream()
                                 .map(route -> route.route(upd))
                                 .filter(Optional::isPresent)
                                 .findFirst()

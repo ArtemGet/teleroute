@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class FkSend implements Send<FkRs> {
+public class FkSend implements Send<FkClient> {
     private final List<String> response;
 
     public FkSend() {
@@ -21,8 +21,8 @@ public class FkSend implements Send<FkRs> {
     }
 
     @Override
-    public void send(FkRs send) {
-        response.forEach(send::submit);
+    public void send(FkClient client) {
+        response.forEach(client::submit);
     }
 
     @Override
