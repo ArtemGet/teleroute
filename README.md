@@ -31,7 +31,7 @@ And add dependency to your pom.xml
 
 In case you want to use teleroute with other telegram library:
 
-1) [TelegramBots integration (TODO)]()
+1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
 2) [java-telegram-bot-api integration (TODO)]()
 3) [elegram-api (TODO)]()
 
