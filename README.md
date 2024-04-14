@@ -8,10 +8,32 @@
 The goal of this project is to provide flexible telegram bot update routing.
 
 ## Getting started:
+This library is distributed via [Github Packages (actual)](https://github.com/ArtemGet/teleroute/packages/2122234) so
+you have to include this setting in your ~/.m2
+
+```xml
+<repository>
+    <id>github</id>
+    <name>Github ArtemGet Apache Maven Packages</name>
+    <url>https://maven.pkg.github.com/ArtemGet/teleroute</url>
+</repository>
+```
+
+And add dependency to your pom.xml
+
+```xml
+<dependency>
+    <groupId>com.github.ArtemGet</groupId>
+    <artifactId>teleroute</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
+
+In case you want to use teleroute with other telegram library:
 
 1) [TelegramBots integration (TODO)]()
 2) [java-telegram-bot-api integration (TODO)]()
-3) [your own implementation of telegram bot api (TODO)]()
+3) [elegram-api (TODO)]()
 
 ## Understanding of concept:
 
