@@ -28,7 +28,8 @@ package com.github.artemget.teleroute.send;
  * Sends messages via sender.
  * Feel free to implement.
  *
- * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @since 0.0.0
  */
 public interface Send<S> {
     /**
@@ -36,5 +37,5 @@ public interface Send<S> {
      *
      * @param client Sender client
      */
-    void send(S client);
+    void send(S client) throws SendException;
 }

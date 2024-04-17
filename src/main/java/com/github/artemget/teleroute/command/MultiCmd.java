@@ -26,30 +26,37 @@ package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.MultiSend;
 import com.github.artemget.teleroute.send.Send;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Execute many commands as one.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @since 0.0.0
  */
 public final class MultiCmd<U, S> implements Cmd<U, S> {
-    private static final Logger log = LoggerFactory.getLogger(MultiCmd.class);
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MultiCmd.class);
+
+    /**
+     * Commands.
+     */
     private final Collection<Cmd<U, S>> commands;
 
     /**
      * Construct MultiCmd that execute one or many commands.
      *
-     * @param commands commands to execute
+     * @param commands Commands to execute
      */
     @SafeVarargs
     public MultiCmd(final Cmd<U, S>... commands) {
@@ -59,7 +66,7 @@ public final class MultiCmd<U, S> implements Cmd<U, S> {
     /**
      * Main constructor. Construct MultiCmd that execute collection of commands.
      *
-     * @param commands commands to execute
+     * @param commands Commands to execute
      */
     public MultiCmd(final Collection<Cmd<U, S>> commands) {
         this.commands = Collections.unmodifiableCollection(commands);
@@ -67,28 +74,35 @@ public final class MultiCmd<U, S> implements Cmd<U, S> {
 
     @Override
     public Optional<Send<S>> execute(final U update) {
-        return this.form(this.executeCmds(update));
-    }
-
-    private Optional<Send<S>> form(List<Send<S>> sends) {
+        final List<Send<S>> sends = this.executeCmds(update);
+        final Optional<Send<S>> resp;
         if (sends.isEmpty()) {
-            return Optional.empty();
+            resp = Optional.empty();
+        } else {
+            resp = Optional.of(new MultiSend<>(sends));
         }
-        return Optional.of(new MultiSend<>(sends));
+        return resp;
     }
 
     private List<Send<S>> executeCmds(final U update) {
         return this.commands.stream()
-                .map(cmd -> {
+            .map(
+                cmd -> {
+                    Optional<Send<S>> resp;
                     try {
-                        return cmd.execute(update);
-                    } catch (Exception e) {
-                        log.warn("Error execute cmd: {}", e.getMessage(), e);
-                        return Optional.<Send<S>>empty();
+                        resp = cmd.execute(update);
+                    } catch (final CmdException exception) {
+                        MultiCmd.LOG.warn(
+                            "Error execute cmd: {}",
+                            exception.getMessage(),
+                            exception
+                        );
+                        resp = Optional.empty();
                     }
+                    return resp;
                 })
-                .filter(Optional::isPresent)
-                .map(Optional::get)
-                .collect(Collectors.toList());
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .collect(Collectors.toList());
     }
 }

@@ -27,28 +27,40 @@ package com.github.artemget.teleroute.route;
 import com.github.artemget.teleroute.command.Cmd;
 import com.github.artemget.teleroute.match.Match;
 import com.github.artemget.teleroute.update.UpdWrap;
-
 import java.util.Optional;
 
 /**
  * Fork route.
- * Routes to route or command in case of update matching condition, if not - route to other route or command or none.
+ * Routes to route or command in case of update matching condition,
+ * if not - route to other route or command or none.
  *
  * <p><img src="../doc-files/MatchRouteScheme.png" width=1000>
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @since 0.0.0
  */
 public final class ForkRoute<U, S> implements Route<U, S> {
+    /**
+     * Origin route.
+     */
     private final Route<U, S> origin;
+
+    /**
+     * Spare route.
+     */
     private final Route<U, S> spare;
+
+    /**
+     * Match condition.
+     */
     private final Match<U> match;
 
     /**
      * Construct FkRoute that routes to match command or none if update not match condition.
      *
-     * @param match   match condition
-     * @param origin match command
+     * @param match Match condition
+     * @param origin Match command
      */
     public ForkRoute(final Match<U> match, final Cmd<U, S> origin) {
         this(match, new EndRoute<>(origin), new EndRoute<>());
@@ -57,9 +69,9 @@ public final class ForkRoute<U, S> implements Route<U, S> {
     /**
      * Construct FkRoute that route to match command or spare command if update not match condition.
      *
-     * @param match      match condition
-     * @param origin    match command
-     * @param spare spare command
+     * @param match Match condition
+     * @param origin Match command
+     * @param spare Spare command
      */
     public ForkRoute(final Match<U> match, final Cmd<U, S> origin, final Cmd<U, S> spare) {
         this(match, new EndRoute<>(origin), new EndRoute<>(spare));
@@ -68,19 +80,20 @@ public final class ForkRoute<U, S> implements Route<U, S> {
     /**
      * Construct FkRoute that route to match route or none if update not match condition.
      *
-     * @param match match condition
-     * @param origin match route
+     * @param match Match condition
+     * @param origin Match route
      */
     public ForkRoute(final Match<U> match, final Route<U, S> origin) {
         this(match, origin, new EndRoute<>());
     }
 
     /**
-     * Main constructor. Construct FkRoute that route to match route or spare route if update not match condition.
+     * Main constructor.
+     * Construct FkRoute that route to match route or spare route if update not match condition.
      *
-     * @param match      match condition
-     * @param origin      match route
-     * @param spare spare route
+     * @param match Match condition
+     * @param origin Match route
+     * @param spare Spare route
      */
     public ForkRoute(final Match<U> match, final Route<U, S> origin, final Route<U, S> spare) {
         this.match = match;
@@ -90,9 +103,12 @@ public final class ForkRoute<U, S> implements Route<U, S> {
 
     @Override
     public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
-        if (!match.match(update)) {
-            return spare.route(update);
+        final Optional<Cmd<U, S>> resp;
+        if (this.match.match(update)) {
+            resp = this.origin.route(update);
+        } else {
+            resp = this.spare.route(update);
         }
-        return this.origin.route(update);
+        return resp;
     }
 }

@@ -29,7 +29,7 @@ import com.github.artemget.teleroute.update.UpdWrap;
 /**
  * Fake match condition.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 public final class FkMatch implements Match<String> {
     /**

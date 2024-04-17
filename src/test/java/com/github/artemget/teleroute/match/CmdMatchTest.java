@@ -29,9 +29,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link CmdMatchd}.
+ * Test case {@link CmdMatch}.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 final class CmdMatchTest {
 

@@ -32,7 +32,7 @@ import java.util.Objects;
 /**
  * Fake send.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 public final class FkSend implements Send<FkClient> {
     /**

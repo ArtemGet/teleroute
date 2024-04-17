@@ -30,34 +30,35 @@ import java.util.Optional;
  * Update wrapper, provide data required by routes and matches.
  * Implement on your own risk.
  *
- * @param <SrcUpdate> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
-public interface UpdWrap<SrcUpdate> {
+public interface UpdWrap<U> {
     /**
      * Provide update identity.
      *
-     * @return update identity
+     * @return Update identity
      */
     Integer identity();
 
     /**
      * Define is this update contains telegram command.
      *
-     * @return is command
+     * @return Is command
      */
     Boolean isCommand();
 
     /**
      * Provide update's text if exists.
      *
-     * @return update's text
+     * @return Update's text
      */
     Optional<String> text();
 
     /**
      * Provide telegram update.
      *
-     * @return telegram update
+     * @return Telegram update
      */
-    SrcUpdate src();
+    U src();
 }

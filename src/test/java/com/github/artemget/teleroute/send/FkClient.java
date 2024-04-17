@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Fake tg client.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 public final class FkClient {
     /**

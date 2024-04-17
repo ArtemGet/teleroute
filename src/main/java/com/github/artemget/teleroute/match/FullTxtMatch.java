@@ -29,24 +29,28 @@ import com.github.artemget.teleroute.update.UpdWrap;
 /**
  * Check update's message's text equals provided text.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
 public final class FullTxtMatch<U> implements Match<U> {
-    private final String text;
+    /**
+     * Text to compare.
+     */
+    private final String txt;
 
     /**
      * Main constructor. Construct FullTxtMatch.
      *
-     * @param text text to match
+     * @param text Text to match
      */
     public FullTxtMatch(final String text) {
-        this.text = text;
+        this.txt = text;
     }
 
     @Override
     public Boolean match(final UpdWrap<U> update) {
         return update.text()
-                .map(text -> text.equals(this.text))
-                .orElse(false);
+            .map(text -> text.equals(this.txt))
+            .orElse(false);
     }
 }

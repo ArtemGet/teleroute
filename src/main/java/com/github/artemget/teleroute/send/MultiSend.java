@@ -24,26 +24,33 @@
 
 package com.github.artemget.teleroute.send;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of batch send, use in case you need to send many messages at the same time.
  *
  * @param <S> Actually sends messages, ie AdsSender from telegrambots or your own impl of tg send
+ * @since 0.0.0
  */
 public final class MultiSend<S> implements Send<S> {
-    private static final Logger log = LoggerFactory.getLogger(MultiSend.class);
+    /**
+     * Logger.
+     */
+    private static final Logger LOG = LoggerFactory.getLogger(MultiSend.class);
+
+    /**
+     * Sends.
+     */
     private final Collection<Send<S>> sends;
 
     /**
      * Construct MultiSend of one or many Send objects.
      *
-     * @param sends one or many Send objects
+     * @param sends One or many Send objects
      */
     @SafeVarargs
     public MultiSend(final Send<S>... sends) {
@@ -53,7 +60,7 @@ public final class MultiSend<S> implements Send<S> {
     /**
      * Main constructor. Construct MultiSend of many Send objects.
      *
-     * @param sends collection of Send objects
+     * @param sends Collection of Send objects
      */
     public MultiSend(final Collection<Send<S>> sends) {
         this.sends = Collections.unmodifiableCollection(sends);
@@ -61,12 +68,17 @@ public final class MultiSend<S> implements Send<S> {
 
     @Override
     public void send(final S client) {
-        this.sends.forEach(send -> {
-            try {
-                send.send(client);
-            } catch (Exception e) {
-                log.warn("Unable to send message: {}", e.getMessage(), e);
-            }
-        });
+        this.sends.forEach(
+            send -> {
+                try {
+                    send.send(client);
+                } catch (final SendException exception) {
+                    MultiSend.LOG.warn(
+                        "Unable to send message: {}",
+                        exception.getMessage(),
+                        exception
+                    );
+                }
+            });
     }
 }

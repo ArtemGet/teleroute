@@ -31,15 +31,11 @@ import java.util.Optional;
 /**
  * Fake command, always throws error.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override
-    public Optional<Send<FkClient>> execute(final String update) {
-        throw new FkCmdErr.FkCmdException();
-    }
-
-    public static class FkCmdException extends RuntimeException {
-
+    public Optional<Send<FkClient>> execute(final String update) throws CmdException {
+        throw new CmdException();
     }
 }

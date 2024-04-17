@@ -26,7 +26,6 @@ package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
 import com.github.artemget.teleroute.update.UpdWrap;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -36,26 +35,39 @@ import java.util.Optional;
  *
  * <p><img src="../doc-files/EndRouteScheme.png" width=1000>
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @since 0.0.0
  */
 public final class EndRoute<U, S> implements Route<U, S> {
+    /**
+     * Command.
+     */
     private final Collection<Cmd<U, S>> cmd;
 
     /**
      * Construct EndRoute that actually do nothing.
      */
     public EndRoute() {
-        this.cmd = Collections.emptyList();
+        this(Collections.emptyList());
     }
 
     /**
-     * Main constructor. Construct EndRoute that route to command.
+     * Construct EndRoute that route to command.
      *
-     * @param command command
+     * @param command Command
      */
     public EndRoute(final Cmd<U, S> command) {
-        this.cmd = Collections.singletonList(command);
+        this(Collections.singletonList(command));
+    }
+
+    /**
+     * Main constructor.
+     *
+     * @param commands Command
+     */
+    private EndRoute(final Collection<Cmd<U, S>> commands) {
+        this.cmd = commands;
     }
 
     @Override

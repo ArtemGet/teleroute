@@ -26,7 +26,6 @@ package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
 import com.github.artemget.teleroute.update.UpdWrap;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,16 +37,20 @@ import java.util.Optional;
  *
  * <p><img src="../doc-files/IteratorRouteScheme.png" width=1000>
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
+ * @since 0.0.0
  */
 public final class DfsRoute<U, S> implements Route<U, S> {
+    /**
+     * Routes.
+     */
     private final Collection<Route<U, S>> routes;
 
     /**
      * Construct IterateRoute that iterate over one or many routes.
      *
-     * @param routes routes to iterate
+     * @param routes Routes to iterate
      */
     @SafeVarargs
     public DfsRoute(final Route<U, S>... routes) {
@@ -57,7 +60,7 @@ public final class DfsRoute<U, S> implements Route<U, S> {
     /**
      * Main constructor. Construct IterateRoute that iterate over many routes.
      *
-     * @param routes routes to iterate
+     * @param routes Routes to iterate
      */
     public DfsRoute(final Collection<Route<U, S>> routes) {
         this.routes = Collections.unmodifiableCollection(routes);
@@ -66,12 +69,12 @@ public final class DfsRoute<U, S> implements Route<U, S> {
     @Override
     public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
         return Optional.ofNullable(update)
-                .flatMap(
-                        upd -> this.routes.stream()
-                                .map(route -> route.route(upd))
-                                .filter(Optional::isPresent)
-                                .findFirst()
-                                .orElse(Optional.empty())
-                );
+            .flatMap(
+                upd -> this.routes.stream()
+                    .map(route -> route.route(upd))
+                    .filter(Optional::isPresent)
+                    .findFirst()
+                    .orElse(Optional.empty())
+            );
     }
 }

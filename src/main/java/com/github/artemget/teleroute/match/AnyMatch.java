@@ -25,7 +25,6 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.UpdWrap;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,15 +32,19 @@ import java.util.Collections;
 /**
  * Check update match any condition.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
 public final class AnyMatch<U> implements Match<U> {
+    /**
+     * Match conditions.
+     */
     private final Collection<Match<U>> matches;
 
     /**
      * Construct AnyMatch contains one or many conditions.
      *
-     * @param matches conditions
+     * @param matches Conditions
      */
     @SafeVarargs
     public AnyMatch(final Match<U>... matches) {
@@ -51,19 +54,22 @@ public final class AnyMatch<U> implements Match<U> {
     /**
      * Main constructor. Construct AnyMatch contains many conditions.
      *
-     * @param matches conditions
+     * @param matches Conditions
      */
     public AnyMatch(final Collection<Match<U>> matches) {
         this.matches = Collections.unmodifiableCollection(matches);
     }
 
     @Override
-    public Boolean match(UpdWrap<U> update) {
+    public Boolean match(final UpdWrap<U> update) {
+        final boolean matched;
         if (this.matches.isEmpty()) {
-            return true;
-        }
-        return this.matches
+            matched = true;
+        } else {
+            matched = this.matches
                 .stream()
                 .anyMatch(match -> match.match(update));
+        }
+        return matched;
     }
 }

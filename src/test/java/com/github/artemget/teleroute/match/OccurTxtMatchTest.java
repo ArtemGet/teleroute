@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case {@link OccurTxtMatch}.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 final class OccurTxtMatchTest {
 

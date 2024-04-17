@@ -22,32 +22,27 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.route;
-
-import com.github.artemget.teleroute.command.FkCmd;
-import com.github.artemget.teleroute.send.FkClient;
-import com.github.artemget.teleroute.update.FkUpdWrap;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+package com.github.artemget.teleroute.send;
 
 /**
- * Test case {@link EndRoute}.
+ * Send exception.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class EndRouteTest {
-
-    @Test
-    void shouldBeEmptyWhenNoCommandSpecified() {
-        Assertions.assertTrue(
-            new EndRoute<String, FkClient>().route(new FkUpdWrap()).isEmpty()
-        );
+public class SendException extends Exception {
+    public SendException() {
+        super();
     }
 
-    @Test
-    void shouldReturnFkCmdWhenFkCmdSpecified() {
-        Assertions.assertTrue(
-            new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).isPresent()
-        );
+    public SendException(final String message) {
+        super(message);
+    }
+
+    public SendException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+
+    public SendException(final Throwable cause) {
+        super(cause);
     }
 }

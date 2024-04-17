@@ -27,26 +27,30 @@ package com.github.artemget.teleroute.match;
 import com.github.artemget.teleroute.update.UpdWrap;
 
 /**
- * Check provided text occur in update's message's text
+ * Check provided text occur in update's message's text.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
 public final class OccurTxtMatch<U> implements Match<U> {
-    private final String text;
+    /**
+     * Text to compare.
+     */
+    private final String txt;
 
     /**
      * Main constructor. Construct OccurTxtMatch.
      *
-     * @param text text to match
+     * @param text Text to match
      */
     public OccurTxtMatch(final String text) {
-        this.text = text;
+        this.txt = text;
     }
 
     @Override
     public Boolean match(final UpdWrap<U> update) {
         return update.text()
-                .map(text -> text.contains(this.text))
-                .orElse(false);
+            .map(text -> text.contains(this.txt))
+            .orElse(false);
     }
 }

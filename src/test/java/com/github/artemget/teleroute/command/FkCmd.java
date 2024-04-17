@@ -34,7 +34,7 @@ import java.util.Optional;
 /**
  * Fake Command.
  *
- * @since 0.1.0
+ * @since 0.0.0
  */
 public final class FkCmd implements Cmd<String, FkClient> {
     /**

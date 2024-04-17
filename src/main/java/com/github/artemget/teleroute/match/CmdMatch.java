@@ -29,7 +29,8 @@ import com.github.artemget.teleroute.update.UpdWrap;
 /**
  * Check update contains command.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
 public final class CmdMatch<U> implements Match<U> {
     @Override

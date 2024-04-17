@@ -24,21 +24,21 @@
 
 package com.github.artemget.teleroute.match;
 
-
 import com.github.artemget.teleroute.update.UpdWrap;
 
 /**
  * Match condition.
  * Feel free to implement.
  *
- * @param <U> telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
+ * @since 0.0.0
  */
 public interface Match<U> {
     /**
      * Check if provided update matches condition.
      *
-     * @param update provide data required by routes and matches.
-     * @return condition match
+     * @param update Provide data required by routes and matches.
+     * @return Condition match
      */
     Boolean match(UpdWrap<U> update);
 }
