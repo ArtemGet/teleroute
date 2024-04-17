@@ -1,5 +1,7 @@
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 
+[![Build](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml/badge.svg)](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml)
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/1e5c08074d3bc271fbb8/maintainability)](https://codeclimate.com/github/ArtemGet/teleroute/maintainability)
 [![codecov](https://codecov.io/gh/ArtemGet/teleroute/graph/badge.svg?token=FCGJORYEN5)](https://codecov.io/gh/ArtemGet/teleroute)
 
@@ -52,9 +54,9 @@ Optional<YourCommand> commandOpt = route.route(update);
 After update matched to command all you have to do is execute it and get Send as a result:
 
 ```java
-if(!command.isPresent()){
+if(command.isEmpty()) {
 //not found processing or just ignore
-        }
+}
 
 YourCommand command = commandOpt.get();
 YourSend send = command.execute(update);
@@ -78,15 +80,19 @@ There some routes provided by this library that could decorate each other like m
 This route is actually just provide command:
 
 ```java
-Optional<Cmd<YourUpdate, YourSend> command = new EndRoute<>(new YourCmd()).route(new YourUpdate());
-//command.isEmpty() == false
+new EndRoute<>(new YourCmd())
+    .route(new YourUpdate())
+    .isEmpty();
+//false
 ```
 
 or empty if no command attached to it:
 
 ```java
-Optional<Cmd<YourUpdate, YourSend> command = new EndRoute<YourUpdate, YourSend>().route(new YourUpdate());
-//command.isEmpty() == true;
+new EndRoute<YourUpdate, YourSend>()
+    .route(new YourUpdate())
+    .isEmpty();
+//true;
 ```
 
 #### 2.2)ForkRoute
