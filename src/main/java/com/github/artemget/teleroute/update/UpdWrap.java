@@ -34,11 +34,11 @@ import java.util.Optional;
  */
 public interface UpdWrap<SrcUpdate> {
     /**
-     * Provide update id.
+     * Provide update identity.
      *
-     * @return update id
+     * @return update identity
      */
-    Integer id();
+    Integer identity();
 
     /**
      * Define is this update contains telegram command.

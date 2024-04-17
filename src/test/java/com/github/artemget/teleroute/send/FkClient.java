@@ -30,41 +30,55 @@ import java.util.List;
 
 /**
  * Fake tg client.
+ *
+ * @since 0.1.0
  */
-public class FkClient {
+public final class FkClient {
+    /**
+     * Response sent by client.
+     */
     private final List<String> response;
 
     /**
      * Constructs empty response.
      */
     public FkClient() {
-        this.response = new ArrayList<>();
+        this(new ArrayList<>(1));
     }
 
     /**
-     * Main constructor. Constructs response containing content.
+     * Constructs response containing single content.
      *
-     * @param response content
+     * @param message Response content
      */
-    public FkClient(String response) {
-        this.response = Collections.singletonList(response);
+    public FkClient(final String message) {
+        this(Collections.singletonList(message));
+    }
+
+    /**
+     * Main constructor.
+     *
+     * @param message Response content
+     */
+    private FkClient(final List<String> message) {
+        this.response = message;
     }
 
     /**
      * Submit content to tg response.
      *
-     * @param response content
+     * @param message Content
      */
-    public void submit(String response) {
-        this.response.add(response);
+    public void submit(final String message) {
+        this.response.add(message);
     }
 
     /**
      * Retrieve tg response contents.
      *
-     * @return response
+     * @return Response
      */
     public List<String> sent() {
-        return this.response;
+        return Collections.unmodifiableList(this.response);
     }
 }

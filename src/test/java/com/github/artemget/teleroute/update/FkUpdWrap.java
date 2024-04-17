@@ -26,55 +26,77 @@ package com.github.artemget.teleroute.update;
 
 import java.util.Optional;
 
-public class FkUpdWrap implements UpdWrap<String> {
+/**
+ * Fake Update.
+ *
+ * @since 0.1.0
+ */
+public final class FkUpdWrap implements UpdWrap<String> {
+    /**
+     * Default identity.
+     */
     private static final Integer ID = 123;
-    private static final Boolean IS_COMMAND = true;
-    private static final String TEXT = "text";
-    private static final String SRC = "src";
 
+    /**
+     * Telegram command.
+     */
+    private static final Boolean COMMAND = true;
+
+    /**
+     * Content.
+     */
+    private static final String DEFAULT_TEXT = "text";
+
+    /**
+     * Id.
+     */
     private final Integer id;
-    private final Boolean isCommand;
-    private final String text;
-    private final String src;
+
+    /**
+     * Either command or not.
+     */
+    private final Boolean command;
+
+    /**
+     * Update content.
+     */
+    private final String content;
 
     public FkUpdWrap() {
         this(
-                FkUpdWrap.ID,
-                FkUpdWrap.IS_COMMAND,
-                FkUpdWrap.TEXT,
-                FkUpdWrap.SRC
+            FkUpdWrap.ID,
+            FkUpdWrap.COMMAND,
+            FkUpdWrap.DEFAULT_TEXT
         );
     }
 
     public FkUpdWrap(
-            Integer id,
-            Boolean isCommand,
-            String text,
-            String src
+        final Integer id,
+        final Boolean command,
+        final String content
     ) {
         this.id = id;
-        this.isCommand = isCommand;
-        this.text = text;
-        this.src = src;
+        this.command = command;
+        this.content = content;
     }
 
     @Override
-    public Integer id() {
+    public Integer identity() {
         return this.id;
     }
 
     @Override
     public Boolean isCommand() {
-        return this.isCommand;
+        return this.command;
     }
 
     @Override
     public Optional<String> text() {
-        return Optional.of(this.text);
+        return Optional.of(this.src());
     }
 
     @Override
     public String src() {
-        return this.src;
+        return this.content;
     }
 }

@@ -29,43 +29,42 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class FkSend implements Send<FkClient> {
+/**
+ * Fake send.
+ *
+ * @since 0.1.0
+ */
+public final class FkSend implements Send<FkClient> {
+    /**
+     * Response that would be sent by client.
+     */
     private final List<String> response;
 
     public FkSend() {
         this(Collections.emptyList());
     }
 
-    public FkSend(String... response) {
-        this(Arrays.asList(response));
+    public FkSend(final String... content) {
+        this(Arrays.asList(content));
     }
 
-    public FkSend(List<String> response) {
-        this.response = Collections.unmodifiableList(response);
-    }
-
-    @Override
-    public void send(FkClient client) {
-        response.forEach(client::submit);
+    public FkSend(final List<String> content) {
+        this.response = Collections.unmodifiableList(content);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FkSend fkSend = (FkSend) o;
-        return Objects.equals(response, fkSend.response);
+    public void send(final FkClient client) {
+        this.response.forEach(client::submit);
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        return this == object
+            || object instanceof FkSend && this.response.equals(((FkSend) object).response);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(response);
-    }
-
-    @Override
-    public String toString() {
-        return "FkSend{" +
-                "response=" + response +
-                '}';
+        return Objects.hash(this.response);
     }
 }

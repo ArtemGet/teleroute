@@ -26,48 +26,55 @@ package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.Send;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-public class FkCmd implements Cmd<String, FkClient> {
+/**
+ * Fake Command.
+ *
+ * @since 0.1.0
+ */
+public final class FkCmd implements Cmd<String, FkClient> {
+    /**
+     * Client.
+     */
     private final List<Send<FkClient>> send;
 
     public FkCmd() {
-        send = Collections.emptyList();
+        this(Collections.emptyList());
     }
 
-    public FkCmd(Send<FkClient> send) {
-        this.send = Collections.singletonList(send);
+    public FkCmd(final Send<FkClient> client) {
+        this(Collections.singletonList(client));
+    }
+
+    public FkCmd(final List<Send<FkClient>> clients) {
+        this.send = Collections.unmodifiableList(clients);
     }
 
     @Override
-    public Optional<Send<FkClient>> execute(String update) {
-        if (send.isEmpty()) {
-            return Optional.empty();
+    public Optional<Send<FkClient>> execute(final String update) {
+        final Optional<Send<FkClient>> resp;
+        if (this.send.isEmpty()) {
+            resp = Optional.empty();
+        } else {
+            resp = Optional.of(this.send.get(0));
         }
-        return Optional.of(send.get(0));
+        return resp;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FkCmd fkCmd = (FkCmd) o;
-        return Objects.equals(send, fkCmd.send);
+    public boolean equals(final Object object) {
+        final FkCmd cmd = (FkCmd) object;
+        return this == object
+            || object == null || !this.getClass().equals(object.getClass())
+            || Objects.equals(this.send, cmd.send);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(send);
-    }
-
-    @Override
-    public String toString() {
-        return "FkCmd{" +
-                "send=" + send +
-                '}';
+        return Objects.hash(this.send);
     }
 }

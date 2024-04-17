@@ -26,22 +26,30 @@ package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.UpdWrap;
 
-public class FkMatch implements Match<String> {
-    private final Boolean match;
+/**
+ * Fake match condition.
+ *
+ * @since 0.1.0
+ */
+public final class FkMatch implements Match<String> {
+    /**
+     * Matching condition.
+     */
+    private final Boolean condition;
 
     /**
-     * Always match
+     * Always match.
      */
     public FkMatch() {
         this(true);
     }
 
-    public FkMatch(Boolean match) {
-        this.match = match;
+    public FkMatch(final Boolean match) {
+        this.condition = match;
     }
 
     @Override
-    public Boolean match(UpdWrap<String> update) {
-        return this.match;
+    public Boolean match(final UpdWrap<String> update) {
+        return this.condition;
     }
 }

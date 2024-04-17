@@ -26,12 +26,20 @@ package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.Send;
-
 import java.util.Optional;
 
-public class FkCmdErr implements Cmd<String, FkClient> {
+/**
+ * Fake command, always throws error.
+ *
+ * @since 0.1.0
+ */
+public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override
-    public Optional<Send<FkClient>> execute(String update) {
-        throw new RuntimeException();
+    public Optional<Send<FkClient>> execute(final String update) {
+        throw new FkCmdErr.FkCmdException();
+    }
+
+    public static class FkCmdException extends RuntimeException {
+
     }
 }
