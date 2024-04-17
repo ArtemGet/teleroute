@@ -29,7 +29,7 @@ And add dependency to your pom.xml
 
 ```xml
 <dependency>
-    <groupId>com.github.ArtemGet</groupId>
+    <groupId>com.github.artemget</groupId>
     <artifactId>teleroute</artifactId>
     <version>0.1.0</version>
 </dependency>
