@@ -1,11 +1,17 @@
-name: Workflow for Codecov example-java-maven
+name: Codecov
 on:
   push:
     branches:
-      - main
+      - "main"
+      - "feature/*"
+      - "bugfix/*"
+      - "hotfix/*"
+      - "release/*"
   pull_request:
     branches:
-      - main
+      - "main"
+      - "release/*"
+
 jobs:
   run:
     runs-on: ubuntu-latest
