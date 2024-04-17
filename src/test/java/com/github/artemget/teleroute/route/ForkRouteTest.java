@@ -31,56 +31,61 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class ForkRouteTest {
+/**
+ * Test case {@link ForkRoute}.
+ *
+ * @since 0.1.0
+ */
+final class ForkRouteTest {
 
     @Test
-    void route_shouldRouteCmd_whenMatchAndNoSpareCmd() {
+    void shouldRouteCmdWhenMatchAndNoSpareCmd() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend()),
-                new ForkRoute<>(
-                        new FkMatch(),
-                        new FkCmd(new FkSend())
-                )
+            new FkCmd(new FkSend()),
+            new ForkRoute<>(
+                new FkMatch(),
+                new FkCmd(new FkSend())
+            )
                 .route(new FkUpdWrap())
                 .get()
         );
     }
 
     @Test
-    void route_shouldRouteEmpty_whenNotMatchAndNoSpareCmd() {
+    void shouldRouteEmptyWhenNotMatchAndNoSpareCmd() {
         Assertions.assertTrue(
-                new ForkRoute<>(
-                        new FkMatch(false),
-                        new FkCmd(new FkSend())
-                )
+            new ForkRoute<>(
+                new FkMatch(false),
+                new FkCmd(new FkSend())
+            )
                 .route(new FkUpdWrap())
                 .isEmpty()
         );
     }
 
     @Test
-    void route_shouldRouteCmd_whenMatchAndSpareCmd() {
+    void shouldRouteCmdWhenMatchAndSpareCmd() {
         Assertions.assertEquals(
+            new FkCmd(new FkSend()),
+            new ForkRoute<>(
+                new FkMatch(),
                 new FkCmd(new FkSend()),
-                new ForkRoute<>(
-                        new FkMatch(),
-                        new FkCmd(new FkSend()),
-                        new FkCmd()
-                )
+                new FkCmd()
+            )
                 .route(new FkUpdWrap())
                 .get()
         );
     }
 
     @Test
-    void route_shouldRouteSpareCmd_whenNotMatchAndSpareCmd() {
+    void shouldRouteSpareCmdWhenNotMatchAndSpareCmd() {
         Assertions.assertEquals(
-                new FkCmd(),
-                new ForkRoute<>(
-                        new FkMatch(false),
-                        new FkCmd(new FkSend()),
-                        new FkCmd()
-                )
+            new FkCmd(),
+            new ForkRoute<>(
+                new FkMatch(false),
+                new FkCmd(new FkSend()),
+                new FkCmd()
+            )
                 .route(new FkUpdWrap())
                 .get()
         );
@@ -89,53 +94,53 @@ class ForkRouteTest {
     //routes
 
     @Test
-    void route_shouldRoute_whenMatchAndNoSpareRoute() {
+    void shouldRouteWhenMatchAndNoSpareRoute() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend()),
-                new ForkRoute<>(
-                        new FkMatch(),
-                        new EndRoute<>(new FkCmd(new FkSend()))
-                )
+            new FkCmd(new FkSend()),
+            new ForkRoute<>(
+                new FkMatch(),
+                new EndRoute<>(new FkCmd(new FkSend()))
+            )
                 .route(new FkUpdWrap())
                 .get()
         );
     }
 
     @Test
-    void route_shouldRouteEmpty_whenNotMatchAndNoSpareRoute() {
+    void shouldRouteEmptyWhenNotMatchAndNoSpareRoute() {
         Assertions.assertTrue(
-                new ForkRoute<>(
-                        new FkMatch(false),
-                        new EndRoute<>(new FkCmd(new FkSend()))
-                )
+            new ForkRoute<>(
+                new FkMatch(false),
+                new EndRoute<>(new FkCmd(new FkSend()))
+            )
                 .route(new FkUpdWrap())
                 .isEmpty()
         );
     }
 
     @Test
-    void route_shouldRoute_whenMatchAndSpareRoute() {
+    void shouldRouteWhenMatchAndSpareRoute() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend()),
-                new ForkRoute<>(
-                        new FkMatch(),
-                        new EndRoute<>(new FkCmd(new FkSend())),
-                        new EndRoute<>(new FkCmd())
-                )
+            new FkCmd(new FkSend()),
+            new ForkRoute<>(
+                new FkMatch(),
+                new EndRoute<>(new FkCmd(new FkSend())),
+                new EndRoute<>(new FkCmd())
+            )
                 .route(new FkUpdWrap())
                 .get()
         );
     }
 
     @Test
-    void route_shouldRouteSpareRoute_whenNotMatchAndSpareRoute() {
+    void shouldRouteSpareRouteWhenNotMatchAndSpareRoute() {
         Assertions.assertEquals(
-                new FkCmd(),
-                new ForkRoute<>(
-                        new FkMatch(false),
-                        new EndRoute<>(new FkCmd(new FkSend())),
-                        new EndRoute<>(new FkCmd())
-                )
+            new FkCmd(),
+            new ForkRoute<>(
+                new FkMatch(false),
+                new EndRoute<>(new FkCmd(new FkSend())),
+                new EndRoute<>(new FkCmd())
+            )
                 .route(new FkUpdWrap())
                 .get()
         );

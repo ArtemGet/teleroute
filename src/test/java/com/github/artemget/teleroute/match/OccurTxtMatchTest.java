@@ -28,26 +28,31 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class OccurTxtMatchTest {
+/**
+ * Test case {@link OccurTxtMatch}.
+ *
+ * @since 0.1.0
+ */
+final class OccurTxtMatchTest {
 
     @Test
-    void match_shouldMatch_whenFullTextMatch() {
+    void shouldMatchWhenFullTextMatch() {
         Assertions.assertTrue(
-                new OccurTxtMatch<String>("text").match(new FkUpdWrap())
+            new OccurTxtMatch<String>("text").match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldMatch_whenTextOccurs() {
+    void shouldMatchWhenTextOccurs() {
         Assertions.assertTrue(
-                new OccurTxtMatch<String>("te").match(new FkUpdWrap())
+            new OccurTxtMatch<String>("te").match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldNotMatch_whenTextNotOccurs() {
+    void shouldNotMatchWhenTextNotOccurs() {
         Assertions.assertFalse(
-                new OccurTxtMatch<String>("not").match(new FkUpdWrap())
+            new OccurTxtMatch<String>("not").match(new FkUpdWrap())
         );
     }
 }

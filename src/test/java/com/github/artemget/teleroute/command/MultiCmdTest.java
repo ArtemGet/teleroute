@@ -28,27 +28,32 @@ import com.github.artemget.teleroute.send.FkSend;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class MultiCmdTest {
+/**
+ * Test case {@link MultiCmd}.
+ *
+ * @since 0.1.0
+ */
+final class MultiCmdTest {
 
     @Test
-    public void execute_shouldSendOne_whenSubmitOne() {
+    void shouldSendOneWhenSubmitOne() {
         Assertions.assertTrue(
-                new MultiCmd<>(
-                        new FkCmd(
-                                new FkSend()
-                        )
+            new MultiCmd<>(
+                new FkCmd(
+                    new FkSend()
                 )
+            )
                 .execute("resp")
                 .isPresent()
         );
     }
 
     @Test
-    public void execute_shouldNotSend_whenError() {
+    void shouldNotSendWhenError() {
         Assertions.assertTrue(
-                new MultiCmd<>(new FkCmdErr())
-                        .execute("resp")
-                        .isEmpty()
+            new MultiCmd<>(new FkCmdErr())
+                .execute("resp")
+                .isEmpty()
         );
     }
 }

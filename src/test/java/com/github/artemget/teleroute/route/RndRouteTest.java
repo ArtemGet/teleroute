@@ -29,56 +29,68 @@ import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.FkSend;
 import com.github.artemget.teleroute.update.FkUpdWrap;
+import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
+/**
+ * Test case {@link RndRoute}.
+ *
+ * @since 0.1.0
+ */
+final class RndRouteTest {
+    /**
+     * Command response content.
+     */
+    private static final String RESP = "resp";
 
-class RndRouteTest {
+    /**
+     * Set of fake commands.
+     */
     private static final Set<Cmd<String, FkClient>> CMD_SET =
-            Set.of(new FkCmd(), new FkCmd(new FkSend("resp")));
+        Set.of(new FkCmd(), new FkCmd(new FkSend(RndRouteTest.RESP)));
 
     @Test
-    void route_shouldRouteAny_whenManyCmdSpecified() {
+    void shouldRouteAnyWhenManyCmdSpecified() {
         Assertions.assertTrue(
-                CMD_SET.contains(
-                        new RndRoute<>(
-                                new FkCmd(),
-                                new FkCmd(new FkSend("resp"))
-                        ).route(new FkUpdWrap()).get()
-                )
+            CMD_SET.contains(
+                new RndRoute<>(
+                    new FkCmd(),
+                    new FkCmd(new FkSend(RndRouteTest.RESP))
+                ).route(new FkUpdWrap()).get()
+            )
         );
     }
 
     @Test
-    void route_shouldRouteAny_whenManyRouteSpecified() {
+    void shouldRouteAnyWhenManyRouteSpecified() {
         Assertions.assertTrue(
-                CMD_SET.contains(
-                        new RndRoute<>(
-                                new EndRoute<>(new FkCmd()),
-                                new EndRoute<>(new FkCmd(new FkSend("resp")))
-                        ).route(new FkUpdWrap()).get()
-                )
+            CMD_SET.contains(
+                new RndRoute<>(
+                    new EndRoute<>(new FkCmd()),
+                    new EndRoute<>(new FkCmd(new FkSend(RndRouteTest.RESP)))
+                ).route(new FkUpdWrap()).get()
+            )
         );
     }
 
     @Test
-    void route_shouldRoute_whenOneCmdSpecified() {
+    void shouldRouteWhenOneCmdSpecified() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend("resp")),
-                new RndRoute<>(
-                        new FkCmd(new FkSend("resp"))
-                ).route(new FkUpdWrap()).get()
+            new FkCmd(new FkSend(RndRouteTest.RESP)),
+            new RndRoute<>(
+                new FkCmd(new FkSend(RndRouteTest.RESP))
+            ).route(new FkUpdWrap()).get()
         );
     }
 
     @Test
-    void route_shouldRouteOne_whenOneRouteSpecified() {
+    void shouldRouteOneWhenOneRouteSpecified() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend("resp")),
-                new RndRoute<>(
-                        new EndRoute<>(new FkCmd(new FkSend("resp")))
-                ).route(new FkUpdWrap()).get()
+            new FkCmd(new FkSend(RndRouteTest.RESP)),
+            new RndRoute<>(
+                new EndRoute<>(new FkCmd(new FkSend(RndRouteTest.RESP)))
+            ).route(new FkUpdWrap()).get()
         );
     }
 }

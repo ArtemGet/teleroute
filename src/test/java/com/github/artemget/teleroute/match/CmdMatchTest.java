@@ -28,27 +28,31 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class CmdMatchTest {
+/**
+ * Test case {@link CmdMatchd}.
+ *
+ * @since 0.1.0
+ */
+final class CmdMatchTest {
 
     @Test
-    void match_shouldMatch_whenCmd() {
+    void shouldMatchWhenCmd() {
         Assertions.assertTrue(
-                new CmdMatch<String>().match(new FkUpdWrap())
+            new CmdMatch<String>().match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldNotMatch_whenNotCmd() {
+    void shouldNotMatchWhenNotCmd() {
         Assertions.assertFalse(
-                new CmdMatch<String>()
-                        .match(
-                                new FkUpdWrap(
-                                        123,
-                                        false,
-                                        "text",
-                                        "src"
-                                )
-                        )
+            new CmdMatch<String>()
+                .match(
+                    new FkUpdWrap(
+                        123,
+                        false,
+                        "text"
+                    )
+                )
         );
     }
 }

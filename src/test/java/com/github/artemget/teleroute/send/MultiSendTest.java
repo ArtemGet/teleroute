@@ -24,62 +24,62 @@
 
 package com.github.artemget.teleroute.send;
 
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-public class MultiSendTest {
+/**
+ * Test case {@link MultiSend}.
+ *
+ * @since 0.1.0
+ */
+final class MultiSendTest {
 
     @Test
-    public void send_shouldSingle_whenSubmittedSingle() {
-        FkClient fkClient = new FkClient();
-        new MultiSend<>(new FkSend("resp")).send(fkClient);
-
+    void shouldSingleWhenSubmittedSingle() {
+        final FkClient client = new FkClient();
+        new MultiSend<>(new FkSend("resp")).send(client);
         Assertions.assertEquals(
-                List.of("resp"),
-                fkClient.sent()
+            List.of("resp"),
+            client.sent()
         );
     }
 
     @Test
-    public void send_shouldMulti_whenSubmittedMulti() {
-        FkClient fkClient = new FkClient();
+    void shouldMultiWhenSubmittedMulti() {
+        final FkClient client = new FkClient();
         new MultiSend<>(
-                new FkSend("resp1"),
-                new FkSend("resp2"),
-                new FkSend("resp3")
-        ).send(fkClient);
-
+            new FkSend("resp1"),
+            new FkSend("resp2"),
+            new FkSend("resp3")
+        ).send(client);
         Assertions.assertEquals(
-                List.of("resp1", "resp2", "resp3"),
-                fkClient.sent()
+            List.of("resp1", "resp2", "resp3"),
+            client.sent()
         );
     }
 
     @Test
-    public void send_shouldNotSend_whenError() {
-        FkClient fkClient = new FkClient();
-        new MultiSend<>(new FkSendErr()).send(fkClient);
-
+    void shouldNotSendWhenError() {
+        final FkClient client = new FkClient();
+        new MultiSend<>(new FkSendErr()).send(client);
         Assertions.assertEquals(
-                List.of(),
-                fkClient.sent()
+            List.of(),
+            client.sent()
         );
     }
 
     @Test
-    public void send_shouldSendOnlyOne_whenManyError() {
-        FkClient fkClient = new FkClient();
+    void shouldSendOnlyOneWhenManyError() {
+        final FkClient client = new FkClient();
         new MultiSend<>(
-                new FkSendErr(),
-                new FkSendErr(),
-                new FkSend("resp")
-        ).send(fkClient);
-
+            new FkSendErr(),
+            new FkSendErr(),
+            new FkSend("resp")
+        ).send(client);
         Assertions.assertEquals(
-                List.of("resp"),
-                fkClient.sent()
+            List.of("resp"),
+            client.sent()
         );
     }
 }

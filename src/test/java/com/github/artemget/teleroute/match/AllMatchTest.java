@@ -28,33 +28,38 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class AllMatchTest {
+/**
+ * Test case {@link AllMatch}.
+ *
+ * @since 0.1.0
+ */
+final class AllMatchTest {
 
     @Test
-    void match_shouldMatch_whenNoConditionSpecified() {
+    void shouldMatchWhenNoConditionSpecified() {
         Assertions.assertTrue(
-                new AllMatch<String>().match(new FkUpdWrap())
+            new AllMatch<String>().match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldMatch_whenAllMatch() {
+    void shouldMatchWhenAllMatch() {
         Assertions.assertTrue(
-                new AllMatch<>(
-                        new FkMatch(),
-                        new FkMatch()
-                )
+            new AllMatch<>(
+                new FkMatch(),
+                new FkMatch()
+            )
                 .match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldNotMatch_whenAnyNotMatch() {
+    void shouldNotMatchWhenAnyNotMatch() {
         Assertions.assertFalse(
-                new AllMatch<>(
-                        new FkMatch(false),
-                        new FkMatch()
-                )
+            new AllMatch<>(
+                new FkMatch(false),
+                new FkMatch()
+            )
                 .match(new FkUpdWrap())
         );
     }

@@ -30,23 +30,24 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-
 /**
+ * Test case {@link EndRoute}.
  *
+ * @since 0.1.0
  */
-public class EndRouteTest {
+final class EndRouteTest {
 
     @Test
-    public void route_shouldBeEmpty_whenNoCommandSpecified() {
+    void shouldBeEmptyWhenNoCommandSpecified() {
         Assertions.assertTrue(
-                new EndRoute<String, FkClient>().route(new FkUpdWrap()).isEmpty()
+            new EndRoute<String, FkClient>().route(new FkUpdWrap()).isEmpty()
         );
     }
 
     @Test
-    public void route_shouldReturnFkCmd_whenFkCmdSpecified() {
+    void shouldReturnFkCmdWhenFkCmdSpecified() {
         Assertions.assertTrue(
-                new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).isPresent()
+            new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).isPresent()
         );
     }
 }

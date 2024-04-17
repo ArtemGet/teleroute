@@ -31,45 +31,50 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class DfsRouteTest {
+/**
+ * Test case {@link DfsRoute}.
+ *
+ * @since 0.1.0
+ */
+final class DfsRouteTest {
 
     @Test
-    void route_shouldRouteEmpty_whenEmpty() {
+    void shouldRouteEmptyWhenEmpty() {
         Assertions.assertTrue(
-                new DfsRoute<String, FkClient>(new EndRoute<>())
-                        .route(new FkUpdWrap())
-                        .isEmpty()
+            new DfsRoute<String, FkClient>(new EndRoute<>())
+                .route(new FkUpdWrap())
+                .isEmpty()
         );
     }
 
     @Test
-    void route_shouldRouteEmpty_whenNullUpdate() {
+    void shouldRouteEmptyWhenNullUpdate() {
         Assertions.assertTrue(
-                new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
-                        .route(null)
-                        .isEmpty()
+            new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
+                .route(null)
+                .isEmpty()
         );
     }
 
     @Test
-    void route_shouldRouteFirst_whenOneSubmitted() {
+    void shouldRouteFirstWhenOneSubmitted() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend("resp")),
-                new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
-                        .route(new FkUpdWrap())
-                        .get()
+            new FkCmd(new FkSend("resp")),
+            new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
+                .route(new FkUpdWrap())
+                .get()
         );
     }
 
     @Test
-    void route_shouldRouteFirstSuitable_whenManySubmitted() {
+    void shouldRouteFirstSuitableWhenManySubmitted() {
         Assertions.assertEquals(
-                new FkCmd(new FkSend("resp1")),
-                new DfsRoute<>(
-                        new EndRoute<>(),
-                        new EndRoute<>(new FkCmd(new FkSend("resp1"))),
-                        new EndRoute<>(new FkCmd(new FkSend("resp2")))
-                )
+            new FkCmd(new FkSend("resp1")),
+            new DfsRoute<>(
+                new EndRoute<>(),
+                new EndRoute<>(new FkCmd(new FkSend("resp1"))),
+                new EndRoute<>(new FkCmd(new FkSend("resp2")))
+            )
                 .route(new FkUpdWrap())
                 .get()
         );

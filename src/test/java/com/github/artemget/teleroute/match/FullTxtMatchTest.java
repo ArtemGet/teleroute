@@ -28,19 +28,24 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class FullTxtMatchTest {
+/**
+ * Test case {@link FullTxtMatch}.
+ *
+ * @since 0.1.0
+ */
+final class FullTxtMatchTest {
 
     @Test
-    void match_shouldMatch_whenFullTextMatch() {
+    void shouldMatchWhenFullTextMatch() {
         Assertions.assertTrue(
-                new FullTxtMatch<String>("text").match(new FkUpdWrap())
+            new FullTxtMatch<String>("text").match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldNotMatch_whenFullTextNotMatch() {
+    void shouldNotMatchWhenFullTextNotMatch() {
         Assertions.assertFalse(
-                new FullTxtMatch<String>("not").match(new FkUpdWrap())
+            new FullTxtMatch<String>("not").match(new FkUpdWrap())
         );
     }
 }

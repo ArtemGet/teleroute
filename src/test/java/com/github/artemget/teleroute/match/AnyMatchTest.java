@@ -28,44 +28,49 @@ import com.github.artemget.teleroute.update.FkUpdWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class AnyMatchTest {
+/**
+ * Test case {@link AnyMatch}.
+ *
+ * @since 0.1.0
+ */
+final class AnyMatchTest {
 
     @Test
-    void match_shouldMatch_whenNoConditionSpecified() {
+    void matchShouldMatchWhenNoConditionSpecified() {
         Assertions.assertTrue(
-                new AnyMatch<String>().match(new FkUpdWrap())
+            new AnyMatch<String>().match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldMatch_whenAllMatch() {
+    void matchShouldMatchWhenAllMatch() {
         Assertions.assertTrue(
-                new AnyMatch<>(
-                        new FkMatch(),
-                        new FkMatch()
-                )
+            new AnyMatch<>(
+                new FkMatch(),
+                new FkMatch()
+            )
                 .match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldMatch_whenAnyMatch() {
+    void shouldMatchWhenAnyMatch() {
         Assertions.assertTrue(
-                new AnyMatch<>(
-                        new FkMatch(false),
-                        new FkMatch()
-                )
+            new AnyMatch<>(
+                new FkMatch(false),
+                new FkMatch()
+            )
                 .match(new FkUpdWrap())
         );
     }
 
     @Test
-    void match_shouldNotMatch_whenNoneMatch() {
+    void shouldNotMatchWhenNoneMatch() {
         Assertions.assertFalse(
-                new AnyMatch<>(
-                        new FkMatch(false),
-                        new FkMatch(false)
-                )
+            new AnyMatch<>(
+                new FkMatch(false),
+                new FkMatch(false)
+            )
                 .match(new FkUpdWrap())
         );
     }
