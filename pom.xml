@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +13,6 @@
     <properties>
         <java.version>11</java.version>
         <logging.version>2.22.1</logging.version>
-        <junit.version>5.9.2</junit.version>
     </properties>
 
     <distributionManagement>
@@ -26,25 +26,25 @@
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.version}</version>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.2</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>${logging.version}</version>
+            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>${logging.version}</version>
+            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>${logging.version}</version>
+            <version>2.7</version>
         </dependency>
     </dependencies>
 
@@ -70,6 +70,13 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>0.8.12</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            **/*Exception.class
+                        </exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <id>coverage-initialize</id>
@@ -117,6 +124,20 @@
                 <artifactId>qulice-maven-plugin</artifactId>
                 <version>0.22.2</version>
                 <configuration>
+                    <excludes>
+                        <exclude>
+                            dependencies:org.apache.logging.log4j:log4j-api
+                        </exclude>
+                        <exclude>
+                            dependencies:org.apache.logging.log4j:log4j-core
+                        </exclude>
+                        <exclude>
+                            dependencies:org.apache.logging.log4j:log4j-slf4j-impl
+                        </exclude>
+                        <exclude>
+                            dependencies:org.slf4j:slf4j-api
+                        </exclude>
+                    </excludes>
                     <license>file:${basedir}/LICENSE</license>
                 </configuration>
                 <executions>
