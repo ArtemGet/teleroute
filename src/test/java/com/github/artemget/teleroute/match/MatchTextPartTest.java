@@ -24,33 +24,35 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Check provided text occur in update's message's text.
+ * Test case {@link MatchTextPart}.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * @since 0.1.0
  */
-public final class OccurTxtMatch<U> implements Match<U> {
-    /**
-     * Text to compare.
-     */
-    private final String txt;
+final class MatchTextPartTest {
 
-    /**
-     * Main constructor. Construct OccurTxtMatch.
-     *
-     * @param text Text to match
-     */
-    public OccurTxtMatch(final String text) {
-        this.txt = text;
+    @Test
+    void shouldMatchWhenFullTextMatch() {
+        Assertions.assertTrue(
+            new MatchTextPart<String>("text").match(new FkWrap())
+        );
     }
 
-    @Override
-    public Boolean match(final UpdWrap<U> update) {
-        return update.text()
-            .map(text -> text.contains(this.txt))
-            .orElse(false);
+    @Test
+    void shouldMatchWhenTextOccurs() {
+        Assertions.assertTrue(
+            new MatchTextPart<String>("te").match(new FkWrap())
+        );
+    }
+
+    @Test
+    void shouldNotMatchWhenTextNotOccurs() {
+        Assertions.assertFalse(
+            new MatchTextPart<String>("not").match(new FkWrap())
+        );
     }
 }

@@ -31,7 +31,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Test case {@link CmdFork}.
  *
- * @since 0.1.0
+ * @since 0.2.0
  */
 final class CmdForkTest {
 

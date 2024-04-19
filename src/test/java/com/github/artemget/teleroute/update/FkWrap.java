@@ -22,49 +22,81 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.send;
+package com.github.artemget.teleroute.update;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 /**
- * Fake send.
+ * Fake Update.
  *
  * @since 0.1.0
  */
-public final class FkSend implements Send<FkClient> {
+public final class FkWrap implements Wrap<String> {
     /**
-     * Response that would be sent by client.
+     * Default identity.
      */
-    private final List<String> response;
+    private static final Integer ID = 123;
 
-    public FkSend() {
-        this(Collections.emptyList());
+    /**
+     * Telegram command.
+     */
+    private static final Boolean COMMAND = true;
+
+    /**
+     * Content.
+     */
+    private static final String DEFAULT_TEXT = "text";
+
+    /**
+     * Id.
+     */
+    private final Integer id;
+
+    /**
+     * Either command or not.
+     */
+    private final Boolean command;
+
+    /**
+     * Update content.
+     */
+    private final String content;
+
+    public FkWrap() {
+        this(
+            FkWrap.ID,
+            FkWrap.COMMAND,
+            FkWrap.DEFAULT_TEXT
+        );
     }
 
-    public FkSend(final String... content) {
-        this(Arrays.asList(content));
-    }
-
-    public FkSend(final List<String> content) {
-        this.response = Collections.unmodifiableList(content);
+    public FkWrap(
+        final Integer id,
+        final Boolean command,
+        final String content
+    ) {
+        this.id = id;
+        this.command = command;
+        this.content = content;
     }
 
     @Override
-    public void send(final FkClient client) {
-        this.response.forEach(client::submit);
+    public Integer identity() {
+        return this.id;
     }
 
     @Override
-    public boolean equals(final Object object) {
-        return this == object
-            || object instanceof FkSend && this.response.equals(((FkSend) object).response);
+    public Boolean isCommand() {
+        return this.command;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.response);
+    public Optional<String> text() {
+        return Optional.of(this.src());
+    }
+
+    @Override
+    public String src() {
+        return this.content;
     }
 }

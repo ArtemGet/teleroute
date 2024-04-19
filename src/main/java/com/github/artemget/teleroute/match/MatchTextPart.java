@@ -24,17 +24,33 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
 
 /**
- * Check update contains command.
+ * Match text occurrence.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @since 0.1.0
  */
-public final class CmdMatch<U> implements Match<U> {
+public final class MatchTextPart<U> implements Match<U> {
+    /**
+     * Text to compare.
+     */
+    private final String txt;
+
+    /**
+     * Main ctor.
+     *
+     * @param text Text to match
+     */
+    public MatchTextPart(final String text) {
+        this.txt = text;
+    }
+
     @Override
-    public Boolean match(final UpdWrap<U> update) {
-        return update.isCommand();
+    public Boolean match(final Wrap<U> update) {
+        return update.text()
+            .map(text -> text.contains(this.txt))
+            .orElse(false);
     }
 }

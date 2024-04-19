@@ -24,8 +24,8 @@
 
 package com.github.artemget.teleroute.command;
 
-import com.github.artemget.teleroute.send.MultiSend;
 import com.github.artemget.teleroute.send.Send;
+import com.github.artemget.teleroute.send.SendBatch;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -38,61 +38,61 @@ import org.slf4j.LoggerFactory;
 /**
  * Execute many commands as one.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public final class MultiCmd<U, S> implements Cmd<U, S> {
+public final class CmdBatch<U, C> implements Cmd<U, C> {
     /**
      * Logger.
      */
-    private static final Logger LOG = LoggerFactory.getLogger(MultiCmd.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CmdBatch.class);
 
     /**
      * Commands.
      */
-    private final Collection<Cmd<U, S>> commands;
+    private final Collection<Cmd<U, C>> commands;
 
     /**
-     * Construct MultiCmd that execute one or many commands.
+     * Ctor.
      *
      * @param commands Commands to execute
      */
     @SafeVarargs
-    public MultiCmd(final Cmd<U, S>... commands) {
+    public CmdBatch(final Cmd<U, C>... commands) {
         this(Arrays.asList(commands));
     }
 
     /**
-     * Main constructor. Construct MultiCmd that execute collection of commands.
+     * Main ctor.
      *
      * @param commands Commands to execute
      */
-    public MultiCmd(final Collection<Cmd<U, S>> commands) {
+    public CmdBatch(final Collection<Cmd<U, C>> commands) {
         this.commands = Collections.unmodifiableCollection(commands);
     }
 
     @Override
-    public Optional<Send<S>> execute(final U update) {
-        final List<Send<S>> sends = this.executeCmds(update);
-        final Optional<Send<S>> resp;
+    public Optional<Send<C>> execute(final U update) {
+        final List<Send<C>> sends = this.executeCmds(update);
+        final Optional<Send<C>> resp;
         if (sends.isEmpty()) {
             resp = Optional.empty();
         } else {
-            resp = Optional.of(new MultiSend<>(sends));
+            resp = Optional.of(new SendBatch<>(sends));
         }
         return resp;
     }
 
-    private List<Send<S>> executeCmds(final U update) {
+    private List<Send<C>> executeCmds(final U update) {
         return this.commands.stream()
             .map(
                 cmd -> {
-                    Optional<Send<S>> resp;
+                    Optional<Send<C>> resp;
                     try {
                         resp = cmd.execute(update);
                     } catch (final CmdException exception) {
-                        MultiCmd.LOG.warn(
+                        CmdBatch.LOG.warn(
                             "Error execute cmd: {}",
                             exception.getMessage(),
                             exception

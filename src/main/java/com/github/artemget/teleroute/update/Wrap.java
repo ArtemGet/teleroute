@@ -22,37 +22,42 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.match;
+package com.github.artemget.teleroute.update;
 
-import com.github.artemget.teleroute.update.FkUpdWrap;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import java.util.Optional;
 
 /**
- * Test case {@link OccurTxtMatch}.
+ * Update wrap.
  *
- * @since 0.0.0
+ * @param <U> Update
+ * @since 0.1.0
  */
-final class OccurTxtMatchTest {
+public interface Wrap<U> {
+    /**
+     * Provide update identity.
+     *
+     * @return Update's id
+     */
+    Integer identity();
 
-    @Test
-    void shouldMatchWhenFullTextMatch() {
-        Assertions.assertTrue(
-            new OccurTxtMatch<String>("text").match(new FkUpdWrap())
-        );
-    }
+    /**
+     * Define is this update contains telegram command.
+     *
+     * @return Is command
+     */
+    Boolean isCommand();
 
-    @Test
-    void shouldMatchWhenTextOccurs() {
-        Assertions.assertTrue(
-            new OccurTxtMatch<String>("te").match(new FkUpdWrap())
-        );
-    }
+    /**
+     * Provide update's text if exists.
+     *
+     * @return Update's text
+     */
+    Optional<String> text();
 
-    @Test
-    void shouldNotMatchWhenTextNotOccurs() {
-        Assertions.assertFalse(
-            new OccurTxtMatch<String>("not").match(new FkUpdWrap())
-        );
-    }
+    /**
+     * Provide telegram update.
+     *
+     * @return Update
+     */
+    U src();
 }

@@ -31,16 +31,16 @@ import java.util.Optional;
  * Command. Entrance to your business logic.
  * Feel free to implement.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public interface Cmd<U, S> {
+public interface Cmd<U, C> {
     /**
-     * Process update(business logic here), return Send as a result.
+     * Start command.
      *
      * @param update Telegram update
      * @return Send
      */
-    Optional<Send<S>> execute(U update) throws CmdException;
+    Optional<Send<C>> execute(U update) throws CmdException;
 }

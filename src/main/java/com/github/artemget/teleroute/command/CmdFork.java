@@ -30,35 +30,35 @@ import java.util.Optional;
 /**
  * Fork command. Origin or spare if error.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.1.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.2.0
  */
-public final class CmdFork<U, S> implements Cmd<U, S> {
+public final class CmdFork<U, C> implements Cmd<U, C> {
     /**
      * Origin route. Would be executed always.
      */
-    private final Cmd<U, S> origin;
+    private final Cmd<U, C> origin;
 
     /**
      * Spare route. Would be executed if error.
      */
-    private final Cmd<U, S> spare;
+    private final Cmd<U, C> spare;
 
     /**
-     * Main constructor.
+     * Main ctor.
      *
-     * @param origin Origin command
-     * @param spare Spare command
+     * @param origin Command
+     * @param spare Command
      */
-    public CmdFork(final Cmd<U, S> origin, final Cmd<U, S> spare) {
+    public CmdFork(final Cmd<U, C> origin, final Cmd<U, C> spare) {
         this.origin = origin;
         this.spare = spare;
     }
 
     @Override
-    public Optional<Send<S>> execute(final U update) throws CmdException {
-        Optional<Send<S>> resp;
+    public Optional<Send<C>> execute(final U update) throws CmdException {
+        Optional<Send<C>> resp;
         try {
             resp = this.origin.execute(update);
         } catch (final CmdException exception) {

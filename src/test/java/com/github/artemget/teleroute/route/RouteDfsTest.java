@@ -22,56 +22,61 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.match;
+package com.github.artemget.teleroute.route;
 
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.command.FkCmd;
+import com.github.artemget.teleroute.send.FkClient;
+import com.github.artemget.teleroute.send.FkSend;
+import com.github.artemget.teleroute.update.FkWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link AnyMatch}.
+ * Test case {@link RouteDfs}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class AnyMatchTest {
+final class RouteDfsTest {
 
     @Test
-    void matchShouldMatchWhenNoConditionSpecified() {
+    void shouldRouteEmptyWhenEmpty() {
         Assertions.assertTrue(
-            new AnyMatch<String>().match(new FkUpdWrap())
+            new RouteDfs<String, FkClient>(new RouteEnd<>())
+                .route(new FkWrap())
+                .isEmpty()
         );
     }
 
     @Test
-    void matchShouldMatchWhenAllMatch() {
+    void shouldRouteEmptyWhenNullUpdate() {
         Assertions.assertTrue(
-            new AnyMatch<>(
-                new FkMatch(),
-                new FkMatch()
-            )
-                .match(new FkUpdWrap())
+            new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
+                .route(null)
+                .isEmpty()
         );
     }
 
     @Test
-    void shouldMatchWhenAnyMatch() {
-        Assertions.assertTrue(
-            new AnyMatch<>(
-                new FkMatch(false),
-                new FkMatch()
-            )
-                .match(new FkUpdWrap())
+    void shouldRouteFirstWhenOneSubmitted() {
+        Assertions.assertEquals(
+            new FkCmd(new FkSend("resp")),
+            new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
+                .route(new FkWrap())
+                .get()
         );
     }
 
     @Test
-    void shouldNotMatchWhenNoneMatch() {
-        Assertions.assertFalse(
-            new AnyMatch<>(
-                new FkMatch(false),
-                new FkMatch(false)
+    void shouldRouteFirstSuitableWhenManySubmitted() {
+        Assertions.assertEquals(
+            new FkCmd(new FkSend("resp1")),
+            new RouteDfs<>(
+                new RouteEnd<>(),
+                new RouteEnd<>(new FkCmd(new FkSend("resp1"))),
+                new RouteEnd<>(new FkCmd(new FkSend("resp2")))
             )
-                .match(new FkUpdWrap())
+                .route(new FkWrap())
+                .get()
         );
     }
 }

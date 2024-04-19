@@ -26,30 +26,28 @@ package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
 import com.github.artemget.teleroute.match.Match;
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
 import java.util.Optional;
 
 /**
- * Fork route.
- * Routes to route or command in case of update matching condition,
- * if not - route to other route or command or none.
+ * Fork route. Pick origin or spare route.
  *
  * <p><img src="../doc-files/MatchRouteScheme.png" width=1000>
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public final class ForkRoute<U, S> implements Route<U, S> {
+public final class RouteFork<U, C> implements Route<U, C> {
     /**
      * Origin route.
      */
-    private final Route<U, S> origin;
+    private final Route<U, C> origin;
 
     /**
      * Spare route.
      */
-    private final Route<U, S> spare;
+    private final Route<U, C> spare;
 
     /**
      * Match condition.
@@ -57,53 +55,52 @@ public final class ForkRoute<U, S> implements Route<U, S> {
     private final Match<U> match;
 
     /**
-     * Construct FkRoute that routes to match command or none if update not match condition.
+     * Ctor.
      *
-     * @param match Match condition
-     * @param origin Match command
+     * @param match Condition
+     * @param origin Command
      */
-    public ForkRoute(final Match<U> match, final Cmd<U, S> origin) {
-        this(match, new EndRoute<>(origin), new EndRoute<>());
+    public RouteFork(final Match<U> match, final Cmd<U, C> origin) {
+        this(match, new RouteEnd<>(origin), new RouteEnd<>());
     }
 
     /**
-     * Construct FkRoute that route to match command or spare command if update not match condition.
+     * Ctor.
      *
-     * @param match Match condition
-     * @param origin Match command
-     * @param spare Spare command
+     * @param match Condition
+     * @param origin Command
+     * @param spare Command
      */
-    public ForkRoute(final Match<U> match, final Cmd<U, S> origin, final Cmd<U, S> spare) {
-        this(match, new EndRoute<>(origin), new EndRoute<>(spare));
+    public RouteFork(final Match<U> match, final Cmd<U, C> origin, final Cmd<U, C> spare) {
+        this(match, new RouteEnd<>(origin), new RouteEnd<>(spare));
     }
 
     /**
-     * Construct FkRoute that route to match route or none if update not match condition.
+     * Ctor.
      *
-     * @param match Match condition
-     * @param origin Match route
+     * @param match Condition
+     * @param origin Route
      */
-    public ForkRoute(final Match<U> match, final Route<U, S> origin) {
-        this(match, origin, new EndRoute<>());
+    public RouteFork(final Match<U> match, final Route<U, C> origin) {
+        this(match, origin, new RouteEnd<>());
     }
 
     /**
-     * Main constructor.
-     * Construct FkRoute that route to match route or spare route if update not match condition.
+     * Main ctor.
      *
-     * @param match Match condition
-     * @param origin Match route
-     * @param spare Spare route
+     * @param match Condition
+     * @param origin Route
+     * @param spare Route
      */
-    public ForkRoute(final Match<U> match, final Route<U, S> origin, final Route<U, S> spare) {
+    public RouteFork(final Match<U> match, final Route<U, C> origin, final Route<U, C> spare) {
         this.match = match;
         this.origin = origin;
         this.spare = spare;
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
-        final Optional<Cmd<U, S>> resp;
+    public Optional<Cmd<U, C>> route(final Wrap<U> update) {
+        final Optional<Cmd<U, C>> resp;
         if (this.match.match(update)) {
             resp = this.origin.route(update);
         } else {

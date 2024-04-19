@@ -25,67 +25,56 @@
 package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 /**
- * Pick any random route or command.
+ * Depth first search route.
+ * Iterate over routes, pick first successful result.
  *
- * <p><img src="../doc-files/RandomRouteScheme.png" width=1000>
+ * <p><img src="../doc-files/IteratorRouteScheme.png" width=1000>
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public final class RndRoute<U, S> implements Route<U, S> {
+public final class RouteDfs<U, C> implements Route<U, C> {
     /**
      * Routes.
      */
-    private final Collection<Route<U, S>> routes;
+    private final Collection<Route<U, C>> routes;
 
     /**
-     * Construct RandomRoute with one or many commands.
+     * Ctor.
      *
-     * @param commands One or many commands
+     * @param routes Routes
      */
     @SafeVarargs
-    public RndRoute(final Cmd<U, S>... commands) {
-        this(
-            Arrays.stream(commands)
-                .map(EndRoute::new)
-                .collect(Collectors.<Route<U, S>>toList())
-        );
-    }
-
-    /**
-     * Construct RandomRoute with one or many routes.
-     *
-     * @param routes One or many routes
-     */
-    @SafeVarargs
-    public RndRoute(final Route<U, S>... routes) {
+    public RouteDfs(final Route<U, C>... routes) {
         this(Arrays.asList(routes));
     }
 
     /**
-     * Main constructor. Construct RandomRoute with many routes.
+     * Main ctor.
      *
      * @param routes Routes
      */
-    public RndRoute(final Collection<Route<U, S>> routes) {
+    public RouteDfs(final Collection<Route<U, C>> routes) {
         this.routes = Collections.unmodifiableCollection(routes);
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
-        return this.routes.stream()
-            .skip(new Random().nextInt(this.routes.size()))
-            .findFirst()
-            .flatMap(route -> route.route(update));
+    public Optional<Cmd<U, C>> route(final Wrap<U> update) {
+        return Optional.ofNullable(update)
+            .flatMap(
+                upd -> this.routes.stream()
+                    .map(route -> route.route(upd))
+                    .filter(Optional::isPresent)
+                    .findFirst()
+                    .orElse(Optional.empty())
+            );
     }
 }

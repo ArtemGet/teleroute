@@ -28,17 +28,17 @@ import com.github.artemget.teleroute.command.Cmd;
 import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.FkSend;
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
 import java.util.Set;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link RndRoute}.
+ * Test case {@link RouteRnd}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class RndRouteTest {
+final class RouteRndTest {
     /**
      * Command response content.
      */
@@ -48,16 +48,16 @@ final class RndRouteTest {
      * Set of fake commands.
      */
     private static final Set<Cmd<String, FkClient>> CMD_SET =
-        Set.of(new FkCmd(), new FkCmd(new FkSend(RndRouteTest.RESP)));
+        Set.of(new FkCmd(), new FkCmd(new FkSend(RouteRndTest.RESP)));
 
     @Test
     void shouldRouteAnyWhenManyCmdSpecified() {
         Assertions.assertTrue(
             CMD_SET.contains(
-                new RndRoute<>(
+                new RouteRnd<>(
                     new FkCmd(),
-                    new FkCmd(new FkSend(RndRouteTest.RESP))
-                ).route(new FkUpdWrap()).get()
+                    new FkCmd(new FkSend(RouteRndTest.RESP))
+                ).route(new FkWrap()).get()
             )
         );
     }
@@ -66,10 +66,10 @@ final class RndRouteTest {
     void shouldRouteAnyWhenManyRouteSpecified() {
         Assertions.assertTrue(
             CMD_SET.contains(
-                new RndRoute<>(
-                    new EndRoute<>(new FkCmd()),
-                    new EndRoute<>(new FkCmd(new FkSend(RndRouteTest.RESP)))
-                ).route(new FkUpdWrap()).get()
+                new RouteRnd<>(
+                    new RouteEnd<>(new FkCmd()),
+                    new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
+                ).route(new FkWrap()).get()
             )
         );
     }
@@ -77,20 +77,20 @@ final class RndRouteTest {
     @Test
     void shouldRouteWhenOneCmdSpecified() {
         Assertions.assertEquals(
-            new FkCmd(new FkSend(RndRouteTest.RESP)),
-            new RndRoute<>(
-                new FkCmd(new FkSend(RndRouteTest.RESP))
-            ).route(new FkUpdWrap()).get()
+            new FkCmd(new FkSend(RouteRndTest.RESP)),
+            new RouteRnd<>(
+                new FkCmd(new FkSend(RouteRndTest.RESP))
+            ).route(new FkWrap()).get()
         );
     }
 
     @Test
     void shouldRouteOneWhenOneRouteSpecified() {
         Assertions.assertEquals(
-            new FkCmd(new FkSend(RndRouteTest.RESP)),
-            new RndRoute<>(
-                new EndRoute<>(new FkCmd(new FkSend(RndRouteTest.RESP)))
-            ).route(new FkUpdWrap()).get()
+            new FkCmd(new FkSend(RouteRndTest.RESP)),
+            new RouteRnd<>(
+                new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
+            ).route(new FkWrap()).get()
         );
     }
 }

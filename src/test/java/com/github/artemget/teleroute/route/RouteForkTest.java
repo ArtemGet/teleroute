@@ -27,26 +27,26 @@ package com.github.artemget.teleroute.route;
 import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.match.FkMatch;
 import com.github.artemget.teleroute.send.FkSend;
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link ForkRoute}.
+ * Test case {@link RouteFork}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class ForkRouteTest {
+final class RouteForkTest {
 
     @Test
     void shouldRouteCmdWhenMatchAndNoSpareCmd() {
         Assertions.assertEquals(
             new FkCmd(new FkSend()),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(),
                 new FkCmd(new FkSend())
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }
@@ -54,11 +54,11 @@ final class ForkRouteTest {
     @Test
     void shouldRouteEmptyWhenNotMatchAndNoSpareCmd() {
         Assertions.assertTrue(
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(false),
                 new FkCmd(new FkSend())
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .isEmpty()
         );
     }
@@ -67,12 +67,12 @@ final class ForkRouteTest {
     void shouldRouteCmdWhenMatchAndSpareCmd() {
         Assertions.assertEquals(
             new FkCmd(new FkSend()),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(),
                 new FkCmd(new FkSend()),
                 new FkCmd()
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }
@@ -81,12 +81,12 @@ final class ForkRouteTest {
     void shouldRouteSpareCmdWhenNotMatchAndSpareCmd() {
         Assertions.assertEquals(
             new FkCmd(),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(false),
                 new FkCmd(new FkSend()),
                 new FkCmd()
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }
@@ -97,11 +97,11 @@ final class ForkRouteTest {
     void shouldRouteWhenMatchAndNoSpareRoute() {
         Assertions.assertEquals(
             new FkCmd(new FkSend()),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(),
-                new EndRoute<>(new FkCmd(new FkSend()))
+                new RouteEnd<>(new FkCmd(new FkSend()))
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }
@@ -109,11 +109,11 @@ final class ForkRouteTest {
     @Test
     void shouldRouteEmptyWhenNotMatchAndNoSpareRoute() {
         Assertions.assertTrue(
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(false),
-                new EndRoute<>(new FkCmd(new FkSend()))
+                new RouteEnd<>(new FkCmd(new FkSend()))
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .isEmpty()
         );
     }
@@ -122,12 +122,12 @@ final class ForkRouteTest {
     void shouldRouteWhenMatchAndSpareRoute() {
         Assertions.assertEquals(
             new FkCmd(new FkSend()),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(),
-                new EndRoute<>(new FkCmd(new FkSend())),
-                new EndRoute<>(new FkCmd())
+                new RouteEnd<>(new FkCmd(new FkSend())),
+                new RouteEnd<>(new FkCmd())
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }
@@ -136,12 +136,12 @@ final class ForkRouteTest {
     void shouldRouteSpareRouteWhenNotMatchAndSpareRoute() {
         Assertions.assertEquals(
             new FkCmd(),
-            new ForkRoute<>(
+            new RouteFork<>(
                 new FkMatch(false),
-                new EndRoute<>(new FkCmd(new FkSend())),
-                new EndRoute<>(new FkCmd())
+                new RouteEnd<>(new FkCmd(new FkSend())),
+                new RouteEnd<>(new FkCmd())
             )
-                .route(new FkUpdWrap())
+                .route(new FkWrap())
                 .get()
         );
     }

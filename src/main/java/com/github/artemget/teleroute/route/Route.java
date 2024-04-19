@@ -25,23 +25,23 @@
 package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
 import java.util.Optional;
 
 /**
- * Route, core interface. Routes update to command or other route. Return Cmd as a result.
+ * Routes update to command or other route.
  * Feel free to implement.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public interface Route<U, S> {
+public interface Route<U, C> {
     /**
-     * Routes update to command or other Route.
+     * Routes update to command or other route.
      *
-     * @param update Update wrapper, provide data required by routes and matches.
-     * @return Cmd command
+     * @param update Update
+     * @return Command
      */
-    Optional<Cmd<U, S>> route(UpdWrap<U> update);
+    Optional<Cmd<U, C>> route(Wrap<U> update);
 }

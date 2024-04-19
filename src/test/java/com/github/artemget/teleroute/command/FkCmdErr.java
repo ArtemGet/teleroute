@@ -31,7 +31,7 @@ import java.util.Optional;
 /**
  * Fake command, always throws error.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override

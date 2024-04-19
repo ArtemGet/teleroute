@@ -22,56 +22,54 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.route;
+package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.command.Cmd;
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Optional;
 
 /**
- * Route to single command or none.
+ * Match any condition.
  *
- * <p><img src="../doc-files/EndRouteScheme.png" width=1000>
- *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @param <S> Sends messages, i.e. telegrambots AdsSender or your own telegram send** implementation
- * @since 0.0.0
+ * @param <U> Update
+ * @since 0.1.0
  */
-public final class EndRoute<U, S> implements Route<U, S> {
+public final class MatchAny<U> implements Match<U> {
     /**
-     * Command.
+     * Match conditions.
      */
-    private final Collection<Cmd<U, S>> cmd;
+    private final Collection<Match<U>> matches;
 
     /**
-     * Construct EndRoute that actually do nothing.
+     * Ctor.
+     *
+     * @param matches Conditions
      */
-    public EndRoute() {
-        this(Collections.emptyList());
+    @SafeVarargs
+    public MatchAny(final Match<U>... matches) {
+        this(Arrays.asList(matches));
     }
 
     /**
-     * Construct EndRoute that route to command.
+     * Main ctor.
      *
-     * @param command Command
+     * @param matches Conditions
      */
-    public EndRoute(final Cmd<U, S> command) {
-        this(Collections.singletonList(command));
-    }
-
-    /**
-     * Main constructor.
-     *
-     * @param commands Command
-     */
-    private EndRoute(final Collection<Cmd<U, S>> commands) {
-        this.cmd = commands;
+    public MatchAny(final Collection<Match<U>> matches) {
+        this.matches = Collections.unmodifiableCollection(matches);
     }
 
     @Override
-    public Optional<Cmd<U, S>> route(final UpdWrap<U> update) {
-        return this.cmd.stream().findFirst();
+    public Boolean match(final Wrap<U> update) {
+        final boolean matched;
+        if (this.matches.isEmpty()) {
+            matched = true;
+        } else {
+            matched = this.matches
+                .stream()
+                .anyMatch(match -> match.match(update));
+        }
+        return matched;
     }
 }

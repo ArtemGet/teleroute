@@ -22,32 +22,45 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.route;
+package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.command.FkCmd;
-import com.github.artemget.teleroute.send.FkClient;
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link EndRoute}.
+ * Test case {@link MatchAll}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class EndRouteTest {
+final class MatchAllTest {
 
     @Test
-    void shouldBeEmptyWhenNoCommandSpecified() {
+    void shouldMatchWhenNoConditionSpecified() {
         Assertions.assertTrue(
-            new EndRoute<String, FkClient>().route(new FkUpdWrap()).isEmpty()
+            new MatchAll<String>().match(new FkWrap())
         );
     }
 
     @Test
-    void shouldReturnFkCmdWhenFkCmdSpecified() {
+    void shouldMatchWhenAllMatch() {
         Assertions.assertTrue(
-            new EndRoute<>(new FkCmd()).route(new FkUpdWrap()).isPresent()
+            new MatchAll<>(
+                new FkMatch(),
+                new FkMatch()
+            )
+                .match(new FkWrap())
+        );
+    }
+
+    @Test
+    void shouldNotMatchWhenAnyNotMatch() {
+        Assertions.assertFalse(
+            new MatchAll<>(
+                new FkMatch(false),
+                new FkMatch()
+            )
+                .match(new FkWrap())
         );
     }
 }

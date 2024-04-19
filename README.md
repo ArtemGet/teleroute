@@ -31,9 +31,9 @@ And add dependency to your pom.xml
 
 ```xml
 <dependency>
-    <groupId>com.github.artemget</groupId>
+    <groupId>com.github.Artemget</groupId>
     <artifactId>teleroute</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -76,11 +76,11 @@ soon, so you would not need to implement anything of that except commands, of co
 
 There some routes provided by this library that could decorate each other like matryoshkas:
 
-#### 2.1)EndRoute
+#### 2.1)RouteEnd
 This route is actually just provide command:
 
 ```java
-new EndRoute<>(new YourCmd())
+new RouteEnd<>(new YourCmd())
     .route(new YourUpdate())
     .isEmpty();
 //false
@@ -89,20 +89,20 @@ new EndRoute<>(new YourCmd())
 or empty if no command attached to it:
 
 ```java
-new EndRoute<YourUpdate, YourSend>()
+new RouteEnd<YourUpdate, YourSend>()
     .route(new YourUpdate())
     .isEmpty();
 //true;
 ```
 
-#### 2.2)ForkRoute
+#### 2.2)RouteFork
 This route is a fork between two routes, work like if with a condition represented by Match interface ancestor.
 There are many options to use this route.
 
 You could fork between two commands:
 
 ```java
-new ForkRoute<>(
+new RouteFork<>(
         new YourMatch(),
         new YourCommand(),
         new YourSpareCommand()
@@ -112,23 +112,23 @@ new ForkRoute<>(
 or two routes:
 
 ```java
-new ForkRoute<>(
+new RouteFork<>(
         new YourMatch(),
-        new EndRoute<>(new YourCommand()),
-        new EndRoute<>(new YourSpareCommand())
+        new RouteEnd<>(new YourCommand()),
+        new RouteEnd<>(new YourSpareCommand())
         );
 ```
 
 or one route or command with empty return in case of mismatch:
 
 ```java
-new ForkRoute<>(
+new RouteFork<>(
         new YourMatch(),
-        new EndRoute<>(new YourCommand())
+        new RouteEnd<>(new YourCommand())
         );
 
 
-new ForkRoute<>(
+new RouteFork<>(
         new YourMatch(),
         new YourCommand()
 );
@@ -139,16 +139,16 @@ new ForkRoute<>(
 So, you could try building your own routes based on your conditions:
 
 ```java
-new ForkRoute<>(
+new RouteFork<>(
         new YourMatch(),
-        new ForkRoute<>(
+        new RouteFork<>(
                 new YourAnotherMatch(),
                 new YourCommand()
         ),
-        new ForkRoute<>(
+        new RouteFork<>(
                 new YourAnotherMatch(),
                 new YourRoute(...),
-                new ForkRoute<>(
+                new RouteFork<>(
                         new YourAnotherMatch(),
                         new YourCommand()
                 )
@@ -156,53 +156,53 @@ new ForkRoute<>(
 );
 ```
 
-#### 2.3)DfsRoute
+#### 2.3)RouteDfs
 This route iterate over routes until suitable command is found:
 
 ```java
-new DfsRoute<>(
-        new ForkRoute<>(
+new RouteDfs<>(
+        new RouteFork<>(
                 new YourMatch(),
                 new YourCommand(),
                 new YourAnotherCommand()
         ),
-        new ForkRoute<>(
+        new RouteFork<>(
                 new SomeMatch(),
-                new DfsRoute<>(
+                new RouteDfs<>(
                         ...
                 ),
-                new ForkRoute<>(
+                new RouteFork<>(
                         ...
                 )
         ),
-        new DfsRoute<>(
+        new RouteDfs<>(
         ...
         ),
         ...,
-        new EndRoute<>(new NotFoundCommand())
+        new RouteEnd<>(new NotFoundCommand())
 )
 ```
 
-#### 2.4)RndRoute
+#### 2.4)RouteRnd
 This route pick any random route or command, this could be useful if you want random reaction for specific type of
 content, like in [BreadBot](https://github.com/LEVLLN/bread_bot).
 
 ```java
-new ForkRoute<>(
+new RouteFork<>(
         new TextContentMatch(),
-        new RndRoute<>(
+        new RouteRnd<>(
                 new TextReactCommand(),
                 new AnotherTextReactCommand(),
                 ...
         ),
-        new ForkRoute<>(
+        new RouteFork<>(
                 new StickerContentMatch(),
-                new RndRoute<>(
+                new RouteRnd<>(
                         new StickerReactCommand(),
                         new AnotherStickerReactCommand(),
                         ... 
                 ),
-                new ForkRoute<>(
+                new RouteFork<>(
                         ...
                 )
         )
@@ -212,24 +212,24 @@ new ForkRoute<>(
 you could achieve same result using DfsRoute:
 
 ```java
-new DfsRoute<>(
-        new ForkRoute<>(
+new RouteDfs<>(
+        new RouteFork<>(
                 new TextContentMatch(),
-                new RndRoute<>(
+                new RouteRnd<>(
                         new TextReactCommand(),
                         new AnotherTextReactCommand(),
                 ...
                 )   
         ),
-        new ForkRoute<>(
+        new RouteFork<>(
                 new StickerContentMatch(),
-                new RndRoute<>(
+                new RouteRnd<>(
                         new StickerReactCommand(),
                         new AnotherStickerReactCommand(),
                         ... 
                 )
         ),
-        new ForkRoute<>(
+        new RouteFork<>(
                 ...
         ),
         ...

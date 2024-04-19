@@ -24,33 +24,35 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Check update's message's text equals provided text.
+ * Test case {@link MatchCmd}.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * @since 0.1.0
  */
-public final class FullTxtMatch<U> implements Match<U> {
-    /**
-     * Text to compare.
-     */
-    private final String txt;
+final class MatchCmdTest {
 
-    /**
-     * Main constructor. Construct FullTxtMatch.
-     *
-     * @param text Text to match
-     */
-    public FullTxtMatch(final String text) {
-        this.txt = text;
+    @Test
+    void shouldMatchWhenCmd() {
+        Assertions.assertTrue(
+            new MatchCmd<String>().match(new FkWrap())
+        );
     }
 
-    @Override
-    public Boolean match(final UpdWrap<U> update) {
-        return update.text()
-            .map(text -> text.equals(this.txt))
-            .orElse(false);
+    @Test
+    void shouldNotMatchWhenNotCmd() {
+        Assertions.assertFalse(
+            new MatchCmd<String>()
+                .match(
+                    new FkWrap(
+                        123,
+                        false,
+                        "text"
+                    )
+                )
+        );
     }
 }

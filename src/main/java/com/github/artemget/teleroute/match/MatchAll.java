@@ -22,38 +22,47 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.command;
+package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.send.FkSend;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.github.artemget.teleroute.update.Wrap;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
- * Test case {@link MultiCmd}.
+ * Match all conditions.
  *
- * @since 0.0.0
+ * @param <U> Update
+ * @since 0.1.0
  */
-final class MultiCmdTest {
+public final class MatchAll<U> implements Match<U> {
+    /**
+     * Conditions.
+     */
+    private final Collection<Match<U>> matches;
 
-    @Test
-    void shouldSendOneWhenSubmitOne() {
-        Assertions.assertTrue(
-            new MultiCmd<>(
-                new FkCmd(
-                    new FkSend()
-                )
-            )
-                .execute("resp")
-                .isPresent()
-        );
+    /**
+     * Ctor.
+     *
+     * @param matches Conditions
+     */
+    @SafeVarargs
+    public MatchAll(final Match<U>... matches) {
+        this(Arrays.asList(matches));
     }
 
-    @Test
-    void shouldNotSendWhenError() {
-        Assertions.assertTrue(
-            new MultiCmd<>(new FkCmdErr())
-                .execute("resp")
-                .isEmpty()
-        );
+    /**
+     * Main ctor.
+     *
+     * @param matches Conditions
+     */
+    public MatchAll(final Collection<Match<U>> matches) {
+        this.matches = Collections.unmodifiableCollection(matches);
+    }
+
+    @Override
+    public Boolean match(final Wrap<U> update) {
+        return this.matches.stream()
+            .allMatch(match -> match.match(update));
     }
 }

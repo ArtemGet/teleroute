@@ -29,16 +29,16 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link MultiSend}.
+ * Test case {@link SendBatch}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class MultiSendTest {
+final class SendBatchTest {
 
     @Test
     void shouldSingleWhenSubmittedSingle() {
         final FkClient client = new FkClient();
-        new MultiSend<>(new FkSend("resp")).send(client);
+        new SendBatch<>(new FkSend("resp")).send(client);
         Assertions.assertEquals(
             List.of("resp"),
             client.sent()
@@ -48,7 +48,7 @@ final class MultiSendTest {
     @Test
     void shouldMultiWhenSubmittedMulti() {
         final FkClient client = new FkClient();
-        new MultiSend<>(
+        new SendBatch<>(
             new FkSend("resp1"),
             new FkSend("resp2"),
             new FkSend("resp3")
@@ -62,7 +62,7 @@ final class MultiSendTest {
     @Test
     void shouldNotSendWhenError() {
         final FkClient client = new FkClient();
-        new MultiSend<>(new FkSendErr()).send(client);
+        new SendBatch<>(new FkSendErr()).send(client);
         Assertions.assertEquals(
             List.of(),
             client.sent()
@@ -72,7 +72,7 @@ final class MultiSendTest {
     @Test
     void shouldSendOnlyOneWhenManyError() {
         final FkClient client = new FkClient();
-        new MultiSend<>(
+        new SendBatch<>(
             new FkSendErr(),
             new FkSendErr(),
             new FkSend("resp")

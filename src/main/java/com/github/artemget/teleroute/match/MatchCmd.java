@@ -24,35 +24,17 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.FkUpdWrap;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.github.artemget.teleroute.update.Wrap;
 
 /**
- * Test case {@link CmdMatch}.
+ * Match command.
  *
- * @since 0.0.0
+ * @param <U> Update
+ * @since 0.1.0
  */
-final class CmdMatchTest {
-
-    @Test
-    void shouldMatchWhenCmd() {
-        Assertions.assertTrue(
-            new CmdMatch<String>().match(new FkUpdWrap())
-        );
-    }
-
-    @Test
-    void shouldNotMatchWhenNotCmd() {
-        Assertions.assertFalse(
-            new CmdMatch<String>()
-                .match(
-                    new FkUpdWrap(
-                        123,
-                        false,
-                        "text"
-                    )
-                )
-        );
+public final class MatchCmd<U> implements Match<U> {
+    @Override
+    public Boolean match(final Wrap<U> update) {
+        return update.isCommand();
     }
 }

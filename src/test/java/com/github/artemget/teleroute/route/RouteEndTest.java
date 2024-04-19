@@ -26,57 +26,28 @@ package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.send.FkClient;
-import com.github.artemget.teleroute.send.FkSend;
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.update.FkWrap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link DfsRoute}.
+ * Test case {@link RouteEnd}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class DfsRouteTest {
+final class RouteEndTest {
 
     @Test
-    void shouldRouteEmptyWhenEmpty() {
+    void shouldBeEmptyWhenNoCommandSpecified() {
         Assertions.assertTrue(
-            new DfsRoute<String, FkClient>(new EndRoute<>())
-                .route(new FkUpdWrap())
-                .isEmpty()
+            new RouteEnd<String, FkClient>().route(new FkWrap()).isEmpty()
         );
     }
 
     @Test
-    void shouldRouteEmptyWhenNullUpdate() {
+    void shouldReturnFkCmdWhenFkCmdSpecified() {
         Assertions.assertTrue(
-            new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
-                .route(null)
-                .isEmpty()
-        );
-    }
-
-    @Test
-    void shouldRouteFirstWhenOneSubmitted() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend("resp")),
-            new DfsRoute<>(new EndRoute<>(new FkCmd(new FkSend("resp"))))
-                .route(new FkUpdWrap())
-                .get()
-        );
-    }
-
-    @Test
-    void shouldRouteFirstSuitableWhenManySubmitted() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend("resp1")),
-            new DfsRoute<>(
-                new EndRoute<>(),
-                new EndRoute<>(new FkCmd(new FkSend("resp1"))),
-                new EndRoute<>(new FkCmd(new FkSend("resp2")))
-            )
-                .route(new FkUpdWrap())
-                .get()
+            new RouteEnd<>(new FkCmd()).route(new FkWrap()).isPresent()
         );
     }
 }

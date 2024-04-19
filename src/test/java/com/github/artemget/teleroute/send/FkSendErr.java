@@ -27,7 +27,7 @@ package com.github.artemget.teleroute.send;
 /**
  * Fake send, always throws error.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 public final class FkSendErr implements Send<FkClient> {
     @Override

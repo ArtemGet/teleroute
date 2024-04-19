@@ -24,45 +24,28 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.UpdWrap;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import com.github.artemget.teleroute.update.FkWrap;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Check update match all condition.
+ * Test case {@link MatchTextExact}.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * @since 0.1.0
  */
-public final class AllMatch<U> implements Match<U> {
-    /**
-     * Match conditions.
-     */
-    private final Collection<Match<U>> matches;
+final class MatchTextExactTest {
 
-    /**
-     * Construct AllMatch contains one or many conditions.
-     *
-     * @param matches Conditions
-     */
-    @SafeVarargs
-    public AllMatch(final Match<U>... matches) {
-        this(Arrays.asList(matches));
+    @Test
+    void shouldMatchWhenFullTextMatch() {
+        Assertions.assertTrue(
+            new MatchTextExact<String>("text").match(new FkWrap())
+        );
     }
 
-    /**
-     * Main constructor. Construct AllMatch contains collection of conditions.
-     *
-     * @param matches Conditions
-     */
-    public AllMatch(final Collection<Match<U>> matches) {
-        this.matches = Collections.unmodifiableCollection(matches);
-    }
-
-    @Override
-    public Boolean match(final UpdWrap<U> update) {
-        return this.matches.stream()
-            .allMatch(match -> match.match(update));
+    @Test
+    void shouldNotMatchWhenFullTextNotMatch() {
+        Assertions.assertFalse(
+            new MatchTextExact<String>("not").match(new FkWrap())
+        );
     }
 }

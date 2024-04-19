@@ -22,45 +22,38 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.match;
+package com.github.artemget.teleroute.command;
 
-import com.github.artemget.teleroute.update.FkUpdWrap;
+import com.github.artemget.teleroute.send.FkSend;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link AllMatch}.
+ * Test case {@link CmdBatch}.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
-final class AllMatchTest {
+final class CmdBatchTest {
 
     @Test
-    void shouldMatchWhenNoConditionSpecified() {
+    void shouldSendOneWhenSubmitOne() {
         Assertions.assertTrue(
-            new AllMatch<String>().match(new FkUpdWrap())
+            new CmdBatch<>(
+                new FkCmd(
+                    new FkSend()
+                )
+            )
+                .execute("resp")
+                .isPresent()
         );
     }
 
     @Test
-    void shouldMatchWhenAllMatch() {
+    void shouldNotSendWhenError() {
         Assertions.assertTrue(
-            new AllMatch<>(
-                new FkMatch(),
-                new FkMatch()
-            )
-                .match(new FkUpdWrap())
-        );
-    }
-
-    @Test
-    void shouldNotMatchWhenAnyNotMatch() {
-        Assertions.assertFalse(
-            new AllMatch<>(
-                new FkMatch(false),
-                new FkMatch()
-            )
-                .match(new FkUpdWrap())
+            new CmdBatch<>(new FkCmdErr())
+                .execute("resp")
+                .isEmpty()
         );
     }
 }

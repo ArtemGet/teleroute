@@ -22,43 +22,56 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.update;
+package com.github.artemget.teleroute.match;
 
-import java.util.Optional;
+import com.github.artemget.teleroute.update.FkWrap;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Update wrapper, provide data required by routes and matches.
- * Implement on your own risk.
+ * Test case {@link MatchAny}.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * @since 0.1.0
  */
-public interface UpdWrap<U> {
-    /**
-     * Provide update identity.
-     *
-     * @return Update identity
-     */
-    Integer identity();
+final class MatchAnyTest {
 
-    /**
-     * Define is this update contains telegram command.
-     *
-     * @return Is command
-     */
-    Boolean isCommand();
+    @Test
+    void matchShouldMatchWhenNoConditionSpecified() {
+        Assertions.assertTrue(
+            new MatchAny<String>().match(new FkWrap())
+        );
+    }
 
-    /**
-     * Provide update's text if exists.
-     *
-     * @return Update's text
-     */
-    Optional<String> text();
+    @Test
+    void matchShouldMatchWhenAllMatch() {
+        Assertions.assertTrue(
+            new MatchAny<>(
+                new FkMatch(),
+                new FkMatch()
+            )
+                .match(new FkWrap())
+        );
+    }
 
-    /**
-     * Provide telegram update.
-     *
-     * @return Telegram update
-     */
-    U src();
+    @Test
+    void shouldMatchWhenAnyMatch() {
+        Assertions.assertTrue(
+            new MatchAny<>(
+                new FkMatch(false),
+                new FkMatch()
+            )
+                .match(new FkWrap())
+        );
+    }
+
+    @Test
+    void shouldNotMatchWhenNoneMatch() {
+        Assertions.assertFalse(
+            new MatchAny<>(
+                new FkMatch(false),
+                new FkMatch(false)
+            )
+                .match(new FkWrap())
+        );
+    }
 }

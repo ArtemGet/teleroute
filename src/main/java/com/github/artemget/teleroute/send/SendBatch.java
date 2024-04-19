@@ -22,81 +22,63 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.update;
+package com.github.artemget.teleroute.send;
 
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Fake Update.
+ * Sends many commands as one.
  *
- * @since 0.0.0
+ * @param <C> Client
+ * @since 0.1.0
  */
-public final class FkUpdWrap implements UpdWrap<String> {
+public final class SendBatch<C> implements Send<C> {
     /**
-     * Default identity.
+     * Logger.
      */
-    private static final Integer ID = 123;
+    private static final Logger LOG = LoggerFactory.getLogger(SendBatch.class);
 
     /**
-     * Telegram command.
+     * Sends.
      */
-    private static final Boolean COMMAND = true;
+    private final Collection<Send<C>> sends;
 
     /**
-     * Content.
+     * Ctor.
+     *
+     * @param sends Sends
      */
-    private static final String DEFAULT_TEXT = "text";
-
-    /**
-     * Id.
-     */
-    private final Integer id;
-
-    /**
-     * Either command or not.
-     */
-    private final Boolean command;
-
-    /**
-     * Update content.
-     */
-    private final String content;
-
-    public FkUpdWrap() {
-        this(
-            FkUpdWrap.ID,
-            FkUpdWrap.COMMAND,
-            FkUpdWrap.DEFAULT_TEXT
-        );
+    @SafeVarargs
+    public SendBatch(final Send<C>... sends) {
+        this(Arrays.asList(sends));
     }
 
-    public FkUpdWrap(
-        final Integer id,
-        final Boolean command,
-        final String content
-    ) {
-        this.id = id;
-        this.command = command;
-        this.content = content;
+    /**
+     * Main ctor.
+     *
+     * @param sends Sends
+     */
+    public SendBatch(final Collection<Send<C>> sends) {
+        this.sends = Collections.unmodifiableCollection(sends);
     }
 
     @Override
-    public Integer identity() {
-        return this.id;
-    }
-
-    @Override
-    public Boolean isCommand() {
-        return this.command;
-    }
-
-    @Override
-    public Optional<String> text() {
-        return Optional.of(this.src());
-    }
-
-    @Override
-    public String src() {
-        return this.content;
+    public void send(final C client) {
+        this.sends.forEach(
+            send -> {
+                try {
+                    send.send(client);
+                } catch (final SendException exception) {
+                    SendBatch.LOG.warn(
+                        "Unable to send message: {}",
+                        exception.getMessage(),
+                        exception
+                    );
+                }
+            });
     }
 }

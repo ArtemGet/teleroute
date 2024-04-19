@@ -24,12 +24,12 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.UpdWrap;
+import com.github.artemget.teleroute.update.Wrap;
 
 /**
  * Fake match condition.
  *
- * @since 0.0.0
+ * @since 0.1.0
  */
 public final class FkMatch implements Match<String> {
     /**
@@ -49,7 +49,7 @@ public final class FkMatch implements Match<String> {
     }
 
     @Override
-    public Boolean match(final UpdWrap<String> update) {
+    public Boolean match(final Wrap<String> update) {
         return this.condition;
     }
 }

@@ -22,54 +22,56 @@
  * SOFTWARE.
  */
 
-package com.github.artemget.teleroute.match;
+package com.github.artemget.teleroute.route;
 
-import com.github.artemget.teleroute.update.UpdWrap;
-import java.util.Arrays;
+import com.github.artemget.teleroute.command.Cmd;
+import com.github.artemget.teleroute.update.Wrap;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 
 /**
- * Check update match any condition.
+ * Route to single command or none.
  *
- * @param <U> Telegram update, i.e. telegrambots Update or your own telegram update implementation
- * @since 0.0.0
+ * <p><img src="../doc-files/EndRouteScheme.png" width=1000>
+ *
+ * @param <U> Update
+ * @param <C> Client
+ * @since 0.1.0
  */
-public final class AnyMatch<U> implements Match<U> {
+public final class RouteEnd<U, C> implements Route<U, C> {
     /**
-     * Match conditions.
+     * Command.
      */
-    private final Collection<Match<U>> matches;
+    private final Collection<Cmd<U, C>> cmd;
 
     /**
-     * Construct AnyMatch contains one or many conditions.
-     *
-     * @param matches Conditions
+     * Ctor.
      */
-    @SafeVarargs
-    public AnyMatch(final Match<U>... matches) {
-        this(Arrays.asList(matches));
+    public RouteEnd() {
+        this(Collections.emptyList());
     }
 
     /**
-     * Main constructor. Construct AnyMatch contains many conditions.
+     * Ctor.
      *
-     * @param matches Conditions
+     * @param command Command
      */
-    public AnyMatch(final Collection<Match<U>> matches) {
-        this.matches = Collections.unmodifiableCollection(matches);
+    public RouteEnd(final Cmd<U, C> command) {
+        this(Collections.singletonList(command));
+    }
+
+    /**
+     * Main ctor.
+     *
+     * @param commands Command
+     */
+    private RouteEnd(final Collection<Cmd<U, C>> commands) {
+        this.cmd = commands;
     }
 
     @Override
-    public Boolean match(final UpdWrap<U> update) {
-        final boolean matched;
-        if (this.matches.isEmpty()) {
-            matched = true;
-        } else {
-            matched = this.matches
-                .stream()
-                .anyMatch(match -> match.match(update));
-        }
-        return matched;
+    public Optional<Cmd<U, C>> route(final Wrap<U> update) {
+        return this.cmd.stream().findFirst();
     }
 }
