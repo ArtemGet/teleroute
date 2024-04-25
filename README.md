@@ -15,6 +15,7 @@ In case you want to use teleroute with other telegram library:
 1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
 2) [java-telegram-bot-api integration (TODO)]()
 3) [elegram-api (TODO)]()
+4) [C# port](https://github.com/varya-kot/teleroute)
 
 This library is distributed via [Github Packages (actual)](https://github.com/ArtemGet/teleroute/packages/2122234) so
 you have to include this setting in your ~/.m2
