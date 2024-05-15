@@ -25,9 +25,9 @@
 package com.github.artemget.teleroute.route;
 
 import com.github.artemget.teleroute.command.Cmd;
-import com.github.artemget.teleroute.match.Match;
 import com.github.artemget.teleroute.update.Wrap;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 /**
  * Fork route. Pick origin or spare route.
@@ -52,7 +52,7 @@ public final class RouteFork<U, C> implements Route<U, C> {
     /**
      * Match condition.
      */
-    private final Match<U> match;
+    private final Predicate<Wrap<U>> match;
 
     /**
      * Ctor.
@@ -60,7 +60,7 @@ public final class RouteFork<U, C> implements Route<U, C> {
      * @param match Condition
      * @param origin Command
      */
-    public RouteFork(final Match<U> match, final Cmd<U, C> origin) {
+    public RouteFork(final Predicate<Wrap<U>> match, final Cmd<U, C> origin) {
         this(match, new RouteEnd<>(origin), new RouteEnd<>());
     }
 
@@ -71,7 +71,11 @@ public final class RouteFork<U, C> implements Route<U, C> {
      * @param origin Command
      * @param spare Command
      */
-    public RouteFork(final Match<U> match, final Cmd<U, C> origin, final Cmd<U, C> spare) {
+    public RouteFork(
+        final Predicate<Wrap<U>> match,
+        final Cmd<U, C> origin,
+        final Cmd<U, C> spare
+    ) {
         this(match, new RouteEnd<>(origin), new RouteEnd<>(spare));
     }
 
@@ -81,7 +85,7 @@ public final class RouteFork<U, C> implements Route<U, C> {
      * @param match Condition
      * @param origin Route
      */
-    public RouteFork(final Match<U> match, final Route<U, C> origin) {
+    public RouteFork(final Predicate<Wrap<U>> match, final Route<U, C> origin) {
         this(match, origin, new RouteEnd<>());
     }
 
@@ -92,7 +96,11 @@ public final class RouteFork<U, C> implements Route<U, C> {
      * @param origin Route
      * @param spare Route
      */
-    public RouteFork(final Match<U> match, final Route<U, C> origin, final Route<U, C> spare) {
+    public RouteFork(
+        final Predicate<Wrap<U>> match,
+        final Route<U, C> origin,
+        final Route<U, C> spare
+    ) {
         this.match = match;
         this.origin = origin;
         this.spare = spare;
@@ -101,7 +109,7 @@ public final class RouteFork<U, C> implements Route<U, C> {
     @Override
     public Optional<Cmd<U, C>> route(final Wrap<U> update) {
         final Optional<Cmd<U, C>> resp;
-        if (this.match.match(update)) {
+        if (this.match.test(update)) {
             resp = this.origin.route(update);
         } else {
             resp = this.spare.route(update);

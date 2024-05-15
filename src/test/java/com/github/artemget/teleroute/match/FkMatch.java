@@ -25,13 +25,14 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.Wrap;
+import java.util.function.Predicate;
 
 /**
  * Fake match condition.
  *
  * @since 0.1.0
  */
-public final class FkMatch implements Match<String> {
+public final class FkMatch implements Predicate<Wrap<String>> {
     /**
      * Matching condition.
      */
@@ -49,7 +50,7 @@ public final class FkMatch implements Match<String> {
     }
 
     @Override
-    public Boolean match(final Wrap<String> update) {
+    public boolean test(final Wrap<String> update) {
         return this.condition;
     }
 }

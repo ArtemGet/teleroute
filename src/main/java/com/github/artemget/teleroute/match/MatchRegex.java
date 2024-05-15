@@ -24,35 +24,44 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import com.github.artemget.teleroute.update.Wrap;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
- * Test case {@link MatchTextPart}.
+ * Match text pattern.
  *
- * @since 0.1.0
+ * @param <U> Update
+ * @since 0.3.0
  */
-final class MatchTextPartTest {
+public final class MatchRegex<U> implements Predicate<Wrap<U>> {
+    /**
+     * Pattern to compare.
+     */
+    private final Pattern pattern;
 
-    @Test
-    void shouldMatchWhenFullTextMatch() {
-        Assertions.assertTrue(
-            new MatchTextPart<String>("text").match(new FkWrap())
-        );
+    /**
+     * Ctor.
+     *
+     * @param regex Regex string to compare.
+     */
+    public MatchRegex(final String regex) {
+        this(Pattern.compile(regex));
     }
 
-    @Test
-    void shouldMatchWhenTextOccurs() {
-        Assertions.assertTrue(
-            new MatchTextPart<String>("te").match(new FkWrap())
-        );
+    /**
+     * Main ctor.
+     *
+     * @param pattern Pattern to compare.
+     */
+    public MatchRegex(final Pattern pattern) {
+        this.pattern = pattern;
     }
 
-    @Test
-    void shouldNotMatchWhenTextNotOccurs() {
-        Assertions.assertFalse(
-            new MatchTextPart<String>("not").match(new FkWrap())
-        );
+    @Override
+    public boolean test(final Wrap<U> update) {
+        return update.text()
+            .map(text -> this.pattern.matcher(text).matches())
+            .orElse(false);
     }
 }

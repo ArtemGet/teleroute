@@ -24,43 +24,44 @@
 
 package com.github.artemget.teleroute.match;
 
-import com.github.artemget.teleroute.update.Wrap;
+import com.github.artemget.teleroute.update.FkWrap;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
- * Match text pattern.
+ * Test case {@link MatchRegex}.
  *
- * @param <U> Update
- * @since 0.2.1
+ * @since 0.3.0
  */
-public final class MatchTextRegex<U> implements Match<U> {
-    /**
-     * Pattern to compare.
-     */
-    private final Pattern pattern;
-
-    /**
-     * Ctor.
-     *
-     * @param regex Regex string to compare.
-     */
-    public MatchTextRegex(final String regex) {
-        this(Pattern.compile(regex));
+final class MatchRegexTest {
+    @Test
+    void shouldThrowExceptionWhenRegexNull() {
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> new MatchRegex<String>((String) null).test(new FkWrap())
+        );
     }
 
-    /**
-     * Main ctor.
-     *
-     * @param pattern Pattern to compare.
-     */
-    public MatchTextRegex(final Pattern pattern) {
-        this.pattern = pattern;
+    @Test
+    void shouldThrowExceptionWhenPatternNull() {
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> new MatchRegex<String>((Pattern) null).test(new FkWrap())
+        );
     }
 
-    @Override
-    public Boolean match(final Wrap<U> update) {
-        return update.text()
-            .map(text -> this.pattern.matcher(text).matches())
-            .orElse(false);
+    @Test
+    void shouldMatchWhenRegex() {
+        Assertions.assertTrue(
+            new MatchRegex<String>("\\D+").test(new FkWrap())
+        );
+    }
+
+    @Test
+    void shouldMatchWhenPattern() {
+        Assertions.assertTrue(
+            new MatchRegex<String>(Pattern.compile("\\D+")).test(new FkWrap())
+        );
     }
 }
