@@ -28,6 +28,7 @@ import com.github.artemget.teleroute.update.Wrap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.function.Predicate;
 
 /**
  * Match all conditions.
@@ -35,11 +36,11 @@ import java.util.Collections;
  * @param <U> Update
  * @since 0.1.0
  */
-public final class MatchAll<U> implements Match<U> {
+public final class MatchAll<U> implements Predicate<Wrap<U>> {
     /**
      * Conditions.
      */
-    private final Collection<Match<U>> matches;
+    private final Collection<Predicate<Wrap<U>>> matches;
 
     /**
      * Ctor.
@@ -47,7 +48,7 @@ public final class MatchAll<U> implements Match<U> {
      * @param matches Conditions
      */
     @SafeVarargs
-    public MatchAll(final Match<U>... matches) {
+    public MatchAll(final Predicate<Wrap<U>>... matches) {
         this(Arrays.asList(matches));
     }
 
@@ -56,13 +57,13 @@ public final class MatchAll<U> implements Match<U> {
      *
      * @param matches Conditions
      */
-    public MatchAll(final Collection<Match<U>> matches) {
+    public MatchAll(final Collection<Predicate<Wrap<U>>> matches) {
         this.matches = Collections.unmodifiableCollection(matches);
     }
 
     @Override
-    public Boolean match(final Wrap<U> update) {
+    public boolean test(final Wrap<U> update) {
         return this.matches.stream()
-            .allMatch(match -> match.match(update));
+            .allMatch(match -> match.test(update));
     }
 }

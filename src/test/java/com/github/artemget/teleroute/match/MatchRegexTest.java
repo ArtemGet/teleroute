@@ -25,34 +25,43 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.FkWrap;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test case {@link MatchTextPart}.
+ * Test case {@link MatchRegex}.
  *
- * @since 0.1.0
+ * @since 0.3.0
  */
-final class MatchTextPartTest {
-
+final class MatchRegexTest {
     @Test
-    void shouldMatchWhenFullTextMatch() {
-        Assertions.assertTrue(
-            new MatchTextPart<String>("text").match(new FkWrap())
+    void shouldThrowExceptionWhenRegexNull() {
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> new MatchRegex<String>((String) null).test(new FkWrap())
         );
     }
 
     @Test
-    void shouldMatchWhenTextOccurs() {
-        Assertions.assertTrue(
-            new MatchTextPart<String>("te").match(new FkWrap())
+    void shouldThrowExceptionWhenPatternNull() {
+        Assertions.assertThrows(
+            NullPointerException.class,
+            () -> new MatchRegex<String>((Pattern) null).test(new FkWrap())
         );
     }
 
     @Test
-    void shouldNotMatchWhenTextNotOccurs() {
-        Assertions.assertFalse(
-            new MatchTextPart<String>("not").match(new FkWrap())
+    void shouldMatchWhenRegex() {
+        Assertions.assertTrue(
+            new MatchRegex<String>("\\D+").test(new FkWrap())
+        );
+    }
+
+    @Test
+    void shouldMatchWhenPattern() {
+        Assertions.assertTrue(
+            new MatchRegex<String>(Pattern.compile("\\D+")).test(new FkWrap())
         );
     }
 }

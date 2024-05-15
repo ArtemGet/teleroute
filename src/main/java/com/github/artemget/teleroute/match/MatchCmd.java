@@ -25,6 +25,7 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.Wrap;
+import java.util.function.Predicate;
 
 /**
  * Match command.
@@ -32,9 +33,9 @@ import com.github.artemget.teleroute.update.Wrap;
  * @param <U> Update
  * @since 0.1.0
  */
-public final class MatchCmd<U> implements Match<U> {
+public final class MatchCmd<U> implements Predicate<Wrap<U>> {
     @Override
-    public Boolean match(final Wrap<U> update) {
+    public boolean test(final Wrap<U> update) {
         return update.isCommand();
     }
 }

@@ -25,32 +25,43 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.Wrap;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 /**
- * Match text occurrence.
+ * Match text pattern.
  *
  * @param <U> Update
- * @since 0.1.0
+ * @since 0.3.0
  */
-public final class MatchTextPart<U> implements Match<U> {
+public final class MatchRegex<U> implements Predicate<Wrap<U>> {
     /**
-     * Text to compare.
+     * Pattern to compare.
      */
-    private final String txt;
+    private final Pattern pattern;
+
+    /**
+     * Ctor.
+     *
+     * @param regex Regex string to compare.
+     */
+    public MatchRegex(final String regex) {
+        this(Pattern.compile(regex));
+    }
 
     /**
      * Main ctor.
      *
-     * @param text Text to match
+     * @param pattern Pattern to compare.
      */
-    public MatchTextPart(final String text) {
-        this.txt = text;
+    public MatchRegex(final Pattern pattern) {
+        this.pattern = pattern;
     }
 
     @Override
-    public Boolean match(final Wrap<U> update) {
+    public boolean test(final Wrap<U> update) {
         return update.text()
-            .map(text -> text.contains(this.txt))
+            .map(text -> this.pattern.matcher(text).matches())
             .orElse(false);
     }
 }

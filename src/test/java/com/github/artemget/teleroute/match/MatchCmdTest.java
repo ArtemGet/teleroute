@@ -38,7 +38,7 @@ final class MatchCmdTest {
     @Test
     void shouldMatchWhenCmd() {
         Assertions.assertTrue(
-            new MatchCmd<String>().match(new FkWrap())
+            new MatchCmd<String>().test(new FkWrap())
         );
     }
 
@@ -46,7 +46,7 @@ final class MatchCmdTest {
     void shouldNotMatchWhenNotCmd() {
         Assertions.assertFalse(
             new MatchCmd<String>()
-                .match(
+                .test(
                     new FkWrap(
                         123,
                         false,

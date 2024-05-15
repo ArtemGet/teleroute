@@ -38,7 +38,7 @@ final class MatchAllTest {
     @Test
     void shouldMatchWhenNoConditionSpecified() {
         Assertions.assertTrue(
-            new MatchAll<String>().match(new FkWrap())
+            new MatchAll<String>().test(new FkWrap())
         );
     }
 
@@ -49,7 +49,7 @@ final class MatchAllTest {
                 new FkMatch(),
                 new FkMatch()
             )
-                .match(new FkWrap())
+                .test(new FkWrap())
         );
     }
 
@@ -60,7 +60,7 @@ final class MatchAllTest {
                 new FkMatch(false),
                 new FkMatch()
             )
-                .match(new FkWrap())
+                .test(new FkWrap())
         );
     }
 }
