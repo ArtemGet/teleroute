@@ -34,7 +34,7 @@ And add dependency to your pom.xml
 <dependency>
     <groupId>com.github.Artemget</groupId>
     <artifactId>teleroute</artifactId>
-    <version>0.2.0</version>
+    <version>0.3.0</version>
 </dependency>
 ```
 
