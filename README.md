@@ -26,6 +26,14 @@ you have to include this setting in your ~/.m2
     <name>Github ArtemGet Apache Maven Packages</name>
     <url>https://maven.pkg.github.com/ArtemGet/teleroute</url>
 </repository>
+
+<servers>
+    <server>
+        <id>github</id>
+        <username>your_username</username>
+        <password>your_token</password>
+    </server>
+</servers>
 ```
 
 And add dependency to your pom.xml
