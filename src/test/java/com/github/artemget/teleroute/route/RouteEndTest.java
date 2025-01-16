@@ -27,7 +27,8 @@ package com.github.artemget.teleroute.route;
 import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -38,16 +39,20 @@ import org.junit.jupiter.api.Test;
 final class RouteEndTest {
 
     @Test
-    void shouldBeEmptyWhenNoCommandSpecified() {
-        Assertions.assertTrue(
-            new RouteEnd<String, FkClient>().route(new FkWrap()).isEmpty()
+    void returnsNotWhenNoCommandSpecified() {
+        MatcherAssert.assertThat(
+            "Routes to command that dont exist",
+            new RouteEnd<String, FkClient>().route(new FkWrap()).isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldReturnFkCmdWhenFkCmdSpecified() {
-        Assertions.assertTrue(
-            new RouteEnd<>(new FkCmd()).route(new FkWrap()).isPresent()
+    void returnsFkCmdWhenFkCmdSpecified() {
+        MatcherAssert.assertThat(
+            "Didnt route to single specified command",
+            new RouteEnd<>(new FkCmd()).route(new FkWrap()).isPresent(),
+            Matchers.equalTo(true)
         );
     }
 }
