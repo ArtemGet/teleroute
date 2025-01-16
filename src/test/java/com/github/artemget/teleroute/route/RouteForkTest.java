@@ -28,7 +28,8 @@ import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.match.FkMatch;
 import com.github.artemget.teleroute.send.FkSend;
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,110 +40,104 @@ import org.junit.jupiter.api.Test;
 final class RouteForkTest {
 
     @Test
-    void shouldRouteCmdWhenMatchAndNoSpareCmd() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend()),
+    void routesToCmdWhenMatchAndNoSpareCmd() {
+        MatcherAssert.assertThat(
+            "Didnt route to matched command",
             new RouteFork<>(
                 new FkMatch(),
                 new FkCmd(new FkSend())
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend()))
         );
     }
 
     @Test
-    void shouldRouteEmptyWhenNotMatchAndNoSpareCmd() {
-        Assertions.assertTrue(
+    void routesNotWhenNotMatchAndNoSpareCmd() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
             new RouteFork<>(
                 new FkMatch(false),
                 new FkCmd(new FkSend())
-            )
-                .route(new FkWrap())
-                .isEmpty()
+            ).route(new FkWrap()).isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteCmdWhenMatchAndSpareCmd() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend()),
+    void routesCmdWhenMatchAndSpareCmd() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
             new RouteFork<>(
                 new FkMatch(),
                 new FkCmd(new FkSend()),
                 new FkCmd()
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend()))
         );
     }
 
     @Test
-    void shouldRouteSpareCmdWhenNotMatchAndSpareCmd() {
-        Assertions.assertEquals(
-            new FkCmd(),
+    void routesSpareCmdWhenNotMatchAndSpareCmd() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
             new RouteFork<>(
                 new FkMatch(false),
                 new FkCmd(new FkSend()),
                 new FkCmd()
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd())
         );
     }
 
     //routes
 
     @Test
-    void shouldRouteWhenMatchAndNoSpareRoute() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend()),
+    void routesWhenMatchAndNoSpareRoute() {
+        MatcherAssert.assertThat(
+            "Didnt route to matched command",
             new RouteFork<>(
                 new FkMatch(),
                 new RouteEnd<>(new FkCmd(new FkSend()))
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend()))
         );
     }
 
     @Test
-    void shouldRouteEmptyWhenNotMatchAndNoSpareRoute() {
-        Assertions.assertTrue(
+    void routesEmptyWhenNotMatchAndNoSpareRoute() {
+        MatcherAssert.assertThat(
+            "Routes to command that not matched",
             new RouteFork<>(
                 new FkMatch(false),
                 new RouteEnd<>(new FkCmd(new FkSend()))
-            )
-                .route(new FkWrap())
-                .isEmpty()
+            ).route(new FkWrap()).isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteWhenMatchAndSpareRoute() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend()),
+    void routesWhenMatchAndSpareRoute() {
+        MatcherAssert.assertThat(
+            "Didnt route to matched command",
             new RouteFork<>(
                 new FkMatch(),
                 new RouteEnd<>(new FkCmd(new FkSend())),
                 new RouteEnd<>(new FkCmd())
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend()))
         );
     }
 
     @Test
-    void shouldRouteSpareRouteWhenNotMatchAndSpareRoute() {
-        Assertions.assertEquals(
-            new FkCmd(),
+    void routesSpareRouteWhenNotMatchAndSpareRoute() {
+        MatcherAssert.assertThat(
+            "Didnt route to matched command",
             new RouteFork<>(
                 new FkMatch(false),
                 new RouteEnd<>(new FkCmd(new FkSend())),
                 new RouteEnd<>(new FkCmd())
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd())
         );
     }
 }
