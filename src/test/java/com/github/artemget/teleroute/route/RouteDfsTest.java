@@ -28,7 +28,8 @@ import com.github.artemget.teleroute.command.FkCmd;
 import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.FkSend;
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -39,44 +40,48 @@ import org.junit.jupiter.api.Test;
 final class RouteDfsTest {
 
     @Test
-    void shouldRouteEmptyWhenEmpty() {
-        Assertions.assertTrue(
+    void routesNotWhenEmpty() {
+        MatcherAssert.assertThat(
+            "Routes with no commands",
             new RouteDfs<String, FkClient>(new RouteEnd<>())
                 .route(new FkWrap())
-                .isEmpty()
+                .isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteEmptyWhenNullUpdate() {
-        Assertions.assertTrue(
+    void routesNotWhenNullUpdate() {
+        MatcherAssert.assertThat(
+            "Routes with corrupted update",
             new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
                 .route(null)
-                .isEmpty()
+                .isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteFirstWhenOneSubmitted() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend("resp")),
+    void routesFirstWhenOneSubmitted() {
+        MatcherAssert.assertThat(
+            "Failed to route to single assigned command",
             new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
                 .route(new FkWrap())
-                .get()
+                .get(),
+            Matchers.equalTo(new FkCmd(new FkSend("resp")))
         );
     }
 
     @Test
-    void shouldRouteFirstSuitableWhenManySubmitted() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend("resp1")),
+    void routesFirstSuitableWhenManySubmitted() {
+        MatcherAssert.assertThat(
+            "Routes to not first suitable command",
             new RouteDfs<>(
                 new RouteEnd<>(),
                 new RouteEnd<>(new FkCmd(new FkSend("resp1"))),
                 new RouteEnd<>(new FkCmd(new FkSend("resp2")))
-            )
-                .route(new FkWrap())
-                .get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend("resp1")))
         );
     }
 }
