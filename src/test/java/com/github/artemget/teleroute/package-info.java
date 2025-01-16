@@ -24,5 +24,9 @@
 
 /**
  * Test package.
+ * @todo #13:30min I suggest adding
+ *  <a href="https://github.com/volodya-lombrozo/jtcop">jtcop</a> plugin
+ *  to check either test fits best practises or not.
+ *  If there are some checks failing - let's fix them.
  */
 package com.github.artemget.teleroute;
