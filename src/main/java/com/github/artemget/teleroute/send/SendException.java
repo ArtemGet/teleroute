@@ -24,12 +24,17 @@
 
 package com.github.artemget.teleroute.send;
 
+import java.io.Serial;
+
 /**
  * Send exception.
  *
  * @since 0.1.0
  */
 public class SendException extends Exception {
+    @Serial
+    private static final long serialVersionUID = -1744765955170305606L;
+
     public SendException() {
         super();
     }

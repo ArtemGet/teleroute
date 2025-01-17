@@ -24,12 +24,17 @@
 
 package com.github.artemget.teleroute.command;
 
+import java.io.Serial;
+
 /**
  * Command execution exception.
  *
  * @since 0.2.0
  */
 public class CmdException extends Exception {
+    @Serial
+    private static final long serialVersionUID = 4174661814037122455L;
+
     public CmdException() {
         super();
     }
