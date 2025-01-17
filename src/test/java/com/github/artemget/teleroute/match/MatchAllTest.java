@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,31 +37,35 @@ import org.junit.jupiter.api.Test;
 final class MatchAllTest {
 
     @Test
-    void shouldMatchWhenNoConditionSpecified() {
-        Assertions.assertTrue(
-            new MatchAll<String>().test(new FkWrap())
+    void matchesWhenNoConditionSpecified() {
+        MatcherAssert.assertThat(
+            "Didnt match without condition",
+            new MatchAll<String>().test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldMatchWhenAllMatch() {
-        Assertions.assertTrue(
+    void matchesWhenAllMatch() {
+        MatcherAssert.assertThat(
+            "Didnt match valid matches",
             new MatchAll<>(
                 new FkMatch(),
                 new FkMatch()
-            )
-                .test(new FkWrap())
+            ).test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldNotMatchWhenAnyNotMatch() {
-        Assertions.assertFalse(
+    void matchesNotWhenOneNotMatch() {
+        MatcherAssert.assertThat(
+            "Matched all when one match is invalid",
             new MatchAll<>(
                 new FkMatch(false),
                 new FkMatch()
-            )
-                .test(new FkWrap())
+            ).test(new FkWrap()),
+            Matchers.equalTo(false)
         );
     }
 }

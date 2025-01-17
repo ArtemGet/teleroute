@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,23 +37,21 @@ import org.junit.jupiter.api.Test;
 final class MatchCmdTest {
 
     @Test
-    void shouldMatchWhenCmd() {
-        Assertions.assertTrue(
-            new MatchCmd<String>().test(new FkWrap())
+    void matchesWhenCmd() {
+        MatcherAssert.assertThat(
+            "Didnt match when update is command",
+            new MatchCmd<String>().test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldNotMatchWhenNotCmd() {
-        Assertions.assertFalse(
+    void matchesNotWhenNotCmd() {
+        MatcherAssert.assertThat(
+            "Matched when update is not a command",
             new MatchCmd<String>()
-                .test(
-                    new FkWrap(
-                        123,
-                        false,
-                        "text"
-                    )
-                )
+                .test(new FkWrap(123, false, "text")),
+            Matchers.equalTo(false)
         );
     }
 }

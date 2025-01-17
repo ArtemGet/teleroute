@@ -33,6 +33,7 @@ import java.util.List;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkClient {
     /**
      * Response sent by client.

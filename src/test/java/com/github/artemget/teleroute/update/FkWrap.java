@@ -31,6 +31,7 @@ import java.util.Optional;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkWrap implements Wrap<String> {
     /**
      * Default identity.

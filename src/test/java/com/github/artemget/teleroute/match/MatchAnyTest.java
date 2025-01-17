@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.match;
 
 import com.github.artemget.teleroute.update.FkWrap;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,42 +37,47 @@ import org.junit.jupiter.api.Test;
 final class MatchAnyTest {
 
     @Test
-    void matchShouldMatchWhenNoConditionSpecified() {
-        Assertions.assertTrue(
-            new MatchAny<String>().test(new FkWrap())
+    void matchesWhenNoConditionSpecified() {
+        MatcherAssert.assertThat(
+            "Didnt match without condition",
+            new MatchAny<String>().test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void matchShouldMatchWhenAllMatch() {
-        Assertions.assertTrue(
+    void matchesWhenAllMatch() {
+        MatcherAssert.assertThat(
+            "Didnt match when all match",
             new MatchAny<>(
                 new FkMatch(),
                 new FkMatch()
-            )
-                .test(new FkWrap())
+            ).test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldMatchWhenAnyMatch() {
-        Assertions.assertTrue(
+    void matchesWhenAnyMatch() {
+        MatcherAssert.assertThat(
+            "Didnt match when any match",
             new MatchAny<>(
                 new FkMatch(false),
                 new FkMatch()
-            )
-                .test(new FkWrap())
+            ).test(new FkWrap()),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldNotMatchWhenNoneMatch() {
-        Assertions.assertFalse(
+    void matchesNotWhenNoneMatch() {
+        MatcherAssert.assertThat(
+            "Matched when all didnt match",
             new MatchAny<>(
                 new FkMatch(false),
                 new FkMatch(false)
-            )
-                .test(new FkWrap())
+            ).test(new FkWrap()),
+            Matchers.equalTo(false)
         );
     }
 }

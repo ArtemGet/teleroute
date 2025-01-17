@@ -34,6 +34,7 @@ import java.util.Objects;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkSend implements Send<FkClient> {
     /**
      * Response that would be sent by client.

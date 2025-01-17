@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.FkSend;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,24 +37,26 @@ import org.junit.jupiter.api.Test;
 final class CmdBatchTest {
 
     @Test
-    void shouldSendOneWhenSubmitOne() {
-        Assertions.assertTrue(
+    void sendsOneWhenSubmitOne() {
+        MatcherAssert.assertThat(
+            "Didnt send submitted command",
             new CmdBatch<>(
                 new FkCmd(
                     new FkSend()
                 )
-            )
-                .execute("resp")
-                .isPresent()
+            ).execute("resp").isPresent(),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldNotSendWhenError() {
-        Assertions.assertTrue(
+    void sendsNotWhenError() {
+        MatcherAssert.assertThat(
+            "Sent command while error occurred",
             new CmdBatch<>(new FkCmdErr())
                 .execute("resp")
-                .isEmpty()
+                .isEmpty(),
+            Matchers.equalTo(true)
         );
     }
 }

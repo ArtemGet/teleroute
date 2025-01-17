@@ -29,6 +29,7 @@ package com.github.artemget.teleroute.send;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkSendErr implements Send<FkClient> {
     @Override
     public void send(final FkClient send) throws SendException {

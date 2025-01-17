@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.send;
 
 import java.util.List;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,50 +37,54 @@ import org.junit.jupiter.api.Test;
 final class SendBatchTest {
 
     @Test
-    void shouldSingleWhenSubmittedSingle() {
+    void executesSingleWhenSubmittedSingle() {
         final FkClient client = new FkClient();
         new SendBatch<>(new FkSend("resp")).send(client);
-        Assertions.assertEquals(
-            List.of("resp"),
-            client.sent()
+        MatcherAssert.assertThat(
+            "Single submitted didnt execute",
+            client.sent(),
+            Matchers.equalTo(List.of("resp"))
         );
     }
 
     @Test
-    void shouldMultiWhenSubmittedMulti() {
+    void executesMultiWhenSubmittedMulti() {
         final FkClient client = new FkClient();
         new SendBatch<>(
             new FkSend("resp1"),
             new FkSend("resp2"),
             new FkSend("resp3")
         ).send(client);
-        Assertions.assertEquals(
-            List.of("resp1", "resp2", "resp3"),
-            client.sent()
+        MatcherAssert.assertThat(
+            "Didnt execute all commands",
+            client.sent(),
+            Matchers.equalTo(List.of("resp1", "resp2", "resp3"))
         );
     }
 
     @Test
-    void shouldNotSendWhenError() {
+    void sendsNotWhenError() {
         final FkClient client = new FkClient();
         new SendBatch<>(new FkSendErr()).send(client);
-        Assertions.assertEquals(
-            List.of(),
-            client.sent()
+        MatcherAssert.assertThat(
+            "Sent while error occurred",
+            client.sent(),
+            Matchers.equalTo(List.of())
         );
     }
 
     @Test
-    void shouldSendOnlyOneWhenManyError() {
+    void sendsOnlyOneWhenManyError() {
         final FkClient client = new FkClient();
         new SendBatch<>(
             new FkSendErr(),
             new FkSendErr(),
             new FkSend("resp")
         ).send(client);
-        Assertions.assertEquals(
-            List.of("resp"),
-            client.sent()
+        MatcherAssert.assertThat(
+            "Didnt send succeed command",
+            client.sent(),
+            Matchers.equalTo(List.of("resp"))
         );
     }
 }

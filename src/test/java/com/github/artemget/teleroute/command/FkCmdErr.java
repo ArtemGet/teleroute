@@ -33,6 +33,7 @@ import java.util.Optional;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override
     public Optional<Send<FkClient>> execute(final String update) throws CmdException {

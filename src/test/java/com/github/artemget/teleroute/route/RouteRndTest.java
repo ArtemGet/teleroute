@@ -30,7 +30,8 @@ import com.github.artemget.teleroute.send.FkClient;
 import com.github.artemget.teleroute.send.FkSend;
 import com.github.artemget.teleroute.update.FkWrap;
 import java.util.Set;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -51,46 +52,52 @@ final class RouteRndTest {
         Set.of(new FkCmd(), new FkCmd(new FkSend(RouteRndTest.RESP)));
 
     @Test
-    void shouldRouteAnyWhenManyCmdSpecified() {
-        Assertions.assertTrue(
+    void routesAnyWhenManyCmdSpecified() {
+        MatcherAssert.assertThat(
+            "Nothing in return",
             CMD_SET.contains(
                 new RouteRnd<>(
                     new FkCmd(),
                     new FkCmd(new FkSend(RouteRndTest.RESP))
                 ).route(new FkWrap()).get()
-            )
+            ),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteAnyWhenManyRouteSpecified() {
-        Assertions.assertTrue(
+    void routesAnyWhenManyRouteSpecified() {
+        MatcherAssert.assertThat(
+            "Nothing in return",
             CMD_SET.contains(
                 new RouteRnd<>(
                     new RouteEnd<>(new FkCmd()),
                     new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
                 ).route(new FkWrap()).get()
-            )
+            ),
+            Matchers.equalTo(true)
         );
     }
 
     @Test
-    void shouldRouteWhenOneCmdSpecified() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend(RouteRndTest.RESP)),
+    void routesWhenOneCmdSpecified() {
+        MatcherAssert.assertThat(
+            "Noting returned when only one command available",
             new RouteRnd<>(
                 new FkCmd(new FkSend(RouteRndTest.RESP))
-            ).route(new FkWrap()).get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend(RouteRndTest.RESP)))
         );
     }
 
     @Test
-    void shouldRouteOneWhenOneRouteSpecified() {
-        Assertions.assertEquals(
-            new FkCmd(new FkSend(RouteRndTest.RESP)),
+    void routesOneWhenOneRouteSpecified() {
+        MatcherAssert.assertThat(
+            "Noting returned when only one route available",
             new RouteRnd<>(
                 new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
-            ).route(new FkWrap()).get()
+            ).route(new FkWrap()).get(),
+            Matchers.equalTo(new FkCmd(new FkSend(RouteRndTest.RESP)))
         );
     }
 }
