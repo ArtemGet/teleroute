@@ -3,15 +3,10 @@ name: Build
 on:
   push:
     branches:
-      - "main"
-      - "feature/*"
-      - "bugfix/*"
-      - "hotfix/*"
-      - "release/*"
+      - main
   pull_request:
     branches:
-      - "main"
-      - "release/*"
+      - main
 
 jobs:
   build:
