@@ -25,7 +25,8 @@
 package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.FkSend;
-import org.junit.jupiter.api.Assertions;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,24 +37,26 @@ import org.junit.jupiter.api.Test;
 final class CmdForkTest {
 
     @Test
-    void shouldExecuteOriginWhenNoError() throws CmdException {
-        Assertions.assertEquals(
-            new FkSend("origin"),
+    void executesOriginWhenNoError() throws CmdException {
+        MatcherAssert.assertThat(
+            "Executed spare command",
             new CmdFork<>(
                 new FkCmd(new FkSend("origin")),
                 new FkCmd(new FkSend("spare"))
-            ).execute("").get()
+            ).execute("").get(),
+            Matchers.equalTo(new FkSend("origin"))
         );
     }
 
     @Test
-    void shouldExecuteSpareWhenError() throws CmdException {
-        Assertions.assertEquals(
-            new FkSend("spare"),
+    void executesSpareWhenError() throws CmdException {
+        MatcherAssert.assertThat(
+            "Executed target command",
             new CmdFork<>(
                 new FkCmdErr(),
                 new FkCmd(new FkSend("spare"))
-            ).execute("").get()
+            ).execute("").get(),
+            Matchers.equalTo(new FkSend("spare"))
         );
     }
 }
