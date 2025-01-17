@@ -32,6 +32,7 @@ import java.util.function.Predicate;
  *
  * @since 0.1.0
  */
+@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkMatch implements Predicate<Wrap<String>> {
     /**
      * Matching condition.
