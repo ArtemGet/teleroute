@@ -22,6 +22,12 @@
   ~ SOFTWARE.
   -->
 
+<!--
+ @todo #11:60min Project's pom.xml have to match sonatype's
+  <a href="https://central.sonatype.org/publish/requirements/">requirements</a>,
+  lets add those tags. Also, this article should be useful:
+  <a href="https://www.yegor256.com/2014/08/19/how-to-release-to-maven-central.html">link</a>
+ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -31,6 +37,13 @@
     <artifactId>parent</artifactId>
     <version>0.68.0</version>
   </parent>
+  <!--
+  @todo #11:10min Group id have to match repository path. I suggest
+  changing com.github.artemget to io.github.artemget. Changing directory structure
+  to io.github.artemget is required.
+  This link should help:
+  <a href="https://central.sonatype.org/publish/requirements/coordinates/">coordinates</a>
+  -->
   <groupId>com.github.artemget</groupId>
   <artifactId>teleroute</artifactId>
   <version>0.3.0</version>
