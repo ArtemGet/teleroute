@@ -55,8 +55,7 @@ final class RouteDfsTest {
             "Routes with corrupted update",
             new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
                 .route(null)
-                .isEmpty(),
-            Matchers.equalTo(true)
+                .isEmpty()
         );
     }
 
