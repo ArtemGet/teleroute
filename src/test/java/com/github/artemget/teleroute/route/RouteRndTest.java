@@ -60,8 +60,7 @@ final class RouteRndTest {
                     new FkCmd(),
                     new FkCmd(new FkSend(RouteRndTest.RESP))
                 ).route(new FkWrap()).get()
-            ),
-            Matchers.equalTo(true)
+            )
         );
     }
 
@@ -74,8 +73,7 @@ final class RouteRndTest {
                     new RouteEnd<>(new FkCmd()),
                     new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
                 ).route(new FkWrap()).get()
-            ),
-            Matchers.equalTo(true)
+            )
         );
     }
 

@@ -58,8 +58,7 @@ final class RouteForkTest {
             new RouteFork<>(
                 new FkMatch(false),
                 new FkCmd(new FkSend())
-            ).route(new FkWrap()).isEmpty(),
-            Matchers.equalTo(true)
+            ).route(new FkWrap()).isEmpty()
         );
     }
 
@@ -110,8 +109,7 @@ final class RouteForkTest {
             new RouteFork<>(
                 new FkMatch(false),
                 new RouteEnd<>(new FkCmd(new FkSend()))
-            ).route(new FkWrap()).isEmpty(),
-            Matchers.equalTo(true)
+            ).route(new FkWrap()).isEmpty()
         );
     }
 

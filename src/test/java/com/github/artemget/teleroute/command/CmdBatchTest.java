@@ -26,7 +26,6 @@ package com.github.artemget.teleroute.command;
 
 import com.github.artemget.teleroute.send.FkSend;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -44,8 +43,7 @@ final class CmdBatchTest {
                 new FkCmd(
                     new FkSend()
                 )
-            ).execute("resp").isPresent(),
-            Matchers.equalTo(true)
+            ).execute("resp").isPresent()
         );
     }
 
@@ -55,8 +53,7 @@ final class CmdBatchTest {
             "Sent command while error occurred",
             new CmdBatch<>(new FkCmdErr())
                 .execute("resp")
-                .isEmpty(),
-            Matchers.equalTo(true)
+                .isEmpty()
         );
     }
 }

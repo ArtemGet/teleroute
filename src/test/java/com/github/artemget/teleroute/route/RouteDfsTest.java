@@ -45,8 +45,7 @@ final class RouteDfsTest {
             "Routes with no commands",
             new RouteDfs<String, FkClient>(new RouteEnd<>())
                 .route(new FkWrap())
-                .isEmpty(),
-            Matchers.equalTo(true)
+                .isEmpty()
         );
     }
 
@@ -56,8 +55,7 @@ final class RouteDfsTest {
             "Routes with corrupted update",
             new RouteDfs<>(new RouteEnd<>(new FkCmd(new FkSend("resp"))))
                 .route(null)
-                .isEmpty(),
-            Matchers.equalTo(true)
+                .isEmpty()
         );
     }
 

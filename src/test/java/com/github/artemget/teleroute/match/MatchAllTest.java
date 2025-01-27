@@ -40,8 +40,7 @@ final class MatchAllTest {
     void matchesWhenNoConditionSpecified() {
         MatcherAssert.assertThat(
             "Didnt match without condition",
-            new MatchAll<String>().test(new FkWrap()),
-            Matchers.equalTo(true)
+            new MatchAll<String>().test(new FkWrap())
         );
     }
 
@@ -52,8 +51,7 @@ final class MatchAllTest {
             new MatchAll<>(
                 new FkMatch(),
                 new FkMatch()
-            ).test(new FkWrap()),
-            Matchers.equalTo(true)
+            ).test(new FkWrap())
         );
     }
 
@@ -61,11 +59,10 @@ final class MatchAllTest {
     void matchesNotWhenOneNotMatch() {
         MatcherAssert.assertThat(
             "Matched all when one match is invalid",
-            new MatchAll<>(
+            !new MatchAll<>(
                 new FkMatch(false),
                 new FkMatch()
-            ).test(new FkWrap()),
-            Matchers.equalTo(false)
+            ).test(new FkWrap())
         );
     }
 }

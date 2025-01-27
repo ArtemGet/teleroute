@@ -27,7 +27,6 @@ package com.github.artemget.teleroute.match;
 import com.github.artemget.teleroute.update.FkWrap;
 import java.util.regex.Pattern;
 import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -60,8 +59,7 @@ final class MatchRegexTest {
     void matchesWhenRegex() {
         MatcherAssert.assertThat(
             "Didnt match regex",
-            new MatchRegex<String>("\\D+").test(new FkWrap()),
-            Matchers.equalTo(true)
+            new MatchRegex<String>("\\D+").test(new FkWrap())
         );
     }
 
@@ -69,8 +67,7 @@ final class MatchRegexTest {
     void matchesWhenPattern() {
         MatcherAssert.assertThat(
             "Didnt match pattern",
-            new MatchRegex<String>(Pattern.compile("\\D+")).test(new FkWrap()),
-            Matchers.equalTo(true)
+            new MatchRegex<String>(Pattern.compile("\\D+")).test(new FkWrap())
         );
     }
 }
