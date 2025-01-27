@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - jtcop-fault-example
   pull_request:
     branches:
       - main
