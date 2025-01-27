@@ -45,8 +45,7 @@ final class RouteDfsTest {
             "Routes with no commands",
             new RouteDfs<String, FkClient>(new RouteEnd<>())
                 .route(new FkWrap())
-                .isEmpty(),
-            Matchers.equalTo(true)
+                .isEmpty()
         );
     }
 
