@@ -175,6 +175,9 @@
             <configuration>
               <excludes>
                 <exclude>
+                  pmd:/src/test/java/com/github/artemget/teleroute/.*
+                </exclude>
+                <exclude>
                   dependencies:org.apache.logging.log4j:log4j-api
                 </exclude>
                 <exclude>
