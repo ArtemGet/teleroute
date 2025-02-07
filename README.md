@@ -16,35 +16,7 @@ In case you want to use teleroute with other telegram library:
 1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
 2) [C# port](https://github.com/varya-kot/teleroute)
 
-This library is distributed via [Github Packages (actual)](https://github.com/ArtemGet/teleroute/packages/2122234) so
-you have to include this setting in your ~/.m2
-
-```xml
-<repository>
-    <id>github</id>
-    <name>Github ArtemGet Apache Maven Packages</name>
-    <url>https://maven.pkg.github.com/ArtemGet/teleroute</url>
-</repository>
-
-<servers>
-    <server>
-        <id>github</id>
-        <username>your_username</username>
-        <password>your_token</password>
-    </server>
-</servers>
-```
-
-And add dependency to your pom.xml
-
-```xml
-<dependency>
-    <groupId>com.github.Artemget</groupId>
-    <artifactId>teleroute</artifactId>
-    <version>0.3.0</version>
-</dependency>
-```
-Or use [jitpack.io](https://jitpack.io/#ArtemGet/teleroute)
+This library is distributed via [jitpack.io](https://jitpack.io/#ArtemGet/teleroute)
 
 ## Understanding of concept:
 
