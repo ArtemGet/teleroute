@@ -1,6 +1,7 @@
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 
 [![Build](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml/badge.svg)](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml)
+[![](https://jitpack.io/v/ArtemGet/teleroute.svg)](https://jitpack.io/#ArtemGet/teleroute)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/1e5c08074d3bc271fbb8/maintainability)](https://codeclimate.com/github/ArtemGet/teleroute/maintainability)
 [![codecov](https://codecov.io/gh/ArtemGet/teleroute/graph/badge.svg?token=FCGJORYEN5)](https://codecov.io/gh/ArtemGet/teleroute)
@@ -15,34 +16,7 @@ In case you want to use teleroute with other telegram library:
 1) [TelegramBots integration](https://github.com/ArtemGet/teleroute.telegrambots)
 2) [C# port](https://github.com/varya-kot/teleroute)
 
-This library is distributed via [Github Packages (actual)](https://github.com/ArtemGet/teleroute/packages/2122234) so
-you have to include this setting in your ~/.m2
-
-```xml
-<repository>
-    <id>github</id>
-    <name>Github ArtemGet Apache Maven Packages</name>
-    <url>https://maven.pkg.github.com/ArtemGet/teleroute</url>
-</repository>
-
-<servers>
-    <server>
-        <id>github</id>
-        <username>your_username</username>
-        <password>your_token</password>
-    </server>
-</servers>
-```
-
-And add dependency to your pom.xml
-
-```xml
-<dependency>
-    <groupId>com.github.Artemget</groupId>
-    <artifactId>teleroute</artifactId>
-    <version>0.3.0</version>
-</dependency>
-```
+This library is distributed via [jitpack.io](https://jitpack.io/#ArtemGet/teleroute)
 
 ## Understanding of concept:
 
