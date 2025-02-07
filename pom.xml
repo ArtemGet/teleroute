@@ -46,7 +46,7 @@
   -->
   <groupId>com.github.artemget</groupId>
   <artifactId>teleroute</artifactId>
-  <version>0.3.0</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>teleroute</name>
   <properties>
