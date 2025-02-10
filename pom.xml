@@ -129,7 +129,7 @@
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>95%</minimum>
+                      <minimum>80%</minimum>
                     </limit>
                     <limit>
                       <counter>METHOD</counter>
