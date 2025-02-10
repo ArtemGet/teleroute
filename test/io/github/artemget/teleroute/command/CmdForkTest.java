@@ -43,7 +43,7 @@ final class CmdForkTest {
             new CmdFork<>(
                 new FkCmd(new FkSend("origin")),
                 new FkCmd(new FkSend("spare"))
-            ).execute("").get(),
+            ).execute(""),
             Matchers.equalTo(new FkSend("origin"))
         );
     }
@@ -55,7 +55,7 @@ final class CmdForkTest {
             new CmdFork<>(
                 new FkCmdErr(),
                 new FkCmd(new FkSend("spare"))
-            ).execute("").get(),
+            ).execute(""),
             Matchers.equalTo(new FkSend("spare"))
         );
     }

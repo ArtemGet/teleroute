@@ -24,8 +24,14 @@
 
 package io.github.artemget.teleroute.command;
 
+import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.FkSend;
+import io.github.artemget.teleroute.send.Send;
+import io.github.artemget.teleroute.send.SendException;
+import java.util.List;
 import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,24 +42,48 @@ import org.junit.jupiter.api.Test;
 final class CmdBatchTest {
 
     @Test
-    void sendsOneWhenSubmitOne() {
+    void sendsOneWhenSubmitOne() throws CmdException, SendException {
+        final FkClient client = new FkClient();
+        new CmdBatch<>(
+            new FkCmd(new FkSend("resp"))
+        ).execute("resp").send(client);
         MatcherAssert.assertThat(
             "Didnt send submitted command",
-            new CmdBatch<>(
-                new FkCmd(
-                    new FkSend()
-                )
-            ).execute("resp").isPresent()
+            client.sent(),
+            Matchers.equalTo(List.of("resp"))
         );
     }
 
     @Test
-    void sendsNotWhenError() {
+    void sendsManyWhenSubmitMany() throws CmdException, SendException {
+        final FkClient client = new FkClient();
+        new CmdBatch<>(
+            new FkCmd(new FkSend("resp1")),
+            new FkCmd(new FkSend("resp2"))
+        ).execute("resp").send(client);
+        MatcherAssert.assertThat(
+            "Didnt send all submitted commands",
+            client.sent(),
+            Matchers.equalTo(List.of("resp1", "resp2"))
+        );
+    }
+
+    @Test
+    void throwsWhenError() {
+        Assertions.assertThrows(
+            CmdException.class,
+            () -> new CmdBatch<>(new FkCmdErr())
+                .execute("resp"),
+            "Sent command while error occurred"
+        );
+    }
+
+    @Test
+    void sendsNotWhenNothingToSend() throws CmdException {
         MatcherAssert.assertThat(
             "Sent command while error occurred",
-            new CmdBatch<>(new FkCmdErr())
-                .execute("resp")
-                .isEmpty()
+            new CmdBatch<>().execute("resp"),
+            Matchers.equalTo(new Send.Not<>())
         );
     }
 }

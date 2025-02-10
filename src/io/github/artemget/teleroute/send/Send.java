@@ -38,4 +38,27 @@ public interface Send<C> {
      * @param client Sender client
      */
     void send(C client) throws SendException;
+
+    /**
+     * Dummy send, do nothing.
+     *
+     * @param <C> Client
+     * @since 1.0.0
+     */
+    final class Not<C> implements Send<C> {
+        @Override
+        public void send(final Object client) throws SendException {
+            //skipping
+        }
+
+        @Override
+        public int hashCode() {
+            return 667;
+        }
+
+        @Override
+        public boolean equals(final Object obj) {
+            return this == obj || this.getClass() == obj.getClass();
+        }
+    }
 }

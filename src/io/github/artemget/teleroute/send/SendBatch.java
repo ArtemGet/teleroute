@@ -24,11 +24,11 @@
 
 package io.github.artemget.teleroute.send;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Objects;
 
 /**
  * Sends many commands as one.
@@ -37,10 +37,6 @@ import org.slf4j.LoggerFactory;
  * @since 0.1.0
  */
 public final class SendBatch<C> implements Send<C> {
-    /**
-     * Logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(SendBatch.class);
 
     /**
      * Sends.
@@ -67,18 +63,30 @@ public final class SendBatch<C> implements Send<C> {
     }
 
     @Override
-    public void send(final C client) {
-        this.sends.forEach(
-            send -> {
-                try {
-                    send.send(client);
-                } catch (final SendException exception) {
-                    SendBatch.LOG.warn(
-                        "Unable to send message: {}",
-                        exception.getMessage(),
-                        exception
-                    );
-                }
-            });
+    public void send(final C client) throws SendException {
+        for (final Send<C> send : this.sends) {
+            send.send(client);
+        }
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        final boolean equals;
+        if (this == obj) {
+            equals = true;
+        } else if (obj == null || this.getClass() != obj.getClass()) {
+            equals = false;
+        } else {
+            final SendBatch<?> batch = (SendBatch<?>) obj;
+            equals = this.sends.stream()
+                .toList()
+                .equals(batch.sends.stream().toList());
+        }
+        return equals;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(new ArrayList<>(this.sends));
     }
 }
