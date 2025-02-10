@@ -37,14 +37,7 @@
     <artifactId>parent</artifactId>
     <version>0.68.0</version>
   </parent>
-  <!--
-  @todo #11:10min Group id have to match repository path. I suggest
-  changing com.github.artemget to io.github.artemget. Changing directory structure
-  to io.github.artemget is required.
-  This link should help:
-  <a href="https://central.sonatype.org/publish/requirements/coordinates/">coordinates</a>
-  -->
-  <groupId>com.github.artemget</groupId>
+  <groupId>io.github.artemget</groupId>
   <artifactId>teleroute</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -90,6 +83,8 @@
     </dependency>
   </dependencies>
   <build>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
