@@ -26,7 +26,6 @@ package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.Send;
-import java.util.Optional;
 
 /**
  * Fake command, always throws error.
@@ -36,7 +35,7 @@ import java.util.Optional;
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override
-    public Optional<Send<FkClient>> execute(final String update) throws CmdException {
+    public Send<FkClient> execute(final String update) throws CmdException {
         throw new CmdException();
     }
 }

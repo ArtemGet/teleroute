@@ -27,6 +27,7 @@ package io.github.artemget.teleroute.send;
 import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -37,7 +38,7 @@ import org.junit.jupiter.api.Test;
 final class SendBatchTest {
 
     @Test
-    void executesSingleWhenSubmittedSingle() {
+    void executesSingleWhenSubmittedSingle() throws SendException {
         final FkClient client = new FkClient();
         new SendBatch<>(new FkSend("resp")).send(client);
         MatcherAssert.assertThat(
@@ -48,7 +49,7 @@ final class SendBatchTest {
     }
 
     @Test
-    void executesMultiWhenSubmittedMulti() {
+    void executesMultiWhenSubmittedMulti() throws SendException {
         final FkClient client = new FkClient();
         new SendBatch<>(
             new FkSend("resp1"),
@@ -63,28 +64,103 @@ final class SendBatchTest {
     }
 
     @Test
-    void sendsNotWhenError() {
+    void throwsWhenError() {
+        Assertions.assertThrows(
+            SendException.class,
+            () -> new SendBatch<>(new FkSendErr()).send(new FkClient()),
+            "Sent while error occurred"
+        );
+    }
+
+    @Test
+    void sendsNothingWhenManyErrorBefore() {
         final FkClient client = new FkClient();
-        new SendBatch<>(new FkSendErr()).send(client);
+        try {
+            new SendBatch<>(
+                new FkSendErr(),
+                new FkSendErr(),
+                new FkSend("resp")
+            ).send(client);
+        } catch (final SendException exception) {
+            //ignore
+        }
         MatcherAssert.assertThat(
-            "Sent while error occurred",
+            "Sent succeed command",
             client.sent(),
             Matchers.equalTo(List.of())
         );
     }
 
     @Test
-    void sendsOnlyOneWhenManyError() {
+    void sendsSucceedWhenErrorAfter() {
         final FkClient client = new FkClient();
-        new SendBatch<>(
-            new FkSendErr(),
-            new FkSendErr(),
-            new FkSend("resp")
-        ).send(client);
+        try {
+            new SendBatch<>(
+                new FkSend("resp"),
+                new FkSendErr()
+            ).send(client);
+        } catch (final SendException exception) {
+            //ignore
+        }
         MatcherAssert.assertThat(
-            "Didnt send succeed command",
+            "Sent succeed command",
             client.sent(),
             Matchers.equalTo(List.of("resp"))
+        );
+    }
+
+    @Test
+    void equalsWhenSameObject() {
+        final Send<String> batch = new SendBatch<>();
+        MatcherAssert.assertThat(
+            "SendBatch not equal to itself",
+            batch,
+            Matchers.equalTo(batch)
+        );
+    }
+
+    @Test
+    void equalsWhenSameFilledObject() {
+        final Send<String> batch = new SendBatch<>(new Send.Void<>());
+        MatcherAssert.assertThat(
+            "SendBatch not equal to itself",
+            batch,
+            Matchers.equalTo(batch)
+        );
+    }
+
+    @Test
+    void equalsWhenDifferentFilledObject() {
+        MatcherAssert.assertThat(
+            "SendBatch not equal to same object",
+            new SendBatch<>(new Send.Void<>()),
+            Matchers.equalTo(new SendBatch<>(new Send.Void<>()))
+        );
+    }
+
+    @Test
+    void equalsNotWhenDifferentFilledObject() {
+        MatcherAssert.assertThat(
+            "SendBatch equals to different object",
+            new SendBatch<>(),
+            Matchers.not(new SendBatch<>(new Send.Void<>()))
+        );
+    }
+
+    @Test
+    void equalsNotWhenNull() {
+        MatcherAssert.assertThat(
+            "SendBatch equals to null",
+            !new SendBatch<>().equals(new Object())
+        );
+    }
+
+    @Test
+    void matchesHash() {
+        MatcherAssert.assertThat(
+            "SendBatch equals to different object",
+            new SendBatch<>(new Send.Void<>()).hashCode(),
+            Matchers.equalTo(new SendBatch<>(new Send.Void<>()).hashCode())
         );
     }
 }

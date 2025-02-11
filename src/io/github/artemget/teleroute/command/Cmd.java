@@ -25,7 +25,6 @@
 package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.Send;
-import java.util.Optional;
 
 /**
  * Command. Entrance to your business logic.
@@ -42,5 +41,5 @@ public interface Cmd<U, C> {
      * @param update Telegram update
      * @return Send
      */
-    Optional<Send<C>> execute(U update) throws CmdException;
+    Send<C> execute(U update) throws CmdException;
 }

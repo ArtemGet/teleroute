@@ -26,14 +26,11 @@ package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.Send;
 import io.github.artemget.teleroute.send.SendBatch;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Execute many commands as one.
@@ -43,10 +40,6 @@ import org.slf4j.LoggerFactory;
  * @since 0.1.0
  */
 public final class CmdBatch<U, C> implements Cmd<U, C> {
-    /**
-     * Logger.
-     */
-    private static final Logger LOG = LoggerFactory.getLogger(CmdBatch.class);
 
     /**
      * Commands.
@@ -73,36 +66,22 @@ public final class CmdBatch<U, C> implements Cmd<U, C> {
     }
 
     @Override
-    public Optional<Send<C>> execute(final U update) {
+    public Send<C> execute(final U update) throws CmdException {
         final List<Send<C>> sends = this.executeCmds(update);
-        final Optional<Send<C>> resp;
+        final Send<C> resp;
         if (sends.isEmpty()) {
-            resp = Optional.empty();
+            resp = new Send.Void<>();
         } else {
-            resp = Optional.of(new SendBatch<>(sends));
+            resp = new SendBatch<>(sends);
         }
         return resp;
     }
 
-    private List<Send<C>> executeCmds(final U update) {
-        return this.commands.stream()
-            .map(
-                cmd -> {
-                    Optional<Send<C>> resp;
-                    try {
-                        resp = cmd.execute(update);
-                    } catch (final CmdException exception) {
-                        CmdBatch.LOG.warn(
-                            "Error execute cmd: {}",
-                            exception.getMessage(),
-                            exception
-                        );
-                        resp = Optional.empty();
-                    }
-                    return resp;
-                })
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(Collectors.toList());
+    private List<Send<C>> executeCmds(final U update) throws CmdException {
+        final List<Send<C>> sends = new ArrayList<>(this.commands.size());
+        for (final Cmd<U, C> cmd : this.commands) {
+            sends.add(cmd.execute(update));
+        }
+        return sends;
     }
 }

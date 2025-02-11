@@ -4,7 +4,6 @@
 [![](https://jitpack.io/v/ArtemGet/teleroute.svg)](https://jitpack.io/#ArtemGet/teleroute)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/1e5c08074d3bc271fbb8/maintainability)](https://codeclimate.com/github/ArtemGet/teleroute/maintainability)
-[![codecov](https://codecov.io/gh/ArtemGet/teleroute/graph/badge.svg?token=FCGJORYEN5)](https://codecov.io/gh/ArtemGet/teleroute)
 
 # The goal
 

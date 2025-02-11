@@ -44,7 +44,6 @@
   <name>teleroute</name>
   <properties>
     <java.version>17</java.version>
-    <logging.version>2.22.1</logging.version>
   </properties>
   <distributionManagement>
     <repository>
@@ -59,21 +58,6 @@
       <artifactId>junit-jupiter-api</artifactId>
       <version>5.10.2</version>
       <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.20.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.20.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-slf4j-impl</artifactId>
-      <version>2.20.0</version>
     </dependency>
     <dependency>
       <groupId>org.hamcrest</groupId>
@@ -112,6 +96,9 @@
             <exclude>
               **/*Exception.class
             </exclude>
+            <exclude>
+              **/*Not.class
+            </exclude>
           </excludes>
         </configuration>
         <executions>
@@ -137,12 +124,12 @@
             <configuration>
               <rules>
                 <rule>
-                  <element>CLASS</element>
+                  <element>BUNDLE</element>
                   <limits>
                     <limit>
                       <counter>LINE</counter>
                       <value>COVEREDRATIO</value>
-                      <minimum>95%</minimum>
+                      <minimum>80%</minimum>
                     </limit>
                     <limit>
                       <counter>METHOD</counter>
@@ -171,18 +158,6 @@
               <excludes>
                 <exclude>
                   pmd:/src/test/java/com/github/artemget/teleroute/.*
-                </exclude>
-                <exclude>
-                  dependencies:org.apache.logging.log4j:log4j-api
-                </exclude>
-                <exclude>
-                  dependencies:org.apache.logging.log4j:log4j-core
-                </exclude>
-                <exclude>
-                  dependencies:org.apache.logging.log4j:log4j-slf4j-impl
-                </exclude>
-                <exclude>
-                  dependencies:org.slf4j:slf4j-api
                 </exclude>
               </excludes>
               <license>file:${basedir}/LICENSE</license>

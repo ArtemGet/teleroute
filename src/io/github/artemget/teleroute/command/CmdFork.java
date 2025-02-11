@@ -25,7 +25,6 @@
 package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.Send;
-import java.util.Optional;
 
 /**
  * Fork command. Origin or spare if error.
@@ -57,8 +56,8 @@ public final class CmdFork<U, C> implements Cmd<U, C> {
     }
 
     @Override
-    public Optional<Send<C>> execute(final U update) throws CmdException {
-        Optional<Send<C>> resp;
+    public Send<C> execute(final U update) throws CmdException {
+        Send<C> resp;
         try {
             resp = this.origin.execute(update);
         } catch (final CmdException exception) {

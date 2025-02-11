@@ -29,7 +29,6 @@ import io.github.artemget.teleroute.send.Send;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Fake Command.
@@ -56,12 +55,12 @@ public final class FkCmd implements Cmd<String, FkClient> {
     }
 
     @Override
-    public Optional<Send<FkClient>> execute(final String update) {
-        final Optional<Send<FkClient>> resp;
+    public Send<FkClient> execute(final String update) {
+        final Send<FkClient> resp;
         if (this.send.isEmpty()) {
-            resp = Optional.empty();
+            resp = new Send.Void<>();
         } else {
-            resp = Optional.of(this.send.get(0));
+            resp = this.send.get(0);
         }
         return resp;
     }
