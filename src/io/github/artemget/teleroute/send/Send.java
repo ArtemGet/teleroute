@@ -45,7 +45,7 @@ public interface Send<C> {
      * @param <C> Client
      * @since 1.0.0
      */
-    final class Not<C> implements Send<C> {
+    final class Void<C> implements Send<C> {
         @Override
         public void send(final Object client) throws SendException {
             //skipping

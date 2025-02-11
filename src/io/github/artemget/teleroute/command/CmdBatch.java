@@ -70,7 +70,7 @@ public final class CmdBatch<U, C> implements Cmd<U, C> {
         final List<Send<C>> sends = this.executeCmds(update);
         final Send<C> resp;
         if (sends.isEmpty()) {
-            resp = new Send.Not<>();
+            resp = new Send.Void<>();
         } else {
             resp = new SendBatch<>(sends);
         }

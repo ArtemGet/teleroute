@@ -121,7 +121,7 @@ final class SendBatchTest {
 
     @Test
     void equalsWhenSameFilledObject() {
-        final Send<String> batch = new SendBatch<>(new Send.Not<>());
+        final Send<String> batch = new SendBatch<>(new Send.Void<>());
         MatcherAssert.assertThat(
             "SendBatch not equal to itself",
             batch,
@@ -133,8 +133,8 @@ final class SendBatchTest {
     void equalsWhenDifferentFilledObject() {
         MatcherAssert.assertThat(
             "SendBatch not equal to same object",
-            new SendBatch<>(new Send.Not<>()),
-            Matchers.equalTo(new SendBatch<>(new Send.Not<>()))
+            new SendBatch<>(new Send.Void<>()),
+            Matchers.equalTo(new SendBatch<>(new Send.Void<>()))
         );
     }
 
@@ -143,7 +143,7 @@ final class SendBatchTest {
         MatcherAssert.assertThat(
             "SendBatch equals to different object",
             new SendBatch<>(),
-            Matchers.not(new SendBatch<>(new Send.Not<>()))
+            Matchers.not(new SendBatch<>(new Send.Void<>()))
         );
     }
 
@@ -159,8 +159,8 @@ final class SendBatchTest {
     void matchesHash() {
         MatcherAssert.assertThat(
             "SendBatch equals to different object",
-            new SendBatch<>(new Send.Not<>()).hashCode(),
-            Matchers.equalTo(new SendBatch<>(new Send.Not<>()).hashCode())
+            new SendBatch<>(new Send.Void<>()).hashCode(),
+            Matchers.equalTo(new SendBatch<>(new Send.Void<>()).hashCode())
         );
     }
 }

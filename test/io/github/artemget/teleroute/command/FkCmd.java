@@ -58,7 +58,7 @@ public final class FkCmd implements Cmd<String, FkClient> {
     public Send<FkClient> execute(final String update) {
         final Send<FkClient> resp;
         if (this.send.isEmpty()) {
-            resp = new Send.Not<>();
+            resp = new Send.Void<>();
         } else {
             resp = this.send.get(0);
         }

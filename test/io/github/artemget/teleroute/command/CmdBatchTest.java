@@ -83,7 +83,7 @@ final class CmdBatchTest {
         MatcherAssert.assertThat(
             "Sent command while error occurred",
             new CmdBatch<>().execute("resp"),
-            Matchers.equalTo(new Send.Not<>())
+            Matchers.equalTo(new Send.Void<>())
         );
     }
 }
