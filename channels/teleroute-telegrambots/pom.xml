@@ -69,7 +69,7 @@
       <version>${telegrambots.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.github.artemget</groupId>
+      <groupId>com.github.ArtemGet</groupId>
       <artifactId>teleroute</artifactId>
     </dependency>
   </dependencies>

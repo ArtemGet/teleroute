@@ -87,7 +87,7 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
-                <groupId>io.github.artemget</groupId>
+                <groupId>com.github.ArtemGet</groupId>
                 <artifactId>teleroute</artifactId>
                 <version>${teleroute.version}</version>
             </dependency>
