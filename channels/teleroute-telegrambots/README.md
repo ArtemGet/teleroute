@@ -1,4 +1,3 @@
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/ef71ad44b66ffce3437d/maintainability)](https://codeclimate.com/github/ArtemGet/teleroute.telegrambots/maintainability)
 [![](https://jitpack.io/v/ArtemGet/teleroute.telegrambots.svg)](https://jitpack.io/#ArtemGet/teleroute.telegrambots)
 
@@ -18,7 +17,7 @@ This library is distributed via [jitpack.io](https://jitpack.io/#ArtemGet/telero
 
 ## Usage example:
 Imagine our goal is to write long polling telegram bot that greet newcomers or greet already existing users
-by command - /greetmeplease. 
+by command - /greetmeplease.
 
 [Check Example source code (TODO)]()
 
@@ -57,7 +56,7 @@ The possible Route configuration could be similar to:
 
 ```java
 public class Example {
-    public static void io(String[] args) throws TelegramApiException {
+    public static void main(String[] args) throws TelegramApiException {
         Users users = new PgUsers("your_db_connection");
         new TelegramBotsApi(DefaultBotSession.class)
                 .registerBot(
