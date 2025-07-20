@@ -37,11 +37,14 @@
     <artifactId>parent</artifactId>
     <version>0.68.0</version>
   </parent>
-  <groupId>io.github.artemget</groupId>
-  <artifactId>teleroute</artifactId>
+  <groupId>io.github.artemget.eleroute</groupId>
+  <artifactId>root</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
-  <name>teleroute</name>
+  <packaging>pom</packaging>
+  <name>root</name>
+  <modules>
+    <module>core</module>
+  </modules>
   <properties>
     <java.version>17</java.version>
   </properties>
@@ -52,23 +55,7 @@
       <url>https://maven.pkg.github.com/ArtemGet/teleroute</url>
     </repository>
   </distributionManagement>
-  <dependencies>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>5.10.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.hamcrest</groupId>
-      <artifactId>hamcrest-all</artifactId>
-      <version>1.3</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <testSourceDirectory>test</testSourceDirectory>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
