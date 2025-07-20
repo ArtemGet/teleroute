@@ -43,10 +43,12 @@
   <packaging>pom</packaging>
   <name>root</name>
   <modules>
-    <module>core</module>
+    <module>ele-core</module>
+    <module>ele-telegrambots</module>
   </modules>
   <properties>
     <java.version>17</java.version>
+    <junit.version>5.10.2</junit.version>
   </properties>
   <distributionManagement>
     <repository>
