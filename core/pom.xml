@@ -30,7 +30,7 @@
     <artifactId>root</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>ele-core</artifactId>
+  <artifactId>core</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>eleroute-core</name>

@@ -38,13 +38,13 @@
     <version>0.68.0</version>
   </parent>
   <groupId>io.github.artemget.eleroute</groupId>
-  <artifactId>root</artifactId>
+  <artifactId>elerote-parent</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <name>root</name>
+  <name>elerote-parent</name>
   <modules>
-    <module>ele-core</module>
-    <module>ele-telegrambots</module>
+    <module>core</module>
+    <module>telegrambots</module>
   </modules>
   <properties>
     <java.version>21</java.version>
