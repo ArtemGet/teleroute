@@ -43,22 +43,22 @@ final class RouteRndTest {
     /**
      * Command response content.
      */
-    private static final String RESP = "resp";
+    private final String resp = "resp";
 
     /**
      * Set of fake commands.
      */
-    private static final Set<Cmd<String, FkClient>> CMD_SET =
-        Set.of(new FkCmd(), new FkCmd(new FkSend(RouteRndTest.RESP)));
+    private final Set<Cmd<String, FkClient>> cmds =
+        Set.of(new FkCmd(), new FkCmd(new FkSend(resp)));
 
     @Test
     void routesAnyWhenManyCmdSpecified() {
         MatcherAssert.assertThat(
             "Nothing in return",
-            CMD_SET.contains(
+            this.cmds.contains(
                 new RouteRnd<>(
                     new FkCmd(),
-                    new FkCmd(new FkSend(RouteRndTest.RESP))
+                    new FkCmd(new FkSend(this.resp))
                 ).route(new FkWrap()).get()
             )
         );
@@ -68,10 +68,10 @@ final class RouteRndTest {
     void routesAnyWhenManyRouteSpecified() {
         MatcherAssert.assertThat(
             "Nothing in return",
-            CMD_SET.contains(
+            this.cmds.contains(
                 new RouteRnd<>(
                     new RouteEnd<>(new FkCmd()),
-                    new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
+                    new RouteEnd<>(new FkCmd(new FkSend(this.resp)))
                 ).route(new FkWrap()).get()
             )
         );
@@ -82,9 +82,9 @@ final class RouteRndTest {
         MatcherAssert.assertThat(
             "Noting returned when only one command available",
             new RouteRnd<>(
-                new FkCmd(new FkSend(RouteRndTest.RESP))
+                new FkCmd(new FkSend(this.resp))
             ).route(new FkWrap()).get(),
-            Matchers.equalTo(new FkCmd(new FkSend(RouteRndTest.RESP)))
+            Matchers.equalTo(new FkCmd(new FkSend(this.resp)))
         );
     }
 
@@ -93,9 +93,9 @@ final class RouteRndTest {
         MatcherAssert.assertThat(
             "Noting returned when only one route available",
             new RouteRnd<>(
-                new RouteEnd<>(new FkCmd(new FkSend(RouteRndTest.RESP)))
+                new RouteEnd<>(new FkCmd(new FkSend(this.resp)))
             ).route(new FkWrap()).get(),
-            Matchers.equalTo(new FkCmd(new FkSend(RouteRndTest.RESP)))
+            Matchers.equalTo(new FkCmd(new FkSend(this.resp)))
         );
     }
 }
