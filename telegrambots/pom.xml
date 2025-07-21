@@ -17,7 +17,7 @@
   <dependencies>
     <dependency>
       <groupId>io.github.artemget.eleroute</groupId>
-      <artifactId>ele-core</artifactId>
+      <artifactId>core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
