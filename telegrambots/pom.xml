@@ -12,7 +12,7 @@
   <name>eleroute-telegrambots</name>
   <properties>
     <logging.version>2.22.1</logging.version>
-    <telegrambots.version>6.9.7.1</telegrambots.version>
+    <telegrambots.version>9.1.0</telegrambots.version>
   </properties>
   <dependencies>
     <dependency>
@@ -22,8 +22,9 @@
     </dependency>
     <dependency>
       <groupId>org.telegram</groupId>
-      <artifactId>telegrambots</artifactId>
+      <artifactId>telegrambots-meta</artifactId>
       <version>${telegrambots.version}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -57,15 +58,6 @@
               <excludes>
                 <exclude>
                   duplicatefinder:.*
-                </exclude>
-                <exclude>
-                  dependencies:org.telegram:telegrambots:jar:6.9.7.1
-                </exclude>
-                <exclude>
-                  dependencies:org.telegram:telegrambots-meta:jar:6.9.7.1
-                </exclude>
-                <exclude>
-                  dependencies:com.github.ArtemGet:teleroute:jar:1.0.0:compile
                 </exclude>
               </excludes>
               <license>file:${basedir}/LICENSE</license>

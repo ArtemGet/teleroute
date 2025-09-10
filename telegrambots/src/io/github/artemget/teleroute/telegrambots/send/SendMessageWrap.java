@@ -27,9 +27,9 @@ package io.github.artemget.teleroute.telegrambots.send;
 import io.github.artemget.teleroute.send.Send;
 import io.github.artemget.teleroute.send.SendException;
 import java.io.Serializable;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
-import org.telegram.telegrambots.meta.bots.AbsSender;
+import org.telegram.telegrambots.meta.api.methods.botapimethods.BotApiMethod;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 /**
  * Send all content laying under {@code BotApiMethod<T>}. Including ancestors of
@@ -39,7 +39,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
  * @see BotApiMethod
  * @since 0.1.0
  */
-public final class SendMessageWrap<T extends Serializable> implements Send<AbsSender> {
+public final class SendMessageWrap<T extends Serializable> implements Send<TelegramClient> {
     /**
      * Message.
      */
@@ -55,7 +55,7 @@ public final class SendMessageWrap<T extends Serializable> implements Send<AbsSe
     }
 
     @Override
-    public void send(final AbsSender send) throws SendException {
+    public void send(final TelegramClient send) throws SendException {
         try {
             send.execute(this.message);
         } catch (final TelegramApiException exception) {
