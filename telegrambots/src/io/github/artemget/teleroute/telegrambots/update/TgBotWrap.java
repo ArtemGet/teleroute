@@ -26,8 +26,8 @@ package io.github.artemget.teleroute.telegrambots.update;
 
 import io.github.artemget.teleroute.update.Wrap;
 import java.util.Optional;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.message.Message;
 
 /**
  * Telegram Update wrap.
