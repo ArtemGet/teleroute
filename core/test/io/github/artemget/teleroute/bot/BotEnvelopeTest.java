@@ -48,7 +48,7 @@ final class BotEnvelopeTest {
     void handlesUpdateWhenRouteReturnsCommand() {
         final FkClient client = new FkClient();
         new BotEnvelope<>(client,
-            new RouteEnd(
+            new RouteEnd<>(
                 new FkCmd(
                     new FkSend("response")
                 )
@@ -65,7 +65,7 @@ final class BotEnvelopeTest {
     void handlesUpdateWhenRouteReturnsEmpty() {
         final FkClient client = new FkClient();
         new BotEnvelope<>(client,
-            new RouteEnd(
+            new RouteEnd<>(
                 new FkCmd()))
             .handle(new FkWrap());
         MatcherAssert.assertThat(
@@ -79,7 +79,7 @@ final class BotEnvelopeTest {
     void throwsExceptionWhenCommandExecutionFails() {
         final BotEnvelope<String, FkClient> bot =
             new BotEnvelope<>(new FkClient(),
-                new RouteEnd(
+                new RouteEnd<>(
                     new FkCmdErr()
                 ));
         Assertions.assertThrows(
@@ -94,7 +94,7 @@ final class BotEnvelopeTest {
         final BotEnvelope<String, FkClient> bot =
             new BotEnvelope<>(
                 new FkClient(),
-                new RouteEnd(
+                new RouteEnd<>(
                     new FkCmd(
                         new FkSendErr()
                     )

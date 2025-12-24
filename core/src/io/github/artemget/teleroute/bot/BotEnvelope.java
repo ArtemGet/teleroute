@@ -55,6 +55,7 @@ public final class BotEnvelope<U, C> implements Bot<U> {
      * @param client Client
      * @param routes Routes
      */
+    @SafeVarargs
     public BotEnvelope(final C client, final Route<U, C>... routes) {
         this(client, new RouteDfs<>(routes));
     }
