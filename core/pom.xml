@@ -68,11 +68,6 @@
             <artifactId>qulice-maven-plugin</artifactId>
             <version>0.24.0</version>
             <configuration>
-              <excludes>
-                <exclude>
-                  pmd:/src/test/java/com/github/artemget/teleroute/.*
-                </exclude>
-              </excludes>
               <license>file:${basedir}/LICENSE</license>
             </configuration>
             <executions>

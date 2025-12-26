@@ -35,7 +35,7 @@ import io.github.artemget.teleroute.update.Wrap;
  */
 public interface Bot<U> {
     /**
-     * Start command.
+     * Start handle update.
      *
      * @param update Update wrap
      */

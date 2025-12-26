@@ -45,7 +45,7 @@ import org.junit.jupiter.api.Test;
 final class BotEnvelopeTest {
 
     @Test
-    void handlesUpdateWhenRouteReturnsCommand() {
+    void handlesUpdateWhenRouteReturnsCommand() throws Exception {
         final FkClient client = new FkClient();
         new BotEnvelope<>(client,
             new RouteEnd<>(
@@ -62,7 +62,7 @@ final class BotEnvelopeTest {
     }
 
     @Test
-    void handlesUpdateWhenRouteReturnsEmpty() {
+    void handlesUpdateWhenRouteReturnsEmpty() throws Exception {
         final FkClient client = new FkClient();
         new BotEnvelope<>(client,
             new RouteEnd<>(
@@ -83,9 +83,9 @@ final class BotEnvelopeTest {
                     new FkCmdErr()
                 ));
         Assertions.assertThrows(
-            RuntimeException.class,
+            Exception.class,
             () -> bot.handle(new FkWrap()),
-            "Expected RuntimeException when command execution fails"
+            "Expected Exception when command execution fails"
         );
     }
 
@@ -101,9 +101,9 @@ final class BotEnvelopeTest {
                 )
             );
         Assertions.assertThrows(
-            RuntimeException.class,
+            Exception.class,
             () -> bot.handle(new FkWrap()),
-            "Expected RuntimeException when send fails"
+            "Expected Exception when send fails"
         );
     }
 }
