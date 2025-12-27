@@ -53,7 +53,7 @@ final class BotEnvelopeTest {
                     new FkSend("response")
                 )
             )
-        ).handle(new FkWrap());
+        ).exec(new FkWrap());
         MatcherAssert.assertThat(
             "Did not send response",
             client.sent(),
@@ -67,7 +67,7 @@ final class BotEnvelopeTest {
         new BotEnvelope<>(client,
             new RouteEnd<>(
                 new FkCmd()))
-            .handle(new FkWrap());
+            .exec(new FkWrap());
         MatcherAssert.assertThat(
             "Sent response when route returned empty",
             client.sent().isEmpty(),
@@ -84,7 +84,7 @@ final class BotEnvelopeTest {
                 ));
         Assertions.assertThrows(
             Exception.class,
-            () -> bot.handle(new FkWrap()),
+            () -> bot.exec(new FkWrap()),
             "Expected Exception when command execution fails"
         );
     }
@@ -102,7 +102,7 @@ final class BotEnvelopeTest {
             );
         Assertions.assertThrows(
             Exception.class,
-            () -> bot.handle(new FkWrap()),
+            () -> bot.exec(new FkWrap()),
             "Expected Exception when send fails"
         );
     }
