@@ -28,6 +28,7 @@ package io.github.artemget.teleroute.bot;
 import io.github.artemget.teleroute.route.Route;
 import io.github.artemget.teleroute.route.RouteDfs;
 import io.github.artemget.teleroute.update.Wrap;
+import org.cactoos.Proc;
 import org.cactoos.proc.CheckedProc;
 import org.cactoos.proc.UncheckedProc;
 import org.cactoos.scalar.Unchecked;
@@ -39,7 +40,7 @@ import org.cactoos.scalar.Unchecked;
  * @param <C> Client
  * @since 2.0.0
  */
-public final class BotEnvelope<U, C> implements Bot<U> {
+public final class BotEnvelope<U, C> implements Proc<Wrap<U>> {
     /**
      * Client.
      */
@@ -73,11 +74,11 @@ public final class BotEnvelope<U, C> implements Bot<U> {
     }
 
     @Override
-    public void handle(final Wrap<U> update) throws Exception {
+    public void exec(final Wrap<U> update) throws Exception {
         new CheckedProc<>(
-            (Wrap<U> u) -> this.route.route(update)
+            (Wrap<U> u) -> this.route.route(u)
                 .map(
-                    cmd -> new Unchecked<>(() -> cmd.execute(update.src())).value()
+                    cmd -> new Unchecked<>(() -> cmd.execute(u.src())).value()
                 ).ifPresent(send -> new UncheckedProc<>(send::send).exec(this.client)),
             ex -> new Exception("Failed to handle update", ex)
         ).exec(update);
