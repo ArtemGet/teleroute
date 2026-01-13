@@ -38,7 +38,7 @@ import org.junit.jupiter.api.Test;
 final class SendBatchTest {
 
     @Test
-    void executesSingleWhenSubmittedSingle() throws SendException {
+    void executesSingleWhenSubmittedSingle() throws Exception {
         final FkClient client = new FkClient();
         new SendBatch<>(new FkSend("resp")).send(client);
         MatcherAssert.assertThat(
@@ -49,7 +49,7 @@ final class SendBatchTest {
     }
 
     @Test
-    void executesMultiWhenSubmittedMulti() throws SendException {
+    void executesMultiWhenSubmittedMulti() throws Exception {
         final FkClient client = new FkClient();
         new SendBatch<>(
             new FkSend("resp1"),
@@ -66,7 +66,7 @@ final class SendBatchTest {
     @Test
     void throwsWhenError() {
         Assertions.assertThrows(
-            SendException.class,
+            Exception.class,
             () -> new SendBatch<>(new FkSendErr()).send(new FkClient()),
             "Sent while error occurred"
         );
@@ -81,7 +81,7 @@ final class SendBatchTest {
                 new FkSendErr(),
                 new FkSend("resp")
             ).send(client);
-        } catch (final SendException exception) {
+        } catch (final Exception exception) {
             //ignore
         }
         MatcherAssert.assertThat(
@@ -99,7 +99,7 @@ final class SendBatchTest {
                 new FkSend("resp"),
                 new FkSendErr()
             ).send(client);
-        } catch (final SendException exception) {
+        } catch (final Exception exception) {
             //ignore
         }
         MatcherAssert.assertThat(

@@ -25,9 +25,8 @@
 package io.github.artemget.teleroute.telegrambots.send;
 
 import io.github.artemget.teleroute.send.Send;
-import io.github.artemget.teleroute.send.SendException;
+import org.cactoos.proc.CheckedProc;
 import org.telegram.telegrambots.meta.api.methods.send.SendSticker;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.TelegramClient;
 
 /**
@@ -51,11 +50,10 @@ public final class SendStickerWrap implements Send<TelegramClient> {
     }
 
     @Override
-    public void send(final TelegramClient send) throws SendException {
-        try {
-            send.execute(this.message);
-        } catch (final TelegramApiException exception) {
-            throw new SendException(exception.getMessage(), exception);
-        }
+    public void send(final TelegramClient send) throws Exception {
+        new CheckedProc<>(
+            (TelegramClient s) -> s.execute(this.message),
+            exception -> new Exception(exception.getMessage(), exception)
+        ).exec(send);
     }
 }

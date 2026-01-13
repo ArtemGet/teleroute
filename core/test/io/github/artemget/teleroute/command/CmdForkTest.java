@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 final class CmdForkTest {
 
     @Test
-    void executesOriginWhenNoError() throws CmdException {
+    void executesOriginWhenNoError() throws Exception {
         MatcherAssert.assertThat(
             "Executed spare command",
             new CmdFork<>(
@@ -49,7 +49,7 @@ final class CmdForkTest {
     }
 
     @Test
-    void executesSpareWhenError() throws CmdException {
+    void executesSpareWhenError() throws Exception {
         MatcherAssert.assertThat(
             "Executed target command",
             new CmdFork<>(

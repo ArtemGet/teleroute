@@ -41,5 +41,5 @@ public interface Cmd<U, C> {
      * @param update Telegram update
      * @return Send
      */
-    Send<C> execute(U update) throws CmdException;
+    Send<C> execute(U update) throws Exception;
 }

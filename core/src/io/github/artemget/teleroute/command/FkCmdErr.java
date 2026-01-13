@@ -35,7 +35,8 @@ import io.github.artemget.teleroute.send.Send;
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkCmdErr implements Cmd<String, FkClient> {
     @Override
-    public Send<FkClient> execute(final String update) throws CmdException {
-        throw new CmdException();
+    @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
+    public Send<FkClient> execute(final String update) throws Exception {
+        throw new Exception();
     }
 }

@@ -27,7 +27,6 @@ package io.github.artemget.teleroute.command;
 import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.FkSend;
 import io.github.artemget.teleroute.send.Send;
-import io.github.artemget.teleroute.send.SendException;
 import java.util.List;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -42,7 +41,7 @@ import org.junit.jupiter.api.Test;
 final class CmdBatchTest {
 
     @Test
-    void sendsOneWhenSubmitOne() throws CmdException, SendException {
+    void sendsOneWhenSubmitOne() throws Exception {
         final FkClient client = new FkClient();
         new CmdBatch<>(
             new FkCmd(new FkSend("resp"))
@@ -55,7 +54,7 @@ final class CmdBatchTest {
     }
 
     @Test
-    void sendsManyWhenSubmitMany() throws CmdException, SendException {
+    void sendsManyWhenSubmitMany() throws Exception {
         final FkClient client = new FkClient();
         new CmdBatch<>(
             new FkCmd(new FkSend("resp1")),
@@ -71,7 +70,7 @@ final class CmdBatchTest {
     @Test
     void throwsWhenError() {
         Assertions.assertThrows(
-            CmdException.class,
+            Exception.class,
             () -> new CmdBatch<>(new FkCmdErr())
                 .execute("resp"),
             "Sent command while error occurred"
@@ -79,7 +78,7 @@ final class CmdBatchTest {
     }
 
     @Test
-    void sendsNotWhenNothingToSend() throws CmdException {
+    void sendsNotWhenNothingToSend() throws Exception {
         MatcherAssert.assertThat(
             "Sent command while error occurred",
             new CmdBatch<>().execute("resp"),

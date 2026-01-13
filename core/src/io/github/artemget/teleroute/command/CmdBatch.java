@@ -66,7 +66,7 @@ public final class CmdBatch<U, C> implements Cmd<U, C> {
     }
 
     @Override
-    public Send<C> execute(final U update) throws CmdException {
+    public Send<C> execute(final U update) throws Exception {
         final List<Send<C>> sends = this.executeCmds(update);
         final Send<C> resp;
         if (sends.isEmpty()) {
@@ -77,7 +77,7 @@ public final class CmdBatch<U, C> implements Cmd<U, C> {
         return resp;
     }
 
-    private List<Send<C>> executeCmds(final U update) throws CmdException {
+    private List<Send<C>> executeCmds(final U update) throws Exception {
         final List<Send<C>> sends = new ArrayList<>(this.commands.size());
         for (final Cmd<U, C> cmd : this.commands) {
             sends.add(cmd.execute(update));

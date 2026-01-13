@@ -37,7 +37,7 @@ public interface Send<C> {
      *
      * @param client Sender client
      */
-    void send(C client) throws SendException;
+    void send(C client) throws Exception;
 
     /**
      * Dummy send, do nothing.
@@ -47,7 +47,7 @@ public interface Send<C> {
      */
     final class Void<C> implements Send<C> {
         @Override
-        public void send(final Object client) throws SendException {
+        public void send(final Object client) throws Exception {
             //skipping
         }
 

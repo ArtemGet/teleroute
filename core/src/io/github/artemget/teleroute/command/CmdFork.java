@@ -25,6 +25,8 @@
 package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.Send;
+import org.cactoos.Fallback;
+import org.cactoos.scalar.ScalarWithFallback;
 
 /**
  * Fork command. Origin or spare if error.
@@ -56,13 +58,13 @@ public final class CmdFork<U, C> implements Cmd<U, C> {
     }
 
     @Override
-    public Send<C> execute(final U update) throws CmdException {
-        Send<C> resp;
-        try {
-            resp = this.origin.execute(update);
-        } catch (final CmdException exception) {
-            resp = this.spare.execute(update);
-        }
-        return resp;
+    public Send<C> execute(final U update) throws Exception {
+        return new ScalarWithFallback<>(
+            () -> this.origin.execute(update),
+            new Fallback.From<>(
+                Exception.class,
+                u -> this.spare.execute(update)
+            )
+        ).value();
     }
 }

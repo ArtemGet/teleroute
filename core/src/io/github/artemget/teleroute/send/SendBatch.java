@@ -63,7 +63,7 @@ public final class SendBatch<C> implements Send<C> {
     }
 
     @Override
-    public void send(final C client) throws SendException {
+    public void send(final C client) throws Exception {
         for (final Send<C> send : this.sends) {
             send.send(client);
         }
