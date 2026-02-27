@@ -19,10 +19,16 @@ jobs:
           cloc . --quiet --json --out=cloc.json
           LOC=$(cat cloc.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(sum(d[k]['code'] for k in d if k!='header'))")
           echo "LOC=$LOC" >> $GITHUB_ENV
+          echo "LOC" > label.txt
+          echo "$LOC" > value.txt
       - name: Create badge
         run: |
-          pip install shields-badge
-          shields-badge --label "LOC" --value "${{ env.LOC }}" --format svg --output cloc.svg
+          LABEL=$(cat label.txt)
+          VALUE=$(cat value.txt)
+          cat > cloc.svg << 'EOF'
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="92" height="20" role="img" aria-label="LOC: VALUE"><title>LOC: VALUE</title><linearGradient id="s" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="r"><rect width="92" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#r)"><rect width="35" height="20" fill="#555"/><rect x="35" width="57" height="20" fill="#007ec6"/><rect width="92" height="20" fill="url(#s)"/></g><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" text-rendering="geometricPrecision" font-size="110"><text x="185" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="280">LABEL</text><text x="185" y="140" transform="scale(.1)" textLength="280">LABEL</text><text x="635" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="510">VALUE</text><text x="635" y="140" transform="scale(.1)" textLength="510">VALUE</text></g></svg>
+          EOF
+          sed -i "s/LABEL/$LABEL/g; s/VALUE/$VALUE/g" cloc.svg
       - name: Commit badge
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
