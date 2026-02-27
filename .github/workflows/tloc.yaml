@@ -9,10 +9,9 @@ on:
 jobs:
   cloc:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
-      - name: Count Lines of Code
-        uses: Kherrisan/cloc-badge-action@v1.1.1
-        with:
-          directory: .
-          output: LOC
+      - uses: actions/checkout@v2
+      - name: Code Lines Badge
+        uses: Kherrisan/cloc-badge-action@1.0.1
