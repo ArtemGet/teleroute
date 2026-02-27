@@ -10,6 +10,9 @@ jobs:
   cloc:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Count Lines of Code (cloc)
-      uses: djdefi/cloc-action@6
+      - uses: actions/checkout@v4
+      - name: Count Lines of Code
+        uses: Kherrisan/cloc-badge-action@v1.1.1
+        with:
+          directory: .
+          output: LOC
