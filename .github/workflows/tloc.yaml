@@ -12,6 +12,19 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
-      - name: Code Lines Badge
-        uses: Kherrisan/cloc-badge-action@1.0.1
+      - uses: actions/checkout@v4
+      - name: Count Lines of Code
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y cloc
+          cloc . --quiet --json --out=cloc.json
+          LOC=$(cat cloc.json | python3 -c "import json,sys; d=json.load(sys.stdin); print(sum(d[k]['code'] for k in d if k!='header'))")
+          echo "LOC=$LOC" >> $GITHUB_ENV
+      - name: Create badge
+        run: |
+          pip install shields-badge
+          shields-badge --label "LOC" --value "${{ env.LOC }}" --format svg --output cloc.svg
+      - name: Commit badge
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update LOC badge"
+          file_pattern: cloc.svg
