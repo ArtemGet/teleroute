@@ -1,7 +1,7 @@
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 
 [![Build](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml/badge.svg)](https://github.com/ArtemGet/teleroute/actions/workflows/maven.yaml)
-[![Total Lines of Code](https://github.com/ArtemGet/teleroute/actions/workflows/tloc.yaml/badge.svg)](https://github.com/ArtemGet/teleroute/actions/workflows/tloc.yaml)
+[![Total Lines of Code](https://img.shields.io/badge/LOC-3.5k-blue)](https://github.com/ArtemGet/teleroute/actions/workflows/tloc.yaml)
 [![](https://jitpack.io/v/ArtemGet/teleroute.svg)](https://jitpack.io/#ArtemGet/teleroute)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/1e5c08074d3bc271fbb8/maintainability)](https://codeclimate.com/github/ArtemGet/teleroute/maintainability)
