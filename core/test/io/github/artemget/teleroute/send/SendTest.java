@@ -24,42 +24,50 @@
 
 package io.github.artemget.teleroute.send;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+
 /**
- * Sends messages via client.
- * Feel free to implement.
+ * Test case {@link Send}.
  *
- * @param <C> Client
- * @since 0.1.0
+ * @since 0.3.0
  */
-public interface Send<C> {
-    /**
-     * Sends command result to chat or user via client.
-     *
-     * @param client Sender client
-     */
-    void send(C client) throws Exception;
+final class SendTest {
 
-    /**
-     * Dummy send, do nothing.
-     *
-     * @param <C> Client
-     * @since 1.0.0
-     */
-    final class Void<C> implements Send<C> {
-        @Override
-        public void send(final C client) throws Exception {
-            //skipping
-        }
+    @Test
+    void isNotEqualToNull() {
+        MatcherAssert.assertThat(
+            "Void send is not equal to null",
+            new Send.Void<>().equals(null),
+            Matchers.is(false)
+        );
+    }
 
-        @Override
-        public int hashCode() {
-            return this.getClass().hashCode();
-        }
+    @Test
+    void isNotEqualToForeignType() {
+        MatcherAssert.assertThat(
+            "Void send is not equal to a foreign object",
+            new Send.Void<>().equals("foreign"),
+            Matchers.is(false)
+        );
+    }
 
-        @Override
-        public boolean equals(final Object object) {
-            return this == object
-                || object != null && this.getClass() == object.getClass();
-        }
+    @Test
+    void isEqualToAnotherVoid() {
+        MatcherAssert.assertThat(
+            "Two Void sends are equal",
+            new Send.Void<>().equals(new Send.Void<>()),
+            Matchers.is(true)
+        );
+    }
+
+    @Test
+    void isSameHashCodeWhenEqual() {
+        MatcherAssert.assertThat(
+            "Equal Void sends share a hash code",
+            new Send.Void<>().hashCode() == new Send.Void<>().hashCode(),
+            Matchers.is(true)
+        );
     }
 }
