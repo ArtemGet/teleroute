@@ -67,10 +67,10 @@ public final class FkCmd implements Cmd<String, FkClient> {
 
     @Override
     public boolean equals(final Object object) {
-        final FkCmd cmd = (FkCmd) object;
         return this == object
-            || object == null || !this.getClass().equals(object.getClass())
-            || Objects.equals(this.send, cmd.send);
+            || object != null
+            && this.getClass() == object.getClass()
+            && Objects.equals(this.send, ((FkCmd) object).send);
     }
 
     @Override
