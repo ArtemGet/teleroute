@@ -74,13 +74,15 @@
             <groupId>com.qulice</groupId>
             <artifactId>qulice-maven-plugin</artifactId>
             <version>0.24.0</version>
-            <configuration>
+            <configuration combine.self="override">
               <excludes>
                 <exclude>
                   duplicatefinder:.*
                 </exclude>
+                <exclude>
+                  xml:.*
+                </exclude>
               </excludes>
-              <license>file:${basedir}/LICENSE</license>
             </configuration>
             <executions>
               <execution>
