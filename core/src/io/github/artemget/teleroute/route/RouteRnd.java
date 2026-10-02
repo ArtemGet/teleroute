@@ -28,7 +28,7 @@ import io.github.artemget.teleroute.command.Cmd;
 import io.github.artemget.teleroute.update.Wrap;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -47,6 +47,11 @@ public final class RouteRnd<U, C> implements Route<U, C> {
      * Routes.
      */
     private final Collection<Route<U, C>> routes;
+
+    /**
+     * Randomness source.
+     */
+    private final Random random;
 
     /**
      * Ctor.
@@ -73,19 +78,36 @@ public final class RouteRnd<U, C> implements Route<U, C> {
     }
 
     /**
-     * Main ctor.
+     * Ctor.
      *
      * @param routes Routes
      */
     public RouteRnd(final Collection<Route<U, C>> routes) {
-        this.routes = Collections.unmodifiableCollection(routes);
+        this(routes, new Random());
+    }
+
+    /**
+     * Main ctor.
+     *
+     * @param routes Routes
+     * @param random Randomness source
+     */
+    public RouteRnd(final Collection<Route<U, C>> routes, final Random random) {
+        this.routes = List.copyOf(routes);
+        this.random = random;
     }
 
     @Override
     public Optional<Cmd<U, C>> route(final Wrap<U> update) {
-        return this.routes.stream()
-            .skip(new Random().nextInt(this.routes.size()))
-            .findFirst()
-            .flatMap(route -> route.route(update));
+        final Optional<Cmd<U, C>> resp;
+        if (this.routes.isEmpty()) {
+            resp = Optional.empty();
+        } else {
+            resp = this.routes.stream()
+                .skip(this.random.nextInt(this.routes.size()))
+                .findFirst()
+                .flatMap(route -> route.route(update));
+        }
+        return resp;
     }
 }
