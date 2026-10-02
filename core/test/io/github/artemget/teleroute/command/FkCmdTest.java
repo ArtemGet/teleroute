@@ -39,7 +39,7 @@ final class FkCmdTest {
     @Test
     void isNotEqualToNull() {
         MatcherAssert.assertThat(
-            "FkCmd is equal to null",
+            "FkCmd is not equal to null",
             new FkCmd().equals(null),
             Matchers.is(false)
         );
@@ -48,7 +48,7 @@ final class FkCmdTest {
     @Test
     void isNotEqualToForeignType() {
         MatcherAssert.assertThat(
-            "FkCmd is equal to a foreign object",
+            "FkCmd is not equal to a foreign object",
             new FkCmd().equals("foreign"),
             Matchers.is(false)
         );
@@ -57,7 +57,7 @@ final class FkCmdTest {
     @Test
     void isEqualWhenSendsEqual() {
         MatcherAssert.assertThat(
-            "FkCmd with equal sends is not equal",
+            "FkCmd with equal sends is equal",
             new FkCmd(new FkSend("content")).equals(
                 new FkCmd(new FkSend("content"))
             ),
@@ -68,7 +68,7 @@ final class FkCmdTest {
     @Test
     void isNotEqualWhenSendsDiffer() {
         MatcherAssert.assertThat(
-            "FkCmd with different sends is equal",
+            "FkCmd with different sends is not equal",
             new FkCmd(new FkSend("first")).equals(
                 new FkCmd(new FkSend("second"))
             ),
