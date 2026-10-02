@@ -29,6 +29,7 @@ import io.github.artemget.teleroute.command.FkCmd;
 import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.FkSend;
 import io.github.artemget.teleroute.update.FkWrap;
+import java.util.Collections;
 import java.util.Set;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -40,62 +41,73 @@ import org.junit.jupiter.api.Test;
  * @since 0.1.0
  */
 final class RouteRndTest {
-    /**
-     * Command response content.
-     */
-    private final String resp = "resp";
-
-    /**
-     * Set of fake commands.
-     */
-    private final Set<Cmd<String, FkClient>> cmds =
-        Set.of(new FkCmd(), new FkCmd(new FkSend(resp)));
 
     @Test
     void routesAnyWhenManyCmdSpecified() {
+        final Set<Cmd<String, FkClient>> cmds = Set.of(
+            new FkCmd(),
+            new FkCmd(new FkSend("resp"))
+        );
         MatcherAssert.assertThat(
-            "Nothing in return",
-            this.cmds.contains(
+            "Routes to one of the configured commands",
+            cmds.contains(
                 new RouteRnd<>(
                     new FkCmd(),
-                    new FkCmd(new FkSend(this.resp))
+                    new FkCmd(new FkSend("resp"))
                 ).route(new FkWrap()).get()
-            )
+            ),
+            Matchers.is(true)
         );
     }
 
     @Test
     void routesAnyWhenManyRouteSpecified() {
+        final Set<Cmd<String, FkClient>> cmds = Set.of(
+            new FkCmd(),
+            new FkCmd(new FkSend("resp"))
+        );
         MatcherAssert.assertThat(
-            "Nothing in return",
-            this.cmds.contains(
+            "Routes to one of the configured routes",
+            cmds.contains(
                 new RouteRnd<>(
                     new RouteEnd<>(new FkCmd()),
-                    new RouteEnd<>(new FkCmd(new FkSend(this.resp)))
+                    new RouteEnd<>(new FkCmd(new FkSend("resp")))
                 ).route(new FkWrap()).get()
-            )
+            ),
+            Matchers.is(true)
         );
     }
 
     @Test
-    void routesWhenOneCmdSpecified() {
+    void routesOneWhenOneCmdSpecified() {
         MatcherAssert.assertThat(
-            "Noting returned when only one command available",
+            "Routes to the only command available",
             new RouteRnd<>(
-                new FkCmd(new FkSend(this.resp))
+                new FkCmd(new FkSend("resp"))
             ).route(new FkWrap()).get(),
-            Matchers.equalTo(new FkCmd(new FkSend(this.resp)))
+            Matchers.equalTo(new FkCmd(new FkSend("resp")))
         );
     }
 
     @Test
     void routesOneWhenOneRouteSpecified() {
         MatcherAssert.assertThat(
-            "Noting returned when only one route available",
+            "Routes to the only route available",
             new RouteRnd<>(
-                new RouteEnd<>(new FkCmd(new FkSend(this.resp)))
+                new RouteEnd<>(new FkCmd(new FkSend("resp")))
             ).route(new FkWrap()).get(),
-            Matchers.equalTo(new FkCmd(new FkSend(this.resp)))
+            Matchers.equalTo(new FkCmd(new FkSend("resp")))
+        );
+    }
+
+    @Test
+    void returnsEmptyWhenNoRoutesSpecified() {
+        MatcherAssert.assertThat(
+            "Empty route set yields no command",
+            new RouteRnd<String, FkClient>(
+                Collections.emptyList()
+            ).route(new FkWrap()).isEmpty(),
+            Matchers.is(true)
         );
     }
 }
