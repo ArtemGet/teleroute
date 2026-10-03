@@ -22,4 +22,7 @@
  * SOFTWARE.
  */
 
+/**
+ * Telegram update package.
+ */
 package io.github.artemget.teleroute.telegrambots.update;

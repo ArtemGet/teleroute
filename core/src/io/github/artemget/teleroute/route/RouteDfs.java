@@ -26,22 +26,23 @@ package io.github.artemget.teleroute.route;
 
 import io.github.artemget.teleroute.command.Cmd;
 import io.github.artemget.teleroute.update.Wrap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Optional;
 
 /**
  * Depth first search route.
  * Iterate over routes, pick first successful result.
  *
- * <p><img src="../doc-files/IteratorRouteScheme.png" width=1000>
+ * <p><img src="../doc-files/IteratorRouteScheme.png" width=1000></p>
  *
  * @param <U> Update
  * @param <C> Client
  * @since 0.1.0
  */
 public final class RouteDfs<U, C> implements Route<U, C> {
+
     /**
      * Routes.
      */
@@ -63,18 +64,17 @@ public final class RouteDfs<U, C> implements Route<U, C> {
      * @param routes Routes
      */
     public RouteDfs(final Collection<Route<U, C>> routes) {
-        this.routes = Collections.unmodifiableCollection(routes);
+        this.routes = new ArrayList<>(routes);
     }
 
     @Override
     public Optional<Cmd<U, C>> route(final Wrap<U> update) {
-        return Optional.ofNullable(update)
-            .flatMap(
-                upd -> this.routes.stream()
-                    .map(route -> route.route(upd))
-                    .filter(Optional::isPresent)
-                    .findFirst()
-                    .orElse(Optional.empty())
-            );
+        return Optional.ofNullable(update).flatMap(
+            upd -> this.routes.stream()
+                .map(route -> route.route(upd))
+                .filter(Optional::isPresent)
+                .findFirst()
+                .orElse(Optional.empty())
+        );
     }
 }

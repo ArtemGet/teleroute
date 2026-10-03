@@ -39,8 +39,8 @@ final class SendTest {
     void isNotEqualToNull() {
         MatcherAssert.assertThat(
             "Void send is not equal to null",
-            new Send.Void<>().equals(null),
-            Matchers.is(false)
+            new Send.Void<>(),
+            Matchers.not(Matchers.equalTo(null))
         );
     }
 
@@ -48,8 +48,8 @@ final class SendTest {
     void isNotEqualToForeignType() {
         MatcherAssert.assertThat(
             "Void send is not equal to a foreign object",
-            new Send.Void<>().equals("foreign"),
-            Matchers.is(false)
+            new Send.Void<>(),
+            Matchers.not(Matchers.equalTo("foreign"))
         );
     }
 

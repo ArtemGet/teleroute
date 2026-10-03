@@ -33,13 +33,14 @@ import java.util.Optional;
 /**
  * Route to single command or none.
  *
- * <p><img src="../doc-files/EndRouteScheme.png" width=1000>
+ * <p><img src="../doc-files/EndRouteScheme.png" width=1000></p>
  *
  * @param <U> Update
  * @param <C> Client
  * @since 0.1.0
  */
 public final class RouteEnd<U, C> implements Route<U, C> {
+
     /**
      * Command.
      */

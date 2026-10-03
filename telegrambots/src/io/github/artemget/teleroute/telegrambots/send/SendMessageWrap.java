@@ -34,11 +34,12 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
  * Send all content laying under {@code BotApiMethod<T>}. Including ancestors of
  * {@code BotApiMethod<Boolean>, BotApiMethod<Message>, BotApiMethod<Serializable>}.
  *
- * @param <T> generic param of BotApiMethod: Boolean, Message, Serializable
+ * @param <T> Generic param of BotApiMethod: Boolean, Message, Serializable
  * @see BotApiMethod
  * @since 0.1.0
  */
 public final class SendMessageWrap<T extends Serializable> implements Send<TelegramClient> {
+
     /**
      * Message.
      */

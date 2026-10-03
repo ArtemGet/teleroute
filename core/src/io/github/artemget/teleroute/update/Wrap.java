@@ -33,6 +33,7 @@ import java.util.Optional;
  * @since 0.1.0
  */
 public interface Wrap<U> {
+
     /**
      * Provide update identity.
      *

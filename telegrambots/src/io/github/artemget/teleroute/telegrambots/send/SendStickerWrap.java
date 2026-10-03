@@ -35,6 +35,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
  * @since 0.1.0
  */
 public final class SendStickerWrap implements Send<TelegramClient> {
+
     /**
      * Message.
      */

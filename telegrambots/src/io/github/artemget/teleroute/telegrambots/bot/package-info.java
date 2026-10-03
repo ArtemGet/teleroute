@@ -23,4 +23,7 @@
  *
  */
 
+/**
+ * Telegram bot package.
+ */
 package io.github.artemget.teleroute.telegrambots.bot;

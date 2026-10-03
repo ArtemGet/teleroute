@@ -24,7 +24,6 @@
 
 package io.github.artemget.teleroute.route;
 
-import io.github.artemget.teleroute.command.Cmd;
 import io.github.artemget.teleroute.command.FkCmd;
 import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.FkSend;
@@ -44,13 +43,12 @@ final class RouteRndTest {
 
     @Test
     void routesAnyWhenManyCmdSpecified() {
-        final Set<Cmd<String, FkClient>> cmds = Set.of(
-            new FkCmd(),
-            new FkCmd(new FkSend("resp"))
-        );
         MatcherAssert.assertThat(
             "Routes to one of the configured commands",
-            cmds.contains(
+            Set.of(
+                new FkCmd(),
+                new FkCmd(new FkSend("resp"))
+            ).contains(
                 new RouteRnd<>(
                     new FkCmd(),
                     new FkCmd(new FkSend("resp"))
@@ -62,13 +60,12 @@ final class RouteRndTest {
 
     @Test
     void routesAnyWhenManyRouteSpecified() {
-        final Set<Cmd<String, FkClient>> cmds = Set.of(
-            new FkCmd(),
-            new FkCmd(new FkSend("resp"))
-        );
         MatcherAssert.assertThat(
             "Routes to one of the configured routes",
-            cmds.contains(
+            Set.of(
+                new FkCmd(),
+                new FkCmd(new FkSend("resp"))
+            ).contains(
                 new RouteRnd<>(
                     new RouteEnd<>(new FkCmd()),
                     new RouteEnd<>(new FkCmd(new FkSend("resp")))

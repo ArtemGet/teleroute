@@ -36,7 +36,9 @@ import java.util.Optional;
  * @param <C> Client
  * @since 0.1.0
  */
+@FunctionalInterface
 public interface Route<U, C> {
+
     /**
      * Routes update to command or other route.
      *

@@ -34,6 +34,14 @@ import io.github.artemget.teleroute.send.Send;
  */
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkCmdErr implements Cmd<String, FkClient> {
+
+    /**
+     * Ctor.
+     */
+    public FkCmdErr() {
+        // intentionally empty
+    }
+
     @Override
     @SuppressWarnings("PMD.AvoidThrowingRawExceptionTypes")
     public Send<FkClient> execute(final String update) throws Exception {

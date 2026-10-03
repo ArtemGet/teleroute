@@ -75,15 +75,15 @@ final class SendBatchTest {
     @Test
     void sendsNothingWhenManyErrorBefore() {
         final FkClient client = new FkClient();
-        try {
-            new SendBatch<>(
+        Assertions.assertThrows(
+            Exception.class,
+            () -> new SendBatch<>(
                 new FkSendErr(),
                 new FkSendErr(),
                 new FkSend("resp")
-            ).send(client);
-        } catch (final Exception exception) {
-            //ignore
-        }
+            ).send(client),
+            "Sent while error occurred"
+        );
         MatcherAssert.assertThat(
             "Sent succeed command",
             client.sent(),
@@ -94,14 +94,14 @@ final class SendBatchTest {
     @Test
     void sendsSucceedWhenErrorAfter() {
         final FkClient client = new FkClient();
-        try {
-            new SendBatch<>(
+        Assertions.assertThrows(
+            Exception.class,
+            () -> new SendBatch<>(
                 new FkSend("resp"),
                 new FkSendErr()
-            ).send(client);
-        } catch (final Exception exception) {
-            //ignore
-        }
+            ).send(client),
+            "Sent while error occurred"
+        );
         MatcherAssert.assertThat(
             "Sent succeed command",
             client.sent(),

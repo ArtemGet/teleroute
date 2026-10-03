@@ -23,4 +23,7 @@
  *
  */
 
+/**
+ * Bot package.
+ */
 package io.github.artemget.teleroute.bot;

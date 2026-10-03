@@ -44,6 +44,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
  * @since 2.0.0
  */
 public final class BotTg implements LongPollingSingleThreadUpdateConsumer {
+
     /**
      * Logger.
      */
@@ -54,24 +55,53 @@ public final class BotTg implements LongPollingSingleThreadUpdateConsumer {
      */
     private final Proc<Wrap<Update>> bot;
 
+    /**
+     * Ctor.
+     *
+     * @param token Token
+     * @param routes Routes
+     */
     @SafeVarargs
     public BotTg(final String token, final Route<Update, TelegramClient>... routes) {
         this(new OkHttpTelegramClient(token), new RouteDfs<>(routes));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param token Token
+     * @param route Route
+     */
     public BotTg(final String token, final Route<Update, TelegramClient> route) {
         this(new OkHttpTelegramClient(token), route);
     }
 
+    /**
+     * Ctor.
+     *
+     * @param client Client
+     * @param routes Routes
+     */
     @SafeVarargs
     public BotTg(final TelegramClient client, final Route<Update, TelegramClient>... routes) {
         this(new BotEnvelope<>(client, new RouteDfs<>(routes)));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param client Client
+     * @param route Route
+     */
     public BotTg(final TelegramClient client, final Route<Update, TelegramClient> route) {
         this(new BotEnvelope<>(client, route));
     }
 
+    /**
+     * Main ctor.
+     *
+     * @param bot Bot
+     */
     public BotTg(final Proc<Wrap<Update>> bot) {
         this.bot = bot;
     }
@@ -83,7 +113,7 @@ public final class BotTg implements LongPollingSingleThreadUpdateConsumer {
         try {
             this.bot.exec(new TgBotWrap(update));
         } catch (final Exception exception) {
-            LOGGER.error("Error occurred while processing update {}", update, exception);
+            BotTg.LOGGER.error("Error occurred while processing update {}", update, exception);
         }
     }
 }

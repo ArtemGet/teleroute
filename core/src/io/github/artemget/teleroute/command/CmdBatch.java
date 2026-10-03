@@ -29,7 +29,6 @@ import io.github.artemget.teleroute.send.SendBatch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -62,7 +61,7 @@ public final class CmdBatch<U, C> implements Cmd<U, C> {
      * @param commands Commands to execute
      */
     public CmdBatch(final Collection<Cmd<U, C>> commands) {
-        this.commands = Collections.unmodifiableCollection(commands);
+        this.commands = new ArrayList<>(commands);
     }
 
     @Override

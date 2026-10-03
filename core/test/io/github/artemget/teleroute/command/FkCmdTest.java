@@ -40,8 +40,8 @@ final class FkCmdTest {
     void isNotEqualToNull() {
         MatcherAssert.assertThat(
             "FkCmd is not equal to null",
-            new FkCmd().equals(null),
-            Matchers.is(false)
+            new FkCmd(),
+            Matchers.not(Matchers.equalTo(null))
         );
     }
 
@@ -49,8 +49,8 @@ final class FkCmdTest {
     void isNotEqualToForeignType() {
         MatcherAssert.assertThat(
             "FkCmd is not equal to a foreign object",
-            new FkCmd().equals("foreign"),
-            Matchers.is(false)
+            new FkCmd(),
+            Matchers.not(Matchers.equalTo("foreign"))
         );
     }
 

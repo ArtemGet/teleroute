@@ -34,6 +34,14 @@ import java.util.function.Predicate;
  * @since 0.1.0
  */
 public final class MatchCmd<U> implements Predicate<Wrap<U>> {
+
+    /**
+     * Ctor.
+     */
+    public MatchCmd() {
+        // intentionally empty
+    }
+
     @Override
     public boolean test(final Wrap<U> update) {
         return update.isCommand();

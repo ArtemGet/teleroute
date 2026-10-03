@@ -25,9 +25,9 @@
 package io.github.artemget.teleroute.match;
 
 import io.github.artemget.teleroute.update.Wrap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.function.Predicate;
 
 /**
@@ -37,6 +37,7 @@ import java.util.function.Predicate;
  * @since 0.1.0
  */
 public final class MatchAny<U> implements Predicate<Wrap<U>> {
+
     /**
      * Match conditions.
      */
@@ -58,7 +59,7 @@ public final class MatchAny<U> implements Predicate<Wrap<U>> {
      * @param matches Conditions
      */
     public MatchAny(final Collection<Predicate<Wrap<U>>> matches) {
-        this.matches = Collections.unmodifiableCollection(matches);
+        this.matches = new ArrayList<>(matches);
     }
 
     @Override

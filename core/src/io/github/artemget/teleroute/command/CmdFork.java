@@ -36,6 +36,7 @@ import org.cactoos.scalar.ScalarWithFallback;
  * @since 0.2.0
  */
 public final class CmdFork<U, C> implements Cmd<U, C> {
+
     /**
      * Origin route. Would be executed always.
      */

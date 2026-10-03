@@ -31,7 +31,9 @@ package io.github.artemget.teleroute.send;
  * @param <C> Client
  * @since 0.1.0
  */
+@FunctionalInterface
 public interface Send<C> {
+
     /**
      * Sends command result to chat or user via client.
      *
@@ -46,6 +48,14 @@ public interface Send<C> {
      * @since 1.0.0
      */
     final class Void<C> implements Send<C> {
+
+        /**
+         * Ctor.
+         */
+        public Void() {
+            // intentionally empty
+        }
+
         @Override
         public void send(final C client) throws Exception {
             //skipping

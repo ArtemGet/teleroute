@@ -32,6 +32,7 @@ import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.FkSend;
 import io.github.artemget.teleroute.send.FkSendErr;
 import io.github.artemget.teleroute.update.FkWrap;
+import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
@@ -47,7 +48,8 @@ final class BotEnvelopeTest {
     @Test
     void handlesUpdateWhenRouteReturnsCommand() throws Exception {
         final FkClient client = new FkClient();
-        new BotEnvelope<>(client,
+        new BotEnvelope<>(
+            client,
             new RouteEnd<>(
                 new FkCmd(
                     new FkSend("response")
@@ -57,17 +59,19 @@ final class BotEnvelopeTest {
         MatcherAssert.assertThat(
             "Did not send response",
             client.sent(),
-            Matchers.equalTo(java.util.Collections.singletonList("response"))
+            Matchers.equalTo(Collections.singletonList("response"))
         );
     }
 
     @Test
     void handlesUpdateWhenRouteReturnsEmpty() throws Exception {
         final FkClient client = new FkClient();
-        new BotEnvelope<>(client,
+        new BotEnvelope<>(
+            client,
             new RouteEnd<>(
-                new FkCmd()))
-            .exec(new FkWrap());
+                new FkCmd()
+            )
+        ).exec(new FkWrap());
         MatcherAssert.assertThat(
             "Sent response when route returned empty",
             client.sent().isEmpty(),
@@ -78,10 +82,12 @@ final class BotEnvelopeTest {
     @Test
     void throwsExceptionWhenCommandExecutionFails() {
         final BotEnvelope<String, FkClient> bot =
-            new BotEnvelope<>(new FkClient(),
+            new BotEnvelope<>(
+                new FkClient(),
                 new RouteEnd<>(
                     new FkCmdErr()
-                ));
+                )
+            );
         Assertions.assertThrows(
             Exception.class,
             () -> bot.exec(new FkWrap()),

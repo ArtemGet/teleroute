@@ -33,20 +33,6 @@ import java.util.Optional;
  */
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkWrap implements Wrap<String> {
-    /**
-     * Default identity.
-     */
-    private static final Integer ID = 123;
-
-    /**
-     * Telegram command.
-     */
-    private static final Boolean COMMAND = true;
-
-    /**
-     * Content.
-     */
-    private static final String DEFAULT_TEXT = "text";
 
     /**
      * Id.
@@ -63,14 +49,20 @@ public final class FkWrap implements Wrap<String> {
      */
     private final String content;
 
+    /**
+     * Ctor.
+     */
     public FkWrap() {
-        this(
-            FkWrap.ID,
-            FkWrap.COMMAND,
-            FkWrap.DEFAULT_TEXT
-        );
+        this(123, true, "text");
     }
 
+    /**
+     * Main ctor.
+     *
+     * @param id Id
+     * @param command Command
+     * @param content Content
+     */
     public FkWrap(
         final Integer id,
         final Boolean command,
