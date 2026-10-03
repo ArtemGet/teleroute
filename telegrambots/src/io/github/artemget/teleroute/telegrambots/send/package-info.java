@@ -22,4 +22,7 @@
  * SOFTWARE.
  */
 
+/**
+ * Telegram send package.
+ */
 package io.github.artemget.teleroute.telegrambots.send;

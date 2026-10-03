@@ -41,6 +41,7 @@ import org.cactoos.scalar.Unchecked;
  * @since 2.0.0
  */
 public final class BotEnvelope<U, C> implements Proc<Wrap<U>> {
+
     /**
      * Client.
      */
@@ -76,10 +77,9 @@ public final class BotEnvelope<U, C> implements Proc<Wrap<U>> {
     @Override
     public void exec(final Wrap<U> update) throws Exception {
         new CheckedProc<>(
-            (Wrap<U> u) -> this.route.route(u)
-                .map(
-                    cmd -> new Unchecked<>(() -> cmd.execute(u.src())).value()
-                ).ifPresent(send -> new UncheckedProc<>(send::send).exec(this.client)),
+            (Wrap<U> u) -> this.route.route(u).map(
+                cmd -> new Unchecked<>(() -> cmd.execute(u.src())).value()
+            ).ifPresent(send -> new UncheckedProc<>(send::send).exec(this.client)),
             ex -> new Exception("Failed to handle update", ex)
         ).exec(update);
     }

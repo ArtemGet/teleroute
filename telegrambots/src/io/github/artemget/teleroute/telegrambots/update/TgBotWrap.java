@@ -35,11 +35,17 @@ import org.telegram.telegrambots.meta.api.objects.message.Message;
  * @since 0.1.0
  */
 public final class TgBotWrap implements Wrap<Update> {
+
     /**
      * Telegram Update.
      */
     private final Update update;
 
+    /**
+     * Ctor.
+     *
+     * @param update Update
+     */
     public TgBotWrap(final Update update) {
         this.update = update;
     }

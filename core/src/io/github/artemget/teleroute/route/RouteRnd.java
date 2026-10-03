@@ -26,9 +26,9 @@ package io.github.artemget.teleroute.route;
 
 import io.github.artemget.teleroute.command.Cmd;
 import io.github.artemget.teleroute.update.Wrap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -36,13 +36,14 @@ import java.util.stream.Collectors;
 /**
  * Pick any random route.
  *
- * <p><img src="../doc-files/RandomRouteScheme.png" width=1000>
+ * <p><img src="../doc-files/RandomRouteScheme.png" width=1000></p>
  *
  * @param <U> Update
  * @param <C> Client
  * @since 0.1.0
  */
 public final class RouteRnd<U, C> implements Route<U, C> {
+
     /**
      * Routes.
      */
@@ -93,7 +94,7 @@ public final class RouteRnd<U, C> implements Route<U, C> {
      * @param random Randomness source
      */
     public RouteRnd(final Collection<Route<U, C>> routes, final Random random) {
-        this.routes = List.copyOf(routes);
+        this.routes = new ArrayList<>(routes);
         this.random = random;
     }
 

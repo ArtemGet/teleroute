@@ -33,10 +33,12 @@ import java.io.IOException;
  * @since 2.0.0
  */
 public interface Connection extends AutoCloseable {
+
     /**
      * Connects to the bot platform.
      */
     void open() throws Exception;
 
+    @Override
     void close() throws IOException;
 }

@@ -34,7 +34,9 @@ import io.github.artemget.teleroute.send.Send;
  * @param <C> Client
  * @since 0.1.0
  */
+@FunctionalInterface
 public interface Cmd<U, C> {
+
     /**
      * Start command.
      *

@@ -44,6 +44,7 @@ import org.telegram.telegrambots.meta.generics.TelegramClient;
  *    <a href="https://bugs.openjdk.org/browse/JDK-8155591">SDK bug</a>
  */
 public final class ConnectionTg implements Connection {
+
     /**
      * Bot token.
      */
@@ -59,15 +60,34 @@ public final class ConnectionTg implements Connection {
      */
     private final TelegramBotsLongPollingApplication application;
 
+    /**
+     * Ctor.
+     *
+     * @param token Token
+     * @param routes Routes
+     */
     @SafeVarargs
     public ConnectionTg(final String token, final Route<Update, TelegramClient>... routes) {
         this(token, new RouteDfs<>(routes));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param token Token
+     * @param route Route
+     */
     public ConnectionTg(final String token, final Route<Update, TelegramClient> route) {
         this(token, new TelegramBotsLongPollingApplication(), new BotTg(token, route));
     }
 
+    /**
+     * Ctor.
+     *
+     * @param token Token
+     * @param application Application
+     * @param route Route
+     */
     public ConnectionTg(
         final String token,
         final TelegramBotsLongPollingApplication application,
@@ -76,6 +96,13 @@ public final class ConnectionTg implements Connection {
         this(token, application, new BotTg(token, route));
     }
 
+    /**
+     * Main ctor.
+     *
+     * @param token Token
+     * @param application Application
+     * @param consumer Consumer
+     */
     public ConnectionTg(
         final String token,
         final TelegramBotsLongPollingApplication application,

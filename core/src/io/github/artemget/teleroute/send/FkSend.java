@@ -24,6 +24,7 @@
 
 package io.github.artemget.teleroute.send;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -36,21 +37,35 @@ import java.util.Objects;
  */
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkSend implements Send<FkClient> {
+
     /**
      * Response that would be sent by client.
      */
     private final List<String> response;
 
+    /**
+     * Ctor.
+     */
     public FkSend() {
         this(Collections.emptyList());
     }
 
+    /**
+     * Ctor.
+     *
+     * @param content Content
+     */
     public FkSend(final String... content) {
         this(Arrays.asList(content));
     }
 
+    /**
+     * Main ctor.
+     *
+     * @param content Content
+     */
     public FkSend(final List<String> content) {
-        this.response = Collections.unmodifiableList(content);
+        this.response = new ArrayList<>(content);
     }
 
     @Override

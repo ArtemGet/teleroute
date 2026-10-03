@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
  * @since 0.3.0
  */
 public final class MatchRegex<U> implements Predicate<Wrap<U>> {
+
     /**
      * Pattern to compare.
      */
@@ -43,7 +44,7 @@ public final class MatchRegex<U> implements Predicate<Wrap<U>> {
     /**
      * Ctor.
      *
-     * @param regex Regex string to compare.
+     * @param regex Regex string to compare
      */
     public MatchRegex(final String regex) {
         this(Pattern.compile(regex));
@@ -52,7 +53,7 @@ public final class MatchRegex<U> implements Predicate<Wrap<U>> {
     /**
      * Main ctor.
      *
-     * @param pattern Pattern to compare.
+     * @param pattern Pattern to compare
      */
     public MatchRegex(final Pattern pattern) {
         this.pattern = pattern;

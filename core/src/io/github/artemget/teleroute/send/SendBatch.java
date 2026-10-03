@@ -27,7 +27,6 @@ package io.github.artemget.teleroute.send;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Objects;
 
 /**
@@ -59,7 +58,7 @@ public final class SendBatch<C> implements Send<C> {
      * @param sends Sends
      */
     public SendBatch(final Collection<Send<C>> sends) {
-        this.sends = Collections.unmodifiableCollection(sends);
+        this.sends = new ArrayList<>(sends);
     }
 
     @Override
@@ -77,10 +76,9 @@ public final class SendBatch<C> implements Send<C> {
         } else if (obj == null || this.getClass() != obj.getClass()) {
             equals = false;
         } else {
-            final SendBatch<?> batch = (SendBatch<?>) obj;
             equals = this.sends.stream()
                 .toList()
-                .equals(batch.sends.stream().toList());
+                .equals(((SendBatch<?>) obj).sends.stream().toList());
         }
         return equals;
     }

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024-2025. Artem Getmanskii
+ * Copyright (c) 2024-2026. Artem Getmanskii
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,42 +22,7 @@
  * SOFTWARE.
  */
 
-package io.github.artemget.teleroute.match;
-
-import io.github.artemget.teleroute.update.Wrap;
-import java.util.function.Predicate;
-
 /**
- * Fake match condition.
- *
- * @since 0.1.0
+ * Bot test package.
  */
-@SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
-public final class FkMatch implements Predicate<Wrap<String>> {
-
-    /**
-     * Matching condition.
-     */
-    private final Boolean condition;
-
-    /**
-     * Always match.
-     */
-    public FkMatch() {
-        this(true);
-    }
-
-    /**
-     * Main ctor.
-     *
-     * @param match Condition
-     */
-    public FkMatch(final Boolean match) {
-        this.condition = match;
-    }
-
-    @Override
-    public boolean test(final Wrap<String> update) {
-        return this.condition;
-    }
-}
+package io.github.artemget.teleroute.bot;

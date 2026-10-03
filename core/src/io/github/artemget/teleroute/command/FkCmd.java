@@ -26,6 +26,7 @@ package io.github.artemget.teleroute.command;
 
 import io.github.artemget.teleroute.send.FkClient;
 import io.github.artemget.teleroute.send.Send;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -37,28 +38,42 @@ import java.util.Objects;
  */
 @SuppressWarnings({"JTCOP.RuleAllTestsHaveProductionClass", "JTCOP.RuleCorrectTestName"})
 public final class FkCmd implements Cmd<String, FkClient> {
+
     /**
      * Client.
      */
     private final List<Send<FkClient>> send;
 
+    /**
+     * Ctor.
+     */
     public FkCmd() {
         this(Collections.emptyList());
     }
 
+    /**
+     * Ctor.
+     *
+     * @param client Client
+     */
     public FkCmd(final Send<FkClient> client) {
         this(Collections.singletonList(client));
     }
 
+    /**
+     * Main ctor.
+     *
+     * @param clients Clients
+     */
     public FkCmd(final List<Send<FkClient>> clients) {
-        this.send = Collections.unmodifiableList(clients);
+        this.send = new ArrayList<>(clients);
     }
 
     @Override
     public Send<FkClient> execute(final String update) {
         final Send<FkClient> resp;
         if (this.send.isEmpty()) {
-            resp = new Send.Void<>();
+            resp = new Send.Empty<>();
         } else {
             resp = this.send.get(0);
         }
