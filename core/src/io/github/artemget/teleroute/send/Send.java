@@ -47,12 +47,12 @@ public interface Send<C> {
      * @param <C> Client
      * @since 1.0.0
      */
-    final class Void<C> implements Send<C> {
+    final class Empty<C> implements Send<C> {
 
         /**
          * Ctor.
          */
-        public Void() {
+        public Empty() {
             // intentionally empty
         }
 

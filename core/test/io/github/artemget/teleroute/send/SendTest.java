@@ -38,8 +38,8 @@ final class SendTest {
     @Test
     void isNotEqualToNull() {
         MatcherAssert.assertThat(
-            "Void send is not equal to null",
-            new Send.Void<>(),
+            "Empty send is not equal to null",
+            new Send.Empty<>(),
             Matchers.not(Matchers.equalTo(null))
         );
     }
@@ -47,8 +47,8 @@ final class SendTest {
     @Test
     void isNotEqualToForeignType() {
         MatcherAssert.assertThat(
-            "Void send is not equal to a foreign object",
-            new Send.Void<>(),
+            "Empty send is not equal to a foreign object",
+            new Send.Empty<>(),
             Matchers.not(Matchers.equalTo("foreign"))
         );
     }
@@ -56,8 +56,8 @@ final class SendTest {
     @Test
     void isEqualToAnotherVoid() {
         MatcherAssert.assertThat(
-            "Two Void sends are equal",
-            new Send.Void<>().equals(new Send.Void<>()),
+            "Two Empty sends are equal",
+            new Send.Empty<>().equals(new Send.Empty<>()),
             Matchers.is(true)
         );
     }
@@ -65,8 +65,8 @@ final class SendTest {
     @Test
     void isSameHashCodeWhenEqual() {
         MatcherAssert.assertThat(
-            "Equal Void sends share a hash code",
-            new Send.Void<>().hashCode() == new Send.Void<>().hashCode(),
+            "Equal Empty sends share a hash code",
+            new Send.Empty<>().hashCode() == new Send.Empty<>().hashCode(),
             Matchers.is(true)
         );
     }
